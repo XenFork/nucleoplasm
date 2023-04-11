@@ -4,8 +4,15 @@
   "version": "${version}",
   "name": "nucleoplasm_api",
   "description": "",
-  "authors": [],
-  "contact": {},
+  "authors": [
+    "XenFork",
+    "Overrun Organization",
+    "AmazingRabbit Studio",
+    "Funny Developers"
+  ],
+  "contact": {
+    "repo": "https://github.com/XenFork/nucleoplasm"
+  },
   "license": "MIT",
   "icon": "assets/nucleoplasm_api/icon.png",
   "environment": "*",

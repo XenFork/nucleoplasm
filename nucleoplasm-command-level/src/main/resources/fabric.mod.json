@@ -4,9 +4,14 @@
   "version": "${version}",
   "name": "nucleoplasm_command_level",
   "description": "",
-  "authors": [],
+  "authors": [
+    "XenFork",
+    "Overrun Organization",
+    "AmazingRabbit Studio",
+    "Funny Developers"
+  ],
   "contact": {
-    "repo": "https://github.com/Over-Run/Nucleoplasm"
+    "repo": "https://github.com/XenFork/nucleoplasm"
   },
   "license": "MIT",
   "icon": "assets/nucleoplasm_command_level/icon.png",
