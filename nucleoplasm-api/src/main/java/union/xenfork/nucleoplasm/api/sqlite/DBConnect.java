@@ -1,7 +1,6 @@
 package union.xenfork.nucleoplasm.api.sqlite;
 
 import org.sqlite.JDBC;
-import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -18,6 +17,7 @@ public class DBConnect {
         try {
             Class.forName(JDBC.class.getName());
             connection = DriverManager.getConnection(JDBC.PREFIX + "sample.db");
+            connection.setAutoCommit(true);
             logger.info("DB Connected!");
         } catch (Exception e) {
             logger.error(e.getMessage());
