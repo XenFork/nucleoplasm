@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "nucleoplasm_command_level",
+  "version": "${version}",
+  "name": "nucleoplasm_command_level",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/Over-Run/Nucleoplasm"
+  },
+  "license": "MIT",
+  "icon": "assets/nucleoplasm_command_level/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.command.level.server.NucleoplasmCommandLevelServer"
+    ],
+    "client": [
+      "union.xenfork.nucleoplasm.command.level.client.NucleoplasmCommandLevelClient"
+    ],
+    "main": [
+      "union.xenfork.nucleoplasm.command.level.NucleoplasmCommandLevel"
+    ]
+  },
+  "mixins": [
+    "nucleoplasm_command_level.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
