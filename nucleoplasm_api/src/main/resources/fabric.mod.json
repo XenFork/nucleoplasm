@@ -10,11 +10,14 @@
   "icon": "assets/nucleoplasm_api/icon.png",
   "environment": "*",
   "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.api.server.NucleoplasmApiServer"
+    ],
     "client": [
-      "union.xenfork.nucleoplasm.api.client.Nucleoplasm_apiClient"
+      "union.xenfork.nucleoplasm.api.client.NucleoplasmApiClient"
     ],
     "main": [
-      "union.xenfork.nucleoplasm.api.Nucleoplasm_api"
+      "union.xenfork.nucleoplasm.api.NucleoplasmApi"
     ]
   },
   "mixins": [
@@ -24,5 +27,10 @@
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": ["library"]
+    }
   }
 }
