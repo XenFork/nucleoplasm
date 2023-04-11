@@ -1,10 +1,10 @@
 # Nucleoplasm
 
-- [select language](Language.md)
+- [选择语言](../Language.md)
 - [tutorial list]()
-- [no one sees the license](LICENSE)
+- [no one sees the license](../LICENSE)
 
-<h4>Welcome to the Nucleoplasm mod! We are committed to super science fiction.</h4>
+<h4>欢迎使用核质模组！我们将致力于科幻的极致。</h4>
 
 ## sub projects
 
@@ -21,26 +21,26 @@
 
 ## gobals
 
-- [ ] Machine
-    - [ ] Proton Separator Machine
-    - [ ] Proton Exchange Machine
-    - [ ] Neutron Separator Machine
-    - [ ] Neutron Exchange Machine
-- [ ] Block & Item
-    - [ ] Periodic Table of Elements
-    - [ ] Nuclide
-    - [ ] Chemical Compound
-    - [ ] Covalent Bond
-    - [ ] Organic Compound
-    - [ ] Electrodynamics
-    - [ ] Quantum Mechanics
-    - [ ] Disintegration
-- [ ] Extends Taskline
-    - [ ] Server side plugin support
-    - [ ] chemistry
-    - [ ] biology
-    - [ ] Railway Project
-    - [ ] Interstellar Project
+- [ ] 机器
+    - [ ] 质子分离机
+    - [ ] 质子置换机
+    - [ ] 中子分离机
+    - [ ] 中子置换机
+- [ ] 方块与物品
+    - [ ] 元素周期表
+    - [ ] 核素
+    - [ ] 化合物
+    - [ ] 共价键
+    - [ ] 有机化合物
+    - [ ] 电力学
+    - [ ] 遇事不决____!
+    - [ ] 衰变
+- [ ] 拓展线路
+    - [ ] 服务端插件支持
+    - [ ] 化学
+    - [ ] 生物学
+    - [ ] 铁路工程
+    - [ ] 星际
 
 ## rate of progress
-Nucleoplasm-api jar in jar -> sqlite and yaml     <br>
+Nucleoplasm-api 内置数据库和yaml读写    <br>

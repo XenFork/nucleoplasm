@@ -24,18 +24,19 @@ dependencies {
         // Fabric API. This is technically optional, but you probably want it anyway.
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
     modImplementation(include("org.xerial:sqlite-jdbc:3.41.0.0"))
+    modImplementation(include("org.yaml:snakeyaml:2.0"))
 
 }
 
 processResources {
-    inputs.property "version", project.version
+    inputs.property "version", version
     inputs.property "minecraft_version", alpha_version
-    inputs.property "loader_version", project.loader_version
+    inputs.property "loader_version", loader_version
     filteringCharset charset
     filesMatching("fabric.mod.json") {
-        expand "version": project.version,
+        expand "version": version,
                 "minecraft_version": alpha_version,
-                "loader_version": project.loader_version
+                "loader_version": loader_version
     }
 }
 
@@ -56,7 +57,7 @@ java {
     if (JavaVersion.current() < javaVersion) {
         toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     }
-    archivesBaseName = project.archives_base_name
+    archivesBaseName = archives_base_name
     // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
     // if it is present.
     // If you remove this line, sources will not be generated.
