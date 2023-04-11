@@ -12,7 +12,8 @@ targetCompatibility = JavaVersion.VERSION_17
 def charset = "UTF-8"
 
 repositories {
-
+    mavenLocal()
+    mavenCentral()
 }
 
 dependencies {
