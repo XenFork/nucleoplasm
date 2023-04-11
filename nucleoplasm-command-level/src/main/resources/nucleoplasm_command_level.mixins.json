@@ -1,9 +1,11 @@
 {
   "required": true,
   "minVersion": "0.8",
-  "package": "union.xenfork.nucleoplasm_command_level.mixin",
+  "package": "union.xenfork.nucleoplasm.command.level.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "GameModeCommandMixin",
+    "PlayerManagerMixin"
   ],
   "client": [
   ],
