@@ -4,9 +4,7 @@
   "package": "union.xenfork.nucleoplasm.api.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-  ],
-  "client": [
-    "TitleScreenMixin"
+    "PlayerManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
