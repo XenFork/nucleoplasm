@@ -6,7 +6,6 @@ import com.github.artbits.quickio.core.QuickIO;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
-import union.xenfork.nucleoplasm.api.server.NucleoplasmApiServer;
 import union.xenfork.nucleoplasm.command.level.quickio.GroupEntity;
 import union.xenfork.nucleoplasm.command.level.quickio.PlayerEntity;
 
@@ -39,22 +38,6 @@ public class NucleoplasmCommandLevelServer implements DedicatedServerModInitiali
                 }));
             }
         });
-//        ServerPlayerEvents.LOGIN_EVENT.register(serverPlayer -> {
-//            Collection<PlayerEntity> collection = player.collection(PlayerEntity.class);
-//            List<PlayerEntity> all = collection.findAll();
-//            boolean b = true;
-//            for (PlayerEntity playerEntity : all) {
-//                if (playerEntity.player_name.equals(serverPlayer.getEntityName())) {
-//                    b = false;
-//                }
-//            }
-//            if (b) {
-//                collection.save(PlayerEntity.of(playerEntity -> {
-//                    playerEntity.player_name = serverPlayer.getEntityName();
-//                    playerEntity.groups = new ArrayList<>();
-//                }));
-//            }
-//        });
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             player.close();
             group.close();
