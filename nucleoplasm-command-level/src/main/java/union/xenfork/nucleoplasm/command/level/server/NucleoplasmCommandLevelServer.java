@@ -1,7 +1,11 @@
 package union.xenfork.nucleoplasm.command.level.server;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
+import net.minecraft.entity.MovementType;
+import net.minecraft.util.math.Vec3d;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.quickio.GroupEntity;
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
@@ -75,6 +79,27 @@ public final class NucleoplasmCommandLevelServer implements DedicatedServerModIn
                     entity.permission = new ArrayList<>();
                     entity.extends_group = new ArrayList<>();
                 }));
+            }
+        });
+
+        ServerPlayerEvents.PLAYER_TICK_EVENT.register(entity -> {
+            double x = entity.capeX;
+            double y = entity.capeY;
+            double z = entity.capeZ;
+            ArrayList<String> groups =
+                    playerDB.getGroups(entity);
+
+            boolean hasMove = false;
+            if (playerDB.isLogin(entity)) for (String group : groups) {
+                ArrayList<String> groups1 = groupDB.getGroups(group);
+                for (String s : groups1)
+                    if (s.equals("minecraft.move")) {
+                        hasMove = true;
+                        break;
+                    }
+            }
+            if (!hasMove) {
+                entity.move(MovementType.SELF, new Vec3d(x, y, z));
             }
         });
 
