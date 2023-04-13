@@ -3,7 +3,12 @@ package union.xenfork.nucleoplasm.command.level.server;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.QuickIO;
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
+import net.minecraft.server.command.CommandManager;
+import net.minecraft.util.profiling.jfr.event.ServerTickTimeEvent;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.quickio.GroupEntity;
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
@@ -61,15 +66,20 @@ public class NucleoplasmCommandLevelServer implements DedicatedServerModInitiali
             }
         });
 
-
         ServerPlayerEvents.LOGIN_EVENT.register(serverPlayer -> {
             if (!playerDB.hasPlayer(serverPlayer.getEntityName())) {
                 playerDB.add(PlayerEntity.of(playerEntity -> {
                     playerEntity.player_name = serverPlayer.getEntityName();
                     playerEntity.groups = new ArrayList<>(playerDB.getGroups("default"));
+                    playerEntity.join_time = serverPlayer.server.getTimeReference();
                 }));
             }
         });
+
+        ServerPlayerEvents.LOGIN_OUT_EVENT.register(serverPlayer -> {
+
+        });
+
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             playerDB.close();
             groupDB.close();
