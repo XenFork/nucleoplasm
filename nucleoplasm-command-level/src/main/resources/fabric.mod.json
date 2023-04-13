@@ -29,7 +29,7 @@
     ]
   },
   "mixins": [
-    "nucleoplasm_command_level.mixins.json"
+    "nucleoplasm-command-level.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

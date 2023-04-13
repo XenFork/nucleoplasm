@@ -11,7 +11,7 @@ import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
-    @Inject(method = "tick", at = @At(value = "HEAD"))
+    @Inject(method = "playerTick", at = @At(value = "HEAD"))
     public void tick(CallbackInfo ci) {
         ServerPlayerEvents.PLAYER_TICK_EVENT.invoker().tick((ServerPlayerEntity) (Object)this);
     }
