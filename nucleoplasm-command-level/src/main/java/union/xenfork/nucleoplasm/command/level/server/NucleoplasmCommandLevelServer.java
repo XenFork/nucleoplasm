@@ -1,14 +1,7 @@
 package union.xenfork.nucleoplasm.command.level.server;
 
-import com.github.artbits.quickio.api.DB;
-import com.github.artbits.quickio.core.QuickIO;
 import net.fabricmc.api.DedicatedServerModInitializer;
-import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.event.lifecycle.v1.CommonLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.message.v1.ServerMessageEvents;
-import net.minecraft.server.command.CommandManager;
-import net.minecraft.util.profiling.jfr.event.ServerTickTimeEvent;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.quickio.GroupEntity;
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
@@ -18,7 +11,7 @@ import union.xenfork.nucleoplasm.api.quickio.utils.PlayerDB;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NucleoplasmCommandLevelServer implements DedicatedServerModInitializer {
+public final class NucleoplasmCommandLevelServer implements DedicatedServerModInitializer {
     public static PlayerDB<PlayerEntity> playerDB;
     public static GroupDB<GroupEntity> groupDB;
     @Override
@@ -26,6 +19,7 @@ public class NucleoplasmCommandLevelServer implements DedicatedServerModInitiali
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
             playerDB = new PlayerDB<>("player", PlayerEntity.class);
             groupDB = new GroupDB<>("group", GroupEntity.class);
+            //noinspection deprecation
             if (!playerDB.hasPlayer("default")) {
                 playerDB.add(PlayerEntity.of(entity -> {
                     entity.player_name = "default";
@@ -67,17 +61,25 @@ public class NucleoplasmCommandLevelServer implements DedicatedServerModInitiali
         });
 
         ServerPlayerEvents.LOGIN_EVENT.register(serverPlayer -> {
-            if (!playerDB.hasPlayer(serverPlayer.getEntityName())) {
+            if (!playerDB.hasPlayer(serverPlayer)) {
                 playerDB.add(PlayerEntity.of(playerEntity -> {
                     playerEntity.player_name = serverPlayer.getEntityName();
-                    playerEntity.groups = new ArrayList<>(playerDB.getGroups("default"));
+                    //noinspection deprecation
+                    ArrayList<String> groups = new ArrayList<>(playerDB.getGroups("default"));
+                    groups.add(serverPlayer.getEntityName());
+                    playerEntity.groups = groups;
                     playerEntity.join_time = serverPlayer.server.getTimeReference();
+                }));
+                groupDB.add(GroupEntity.of(entity -> {
+                    entity.group_name = serverPlayer.getEntityName() + "-private-group";
+                    entity.permission = new ArrayList<>();
+                    entity.extends_group = new ArrayList<>();
                 }));
             }
         });
 
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(serverPlayer -> {
-
+            playerDB.isLogin(serverPlayer);
         });
 
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {

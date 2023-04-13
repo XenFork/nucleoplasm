@@ -16,6 +16,9 @@ import union.xenfork.nucleoplasm.command.level.server.NucleoplasmCommandLevelSer
 
 import java.util.ArrayList;
 
+import static union.xenfork.nucleoplasm.command.level.server.NucleoplasmCommandLevelServer.groupDB;
+import static union.xenfork.nucleoplasm.command.level.server.NucleoplasmCommandLevelServer.playerDB;
+
 @Mixin(Item.class)
 public abstract class ItemMixin {
     @Shadow public abstract void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected);
@@ -24,19 +27,18 @@ public abstract class ItemMixin {
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
         if (entity instanceof PlayerEntity player) {
             ArrayList<String> groups =
-                    NucleoplasmCommandLevelServer.playerDB.getGroups(player.getEntityName());
+                    playerDB.getGroups(player);
             double capeX = player.capeX;
             double capeY = player.capeY;
             double capeZ = player.capeZ;
             boolean hasMove = false;
-            for (String group : groups) {
-                ArrayList<String> groups1 = NucleoplasmCommandLevelServer.groupDB.getGroups(group);
-                for (String s : groups1) {
+            if (playerDB.isLogin(player)) for (String group : groups) {
+                ArrayList<String> groups1 = groupDB.getGroups(group);
+                for (String s : groups1)
                     if (s.equals("minecraft.move")) {
                         hasMove = true;
                         break;
                     }
-                }
             }
             if (!hasMove) {
                 player.move(MovementType.SELF, new Vec3d(capeX, capeY, capeZ));
