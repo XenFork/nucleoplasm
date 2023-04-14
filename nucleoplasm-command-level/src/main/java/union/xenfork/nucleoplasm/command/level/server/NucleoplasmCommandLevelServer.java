@@ -82,26 +82,9 @@ public final class NucleoplasmCommandLevelServer implements DedicatedServerModIn
             }
         });
 
-        ServerPlayerEvents.PLAYER_TICK_EVENT.register(entity -> {
-            double x = entity.capeX;
-            double y = entity.capeY;
-            double z = entity.capeZ;
-            ArrayList<String> groups =
-                    playerDB.getGroups(entity);
-
-            boolean hasMove = false;
-            if (playerDB.isLogin(entity)) for (String group : groups) {
-                ArrayList<String> groups1 = groupDB.getGroups(group);
-                for (String s : groups1)
-                    if (s.equals("minecraft.move")) {
-                        hasMove = true;
-                        break;
-                    }
-            }
-            if (!hasMove) {
-                entity.move(MovementType.SELF, new Vec3d(x, y, z));
-            }
-        });
+//        ServerPlayerEvents.PLAYER_TICK_EVENT.register(entity -> {
+//
+//        });
 
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(serverPlayer -> {
             playerDB.isLogin(serverPlayer);
