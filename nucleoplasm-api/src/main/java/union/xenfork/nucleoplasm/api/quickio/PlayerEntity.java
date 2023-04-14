@@ -12,6 +12,7 @@ public class PlayerEntity extends IOEntity {
     public long join_time, login_time;//加入游戏的时间， 登陆的计时器
 
     public String password, email;//密码，邮箱
+    public double x,y,z;
 
     public static PlayerEntity of(Consumer<PlayerEntity> consumer) {
         PlayerEntity playerEntity = new PlayerEntity();

@@ -4,6 +4,7 @@ import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.QuickIO;
 import net.minecraft.server.PlayerManager;
+import net.minecraft.util.math.Vec3d;
 import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
 
@@ -18,6 +19,19 @@ public class PlayerDB<T extends PlayerEntity> {
         db = QuickIO.usingDB(name);
         collection = db.collection(t);
     }
+
+    public Vec3d getVec3d(net.minecraft.entity.player.PlayerEntity entity) {
+        PlayerEntity playerEntity = get(entity);
+        return new Vec3d(playerEntity.x, playerEntity.y, playerEntity.z);
+    }
+
+    public void setVec3d(net.minecraft.entity.player.PlayerEntity entity) {
+        PlayerEntity playerEntity = get(entity);
+        playerEntity.x = entity.getX();
+        playerEntity.y = entity.getY();
+        playerEntity.z = entity.getZ();
+    }
+
     @SuppressWarnings("DeprecatedIsStillUsed")
     @Deprecated
     public boolean hasPlayer(String playerName) {

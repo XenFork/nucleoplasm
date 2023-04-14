@@ -4,13 +4,12 @@
   "package": "union.xenfork.nucleoplasm.api.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "PlayerManagerMixin",
-    "ServerPlayerEntityMixin"
+    "MinecraftServerMixin",
+    "PlayerManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
   },
   "client": [
-    "MinecraftClientMixin"
   ]
 }

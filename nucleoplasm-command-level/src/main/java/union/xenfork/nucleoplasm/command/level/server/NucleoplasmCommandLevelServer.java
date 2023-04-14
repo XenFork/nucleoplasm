@@ -66,13 +66,16 @@ public final class NucleoplasmCommandLevelServer implements DedicatedServerModIn
 
         ServerPlayerEvents.LOGIN_EVENT.register(serverPlayer -> {
             if (!playerDB.hasPlayer(serverPlayer)) {
-                playerDB.add(PlayerEntity.of(playerEntity -> {
-                    playerEntity.player_name = serverPlayer.getEntityName();
+                playerDB.add(PlayerEntity.of(entity -> {
+                    entity.player_name = serverPlayer.getEntityName();
                     //noinspection deprecation
                     ArrayList<String> groups = new ArrayList<>(playerDB.getGroups("default"));
                     groups.add(serverPlayer.getEntityName());
-                    playerEntity.groups = groups;
-                    playerEntity.join_time = serverPlayer.server.getTimeReference();
+                    entity.groups = groups;
+                    entity.join_time = serverPlayer.server.getTimeReference();
+                    entity.x = serverPlayer.getX();
+                    entity.y = serverPlayer.getY();
+                    entity.z = serverPlayer.getZ();
                 }));
                 groupDB.add(GroupEntity.of(entity -> {
                     entity.group_name = serverPlayer.getEntityName() + "-private-group";
@@ -82,12 +85,27 @@ public final class NucleoplasmCommandLevelServer implements DedicatedServerModIn
             }
         });
 
-//        ServerPlayerEvents.PLAYER_TICK_EVENT.register(entity -> {
-//
-//        });
+        ServerPlayerEvents.PLAYER_TICK_EVENT.register(entity -> {
+            Vec3d pos = playerDB.getVec3d(entity);
+            ArrayList<String> groups =
+                    playerDB.getGroups(entity);
+            boolean hasMove = false;
+            if (playerDB.isLogin(entity)) for (String group : groups) {
+                ArrayList<String> groups1 = groupDB.getGroups(group);
+                for (String s : groups1)
+                    if (s.equals("minecraft.move")) {
+                        hasMove = true;
+                        break;
+                    }
+            }
+            if (!hasMove) {
+                entity.move(MovementType.SELF, pos);
+            }
+        });
 
-        ServerPlayerEvents.LOGIN_OUT_EVENT.register(serverPlayer -> {
-            playerDB.isLogin(serverPlayer);
+        ServerPlayerEvents.LOGIN_OUT_EVENT.register(entity -> {
+            playerDB.isLogin(entity);
+            playerDB.setVec3d(entity);
         });
 
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
