@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "nucleoplasm_normandy_login",
+  "version": "${version}",
+  "name": "nucleoplasm_normandy_login",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/baka4n/nucleoplasm_normandy_login"
+  },
+  "license": "MIT",
+  "icon": "assets/nucleoplasm_normandy_login/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer"
+    ],
+    "client": [
+      "union.xenfork.nucleoplasm_normandy_login.client.NucleoplasmNormandyLoginClient"
+    ],
+    "main": [
+      "union.xenfork.nucleoplasm_normandy_login.NucleoplasmNormandyLogin"
+    ]
+  },
+  "mixins": [
+    "nucleoplasm-normandy-login.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

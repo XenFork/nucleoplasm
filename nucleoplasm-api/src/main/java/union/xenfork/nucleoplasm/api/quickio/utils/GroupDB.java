@@ -6,55 +6,40 @@ import com.github.artbits.quickio.core.QuickIO;
 import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 import union.xenfork.nucleoplasm.api.quickio.GroupEntity;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
 
 public class GroupDB<T extends GroupEntity> {
-    private final DB db;
-    private final Collection<T> collection;
-    public GroupDB(String name, Class<T> t) {
+    public final DB db;
+    public final Collection<T> collection;
+    public final Class<T> tClass;
+    public GroupDB(String name, Class<T> tClass) {
         db = QuickIO.usingDB(name);
-        collection = db.collection(t);
+        this.tClass = tClass;
+        collection = db.collection(tClass);
     }
 
-    public boolean hasGroup(String groupName) {
-        T one = collection.findOne(t -> t.group_name.equals(groupName));
-        return one != null;
-    }
-
-    public Set<String> playerList() {
-        Set<String> set = new HashSet<>();
-        collection.findAll().forEach(t -> set.add(t.group_name));
-        return set;
-    }
-
-    public ArrayList<String> getGroups(String groupName) {
-        if (hasGroup(groupName)) {
-            T one = collection.findOne(t -> t.group_name.equals(groupName));
-            ArrayList<String> permission = new ArrayList<>(one.permission);
-            for (String s : one.extends_group) {
-                permission.addAll(getGroups(s));
-            }
-            return permission;
+    public void add(String group_name, ArrayList<String> permission, ArrayList<String> extends_group) {
+        try {
+            T t = tClass.getDeclaredConstructor().newInstance();
+            t.group_name = group_name;
+            t.extends_group = extends_group;
+            t.permission = permission;
+            collection.save(t);
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            NucleoplasmApi.logger.info(e.getMessage());
         }
-        return NucleoplasmApi.null_array;
     }
 
-    public long size() {
-        return collection.count();
+    public void remove(String group_name) {
+        collection.delete(t -> t.group_name.equals(group_name));
+    }
+
+    public T get(String group_name) {
+        return collection.findOne(t -> t.group_name.equals(group_name));
     }
 
     public void close() {
         db.close();
     }
-
-    public void add(T t) {
-        collection.save(t);
-    }
-
-    public void delete(String groupName) {
-        collection.delete(t -> t.group_name.equals(groupName));
-    }
-
 }

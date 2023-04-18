@@ -10,10 +10,7 @@ import java.util.ArrayList;
 
 public class NucleoplasmApi implements ModInitializer {
     public static final ArrayList<String> null_array = new ArrayList<>();
-    public static final PlayerEntity null_player_entity = PlayerEntity.of(
-            entity -> {
-
-            });
+    public static final PlayerEntity null_player_entity = new PlayerEntity();
     public static final String modid = "nucleoplasm_api";
     public static final Logger logger = LoggerFactory.getLogger(modid);
     @Override
