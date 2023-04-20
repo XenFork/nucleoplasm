@@ -1,3 +1,0 @@
-[submodule "nucleoplasm-api/gradle"]
-	path = nucleoplasm-api/gradle
-	url = https://github.com/XenFork/gradle_wrapper_link.git
