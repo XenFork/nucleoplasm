@@ -18,7 +18,15 @@ dependencies {
     forge "net.minecraftforge:forge:$forge_version"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-forge:$architectury_version"
-    modImplementation(include("com.github.artbits:quickio:$quickio_version"))
+    modImplementation(include("com.github.artbits:quickio:$quickio_version") {
+        transitive false
+    })
+    modImplementation(include("org.iq80.leveldb:leveldb:$leveldb_version"))
+    modImplementation(include("org.iq80.leveldb:leveldb-api:$leveldb_version"))
+    modImplementation(include("io.protostuff:protostuff-core:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-api:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-runtime:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-collectionschema:$protostuff_version"))
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
