@@ -5,15 +5,30 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import static java.util.Arrays.stream;
 
 public class ImgCrt {
     public final List<File> files = new ArrayList<>();
 
     public ImgCrt(File... files) {
         this.files.addAll(Arrays.asList(files));
+    }
+
+    public ImgCrt(Path... paths) {
+        files.addAll(stream(paths).map(Path::toFile).toList());
+    }
+
+    public void add(File... files) {
+        this.files.addAll(Arrays.asList(files));
+    }
+
+    public void add(Path... paths) {
+        files.addAll(stream(paths).map(Path::toFile).toList());
     }
 
     public void create(String... messages) {
