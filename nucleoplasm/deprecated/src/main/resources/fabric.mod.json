@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "nucleoplasm_deprecated",
+  "version": "${version}",
+  "name": "nucleoplasm_deprecated",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/baka4n/nucleoplasm_normandy_login"
+  },
+  "license": "MIT",
+  "icon": "assets/nucleoplasm_deprecated/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.deprecated.NucleoplasmServerDeprecated"
+    ],
+    "client": [
+      "union.xenfork.nucleoplasm.deprecated.NucleoplasmClientDeprecated"
+    ],
+    "main": [
+      "union.xenfork.nucleoplasm.deprecated.NucleoplasmDeprecated"
+    ]
+  },
+  "mixins": [
+    "nucleoplasm-deprecated.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

@@ -1,0 +1,27 @@
+pluginManagement {
+    repositories {
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        mavenCentral()
+        gradlePluginPortal()
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    }
+}
+
+rootProject.name = 'nucleoplasm'
+
+for (final def p in nucleoplasm_projects.split(",") ) {
+    def string = "nucleoplasm/$p"
+    include(string)
+    project(":$string").name = string.replace('/', '-')
+}
+
+for (final def p in no_fabric_projects.split(",")) {
+    include("draw_png")
+}
+
+
+

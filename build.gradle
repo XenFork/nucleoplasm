@@ -1,0 +1,122 @@
+plugins {
+    id('java')
+    id("fabric-loom").version("1.2-SNAPSHOT").apply(false)
+}
+
+def mvn_local = "${System.getenv("HOMEDRIVE")}/${System.getenv("homepath")}/.m2/repository"
+
+setVersion(nucleoplasm_version)
+
+allprojects {
+    repositories {
+        maven { url 'https://www.jitpack.io' }
+        maven { url 'https://chinawaremc.github.io/maven-repo/' }
+        maven { url 'https://raw.githubusercontent.com/baka4n/mvn-repo/master/' }
+        mavenLocal()
+        mavenCentral()
+        maven { url = "https://cursemaven.com" }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://s01.oss.sonatype.org/content/repositories/releases' }
+        maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots' }
+        maven { url 'https://maven.fabricmc.net/' }
+    }
+}
+
+subprojects {
+    apply  plugin: 'maven-publish'
+    apply  plugin: 'signing'
+    apply plugin: "java"
+    for (final def p in no_fabric_projects.split(",")) {
+        if (!project.name.contains(p)) {
+            apply plugin: "fabric-loom"
+        }
+    }
+    setGroup(maven_group)
+}
+
+for (final def p in nucleoplasm_projects.split(",")) {
+    project("nucleoplasm-$p") {
+        setVersion("${findProperty("${"nucleoplasm-$p".replace('-', '_')}_version")}-${minecraft_version}")
+
+        def targetJavaVersion =
+                Integer.parseInt(String.valueOf((sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17)))
+
+        dependencies {
+            minecraft "com.mojang:minecraft:${minecraft_version}"
+            mappings "net.fabricmc:yarn:${yarn_mappings}:v2"
+            modImplementation "net.fabricmc:fabric-loader:${loader_version}"
+            modImplementation "net.fabricmc.fabric-api:fabric-api:${fabric_version}"
+        }
+
+        processResources {
+            inputs.property "version", getVersion()
+            inputs.property "minecraft_version", alpha_version
+            inputs.property "loader_version", loader_version
+            inputs.property "nucleoplasm_api_version", nucleoplasm_api_dependencies_version
+            filteringCharset charset
+            filesMatching("fabric.mod.json") {
+                expand "version": version,
+                        "minecraft_version": alpha_version,
+                        "loader_version": loader_version,
+                        "nucleoplasm_api_version":nucleoplasm_api_dependencies_version
+            }
+        }
+
+        tasks.withType(JavaCompile).configureEach {
+            // ensure that the encoding is set to UTF-8, no matter what the system default is
+            // this fixes some edge cases with special characters not displaying correctly
+            // see http://yodaconditions.net/blog/fix-for-java-file-encoding-problems-with-gradle.html
+            // If Javadoc is generated, this must be specified in that task too.
+            it.options.encoding = charset
+            if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+                it.options.getRelease().set(targetJavaVersion)
+            }
+        }
+
+        java {
+            def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+            if (JavaVersion.current() < javaVersion) {
+                toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+            }
+            archivesBaseName = project.name
+            // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
+            // if it is present.
+            // If you remove this line, sources will not be generated.
+            withSourcesJar()
+        }
+
+        javadoc {
+            failOnError = false
+            options.encoding charset
+            options.charSet charset
+            options.author true
+            options.locale 'en_US'
+            options.links "https://docs.oracle.com/en/java/javase/$sourceCompatibility/docs/api/"
+            options.windowTitle "$archivesBaseName $version Javadoc"
+        }
+
+        jar {
+            from("../../LICENSE") {
+                rename { "${it}_$archivesBaseName" }
+            }
+        }
+
+        publishing {
+            publications {
+                mavenJava(MavenPublication) {
+                    artifactId = project.name + "-fabric"
+                    from components.java
+                }
+            }
+            repositories {
+                maven {
+                    url "${file("../../../maven-repo")}"
+                }
+
+                maven {
+                    url "$mvn_local"
+                }
+            }
+        }
+    }
+}

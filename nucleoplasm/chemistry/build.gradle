@@ -1,0 +1,7 @@
+loom {
+    accessWidenerPath= file("src/main/resources/nucleoplasm-chemistry.accesswidener")
+}
+
+dependencies {
+
+}
