@@ -17,5 +17,9 @@ public class Main {
         IntStream.rangeClosed('a', 'z').forEach(i -> crt.create(String.valueOf((char) i)));
         IntStream.rangeClosed('A', 'Z').forEach(i -> crt.create(String.valueOf((char) i)));
         IntStream.rangeClosed(1, 9).forEach(i -> crt.create(String.valueOf(i)));
+        crt.createTNOAM();
+        crt.createAN();
+        crt.createNOA();
+        crt.createV();
     }
 }
