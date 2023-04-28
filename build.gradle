@@ -12,7 +12,7 @@ allprojects {
         maven { url 'https://www.jitpack.io' }
         maven { url 'https://chinawaremc.github.io/maven-repo/' }
         maven { url 'https://raw.githubusercontent.com/baka4n/mvn-repo/master/' }
-        mavenLocal()
+        maven { url "$mvn_local" }
         mavenCentral()
         maven { url = "https://cursemaven.com" }
         maven { url 'https://maven.aliyun.com/repository/central' }
