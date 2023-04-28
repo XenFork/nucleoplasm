@@ -73,14 +73,10 @@ for (final def p in nucleoplasm_projects.split(",")) {
         }
 
         java {
-            def javaVersion = JavaVersion.toVersion(targetJavaVersion)
-            if (JavaVersion.current() < javaVersion) {
+            if (JavaVersion.current() < JavaVersion.toVersion(targetJavaVersion))
                 toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
-            }
+
             archivesBaseName = project.name
-            // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-            // if it is present.
-            // If you remove this line, sources will not be generated.
             withSourcesJar()
         }
 
