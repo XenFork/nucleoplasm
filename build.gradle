@@ -2,18 +2,15 @@ plugins {
     id('java')
     id("fabric-loom").version("1.2-SNAPSHOT").apply(false)
 }
-
-def mvn_local = file("${System.getenv("HOMEDRIVE")}${System.getenv("homepath")}/.m2/repository")
-
 setVersion(nucleoplasm_version)
 
 allprojects {
     repositories {
+        mavenCentral()
+        mavenLocal()
         maven { url 'https://www.jitpack.io' }
         maven { url 'https://chinawaremc.github.io/maven-repo/' }
         maven { url 'https://raw.githubusercontent.com/baka4n/mvn-repo/master/' }
-        mavenCentral()
-        maven { url "$mvn_local" }
         maven { url = "https://cursemaven.com" }
         maven { url 'https://maven.aliyun.com/repository/central' }
         maven { url 'https://s01.oss.sonatype.org/content/repositories/releases' }
@@ -115,9 +112,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
                     url "${file("../../../maven-repo")}"
                 }
 
-                maven {
-                    url "$mvn_local"
-                }
+                mavenLocal()
             }
         }
     }
