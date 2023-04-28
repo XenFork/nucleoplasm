@@ -25,18 +25,20 @@ allprojects {
 subprojects {
     apply  plugin: 'maven-publish'
     apply  plugin: 'signing'
-    apply plugin: "java"
+
     for (final def p in no_fabric_projects.split(",")) {
         if (!project.name.contains(p)) {
             apply plugin: "fabric-loom"
+        } else {
+            apply plugin: "java"
         }
     }
     setGroup(maven_group)
 }
 
 for (final def p in nucleoplasm_projects.split(",")) {
-    project("nucleoplasm-$p") {
-        setVersion("${findProperty("${"nucleoplasm-$p".replace('-', '_')}_version")}-${minecraft_version}")
+    project("$base_name-$p") {
+        setVersion("${findProperty("${"$base_name-$p".replace('-', '_')}_version")}-${minecraft_version}")
 
         def targetJavaVersion =
                 Integer.parseInt(String.valueOf((sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17)))

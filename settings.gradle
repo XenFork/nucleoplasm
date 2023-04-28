@@ -11,10 +11,10 @@ pluginManagement {
     }
 }
 
-rootProject.name = 'nucleoplasm'
+rootProject.name = "$base_name"
 
 for (final def p in nucleoplasm_projects.split(",") ) {
-    def string = "nucleoplasm/$p"
+    def string = "$base_name/$p"
     include(string)
     project(":$string").name = string.replace('/', '-')
 }
