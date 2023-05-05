@@ -31,6 +31,10 @@ public class ItemEvents {
                 }
             });
 
+    public static void invoke(ItemStack stack, World world, Entity entity, int slot, boolean selected) {
+        INVENTORY_TICK_EVENT.invoker().inventoryTick(stack, world, entity, slot, selected);
+    }
+
     public static void inventoryTick(Item item, InventoryTick tick) {
         INVENTORY_TICK_EVENT.register((stack, world, entity, slot, selected) -> {
             if (stack.getItem().equals(item)) {

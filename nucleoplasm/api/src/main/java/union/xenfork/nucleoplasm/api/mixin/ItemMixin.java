@@ -8,6 +8,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import union.xenfork.nucleoplasm.api.event.ItemEvents;
 
 @Mixin(Item.class)
 public class ItemMixin {
@@ -20,6 +21,6 @@ public class ItemMixin {
             boolean selected,
             CallbackInfo ci
     ) {
-
+        ItemEvents.invoke(stack, world, entity, slot, selected);
     }
 }
