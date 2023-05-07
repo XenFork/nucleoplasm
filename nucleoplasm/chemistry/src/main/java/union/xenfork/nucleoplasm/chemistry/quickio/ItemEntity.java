@@ -42,7 +42,8 @@ public class ItemEntity extends IOEntity {
                 ref.count += ref.count * 10 + Integer.parseInt(String.valueOf(c));
             }
         });
-        ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of(Nucleoplasm.modid, ref.ch.toLowerCase(Locale.ROOT))))
+        ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of(Nucleoplasm.modid, ref.ch.toLowerCase(Locale.ROOT))));
+        stacks.add(new IItemStack(stack));
     }
 
 }
