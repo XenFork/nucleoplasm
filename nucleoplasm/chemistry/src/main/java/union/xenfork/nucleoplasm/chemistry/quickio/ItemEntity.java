@@ -10,11 +10,14 @@ import union.xenfork.nucleoplasm.api.quickio.minecraft.IItemStack;
 import union.xenfork.nucleoplasm.chemistry.Nucleoplasm;
 
 import java.util.Locale;
+import java.util.UUID;
 
 public class ItemEntity extends IOEntity {
     public String name;
+    public String uuid;
     public DefaultedList<IItemStack> stacks;
     public ItemEntity(String name) {
+        uuid = UUID.randomUUID().toString();
         stacks = DefaultedList.of();
         var ref = new Object() {
             public static String ch = "";
