@@ -109,7 +109,24 @@ for (final def p in nucleoplasm_projects.split(",")) {
                 }
 
                 mavenLocal()
+
+                maven {
+                    name = "OSSRH"
+                    credentials {
+                        username = project.findProperty("OSSRH_USERNAME") ?: "null"
+                        password = project.findProperty("OSSRH_PASSWORD") ?: "null"
+                    }
+                    url = version.endsWith('-SNAPSHOT')
+                            ? "https://s01.oss.sonatype.org/content/repositories/snapshots/"
+                            : "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
+                }
             }
         }
+
+        signing {
+            if (!version.endsWith('-SNAPSHOT') && Boolean.parseBoolean(System.getProperty("gpg.signing", "true")))
+                sign publishing.publications.mavenJava
+        }
+
     }
 }
