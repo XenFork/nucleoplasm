@@ -6,13 +6,10 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.collection.DefaultedList;
-import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 import union.xenfork.nucleoplasm.api.quickio.minecraft.IItemStack;
 import union.xenfork.nucleoplasm.chemistry.Nucleoplasm;
 
-import java.util.List;
 import java.util.Locale;
-import java.util.UUID;
 
 public class ItemEntity extends IOEntity {
     public String name;
@@ -20,9 +17,9 @@ public class ItemEntity extends IOEntity {
     public ItemEntity(String name) {
         stacks = DefaultedList.of();
         var ref = new Object() {
-            String ch = "";
-            int count = 0;
-            boolean b = false;
+            public static String ch = "";
+            public static int count = 0;
+            public static boolean b = false;
         };
         name.chars().forEach(value -> {
             char c = name.charAt(value);
@@ -44,6 +41,14 @@ public class ItemEntity extends IOEntity {
         });
         ItemStack stack = new ItemStack(Registries.ITEM.get(Identifier.of(Nucleoplasm.modid, ref.ch.toLowerCase(Locale.ROOT))));
         stacks.add(new IItemStack(stack));
+    }
+
+
+
+    public DefaultedList<ItemStack> get() {
+        DefaultedList<ItemStack> stacks1 = DefaultedList.of();
+        stacks1.addAll(stacks.stream().map(IItemStack::get).toList());
+        return stacks1;
     }
 
 }
