@@ -41,27 +41,53 @@ public class MixinRecipeManage {
             }
         }
         map.clear();
-        File[] files = recipes.toFile().listFiles();
-        if (files != null) {
-            for (File file : files) {
-                String namespace = file.getPath().substring(file.getPath().lastIndexOf("\\") + 2);
-//                String[] split = file.getPath().replace("\\", "/").split("/");
-//                String namespace = split[split.length - 1];
-                File[] files1 = file.listFiles();
-                if (files1 != null) {
-                    for (File listFile : files1) {
-                        String path = listFile.getPath().substring(file.getPath().lastIndexOf("\\") + 2).replace(".json", "").trim();
+        findFile(recipes.toFile(), "", map);
+//        File[] files = recipes.toFile().listFiles();
+//        if (files != null) {
+//            for (File file : files) {
+//                String namespace = file.getPath().substring(file.getPath().lastIndexOf(File.pathSeparatorChar) + 1);
+////                String[] split = file.getPath().replace("\\", "/").split("/");
+////                String namespace = split[split.length - 1];
+//                File[] files1 = file.listFiles();
+//                if (files1 != null) {
+//                    for (File listFile : files1) {
+//                        String path = listFile.getPath().substring(file.getPath().lastIndexOf(File.pathSeparatorChar) + 1).replace(".json", "").trim();
+////                        String[] split2 = listFile.getPath().replace("\\", "/").split("/");
+////                        String path = split2[split2.length - 1].replace(".json", "").trim();
+//                        try {
+//                            JsonReader jr = new JsonReader(new FileReader(listFile));
+//                            JsonElement parse = Streams.parse(jr);
+//                            map.put(Identifier.of(namespace, path), parse);
+//                        } catch (FileNotFoundException e) {
+//                            System.out.println(e.getMessage());
+//                        }
+//                    }
+//                }
+//            }
+//        }
+    }
+
+    public void findFile(File file, String namespace, Map<Identifier, JsonElement> map) {
+        String namespaceT = file.getPath().substring(file.getPath().lastIndexOf(File.pathSeparatorChar) + 1);
+        StringBuilder sb = new StringBuilder(namespace);
+        if (file.isDirectory()) {
+            sb.append("_").append(namespaceT);
+            File[] files = file.listFiles();
+            if (files != null) {
+                for (File listFile : files) {
+                    findFile(listFile, sb.toString(), map);
+                }
+            }
+        } else {
+            String path = file.getPath().substring(file.getPath().lastIndexOf(File.pathSeparatorChar) + 1).replace(".json", "").trim();
 //                        String[] split2 = listFile.getPath().replace("\\", "/").split("/");
 //                        String path = split2[split2.length - 1].replace(".json", "").trim();
-                        try {
-                            JsonReader jr = new JsonReader(new FileReader(listFile));
-                            JsonElement parse = Streams.parse(jr);
-                            map.put(Identifier.of(namespace, path), parse);
-                        } catch (FileNotFoundException e) {
-                            System.out.println(e.getMessage());
-                        }
-                    }
-                }
+            try {
+                JsonReader jr = new JsonReader(new FileReader(file));
+                JsonElement parse = Streams.parse(jr);
+                map.put(Identifier.of(sb.toString(), path), parse);
+            } catch (FileNotFoundException e) {
+                System.out.println(e.getMessage());
             }
         }
     }
