@@ -44,13 +44,15 @@ public class MixinRecipeManage {
         File[] files = recipes.toFile().listFiles();
         if (files != null) {
             for (File file : files) {
-                String[] split = file.getPath().replace("\\", "/").split("/");
-                String namespace = split[split.length - 1];
+                String namespace = file.getPath().substring(file.getPath().lastIndexOf("\\") + 2);
+//                String[] split = file.getPath().replace("\\", "/").split("/");
+//                String namespace = split[split.length - 1];
                 File[] files1 = file.listFiles();
                 if (files1 != null) {
                     for (File listFile : files1) {
-                        String[] split2 = listFile.getPath().replace("\\", "/").split("/");
-                        String path = split2[split2.length - 1].replace(".json", "").trim();
+                        String path = listFile.getPath().substring(file.getPath().lastIndexOf("\\") + 2).replace(".json", "").trim();
+//                        String[] split2 = listFile.getPath().replace("\\", "/").split("/");
+//                        String path = split2[split2.length - 1].replace(".json", "").trim();
                         try {
                             JsonReader jr = new JsonReader(new FileReader(listFile));
                             JsonElement parse = Streams.parse(jr);
