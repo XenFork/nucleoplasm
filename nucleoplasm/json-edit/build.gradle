@@ -1,4 +1,5 @@
 loom {
+    accessWidenerPath = file("src/main/resources/nucleoplasm_json_edit.accesswidener")
     runs {
         datagenClient {
             inherit client

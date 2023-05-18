@@ -1,0 +1,2 @@
+accessWidener       v2          named
+accessible          method      Lnet/minecraft/loot/LootManager         load        (Lnet/minecraft/loot/LootDataType;Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;

@@ -13,6 +13,7 @@
   "contact": {
     "repo": "https://github.com/XenFork/nucleoplasm"
   },
+  "accessWidener": "nucleoplasm_json_edit.accesswidener",
   "license": "MIT",
   "icon": "assets/nucleoplasm_json_edit/icon.png",
   "environment": "*",
