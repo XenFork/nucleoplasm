@@ -26,10 +26,10 @@ public class MixinRecipeManage {
         if (!recipes.toFile().exists()) recipes.toFile().mkdirs();
         for (var entry : map.entrySet()) {
             Path resolve = recipes.resolve(entry.getKey().getNamespace());
-            if (!resolve.toFile().exists()) {
-                resolve.toFile().mkdirs();
-                Path resolve1 = resolve.resolve(entry.getKey().getPath() + ".json");
-                File file = resolve1.toFile();
+            if (!resolve.toFile().exists()) resolve.toFile().mkdirs();
+            Path resolve1 = resolve.resolve(entry.getKey().getPath() + ".json");
+            File file = resolve1.toFile();
+            if (!file.exists()) {
                 try {
                     file.createNewFile();
                     BufferedWriter bw = new BufferedWriter(new FileWriter(file));
@@ -39,6 +39,7 @@ public class MixinRecipeManage {
                     System.out.println(e.getMessage());
                 }
             }
+
         }
         map.clear();
         findFile(recipes.toFile(), "", map);
