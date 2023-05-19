@@ -43,20 +43,20 @@ public class Nucleoplasm implements ModInitializer {
 
     }
 
-    public static void load(File file, StringBuilder namespace,Map<Identifier, File> iFile) {
-        File[] files = file.listFiles();
-        if (files != null) {
-            for (File file1 : files) {
-                if (file1.isDirectory()) {
-                    StringBuilder sb = new StringBuilder(namespace);
-                    String[] split = file1.getPath().split("\\\\");
-                    sb.append("_").append(split[split.length - 1]);
-                    load(file1, sb, iFile);
-                } else {
-                    String[] split = file1.getPath().split("\\\\");
-                    iFile.put(Identifier.of(namespace.toString(), split[split.length - 1].replace(".json", "")), file1);
-                }
-            }
-        }
-    }
+//    public static void load(File file, StringBuilder namespace,Map<Identifier, File> iFile) {
+//        File[] files = file.listFiles();
+//        if (files != null) {
+//            for (File file1 : files) {
+//                if (file1.isDirectory()) {
+//                    StringBuilder sb = new StringBuilder(namespace);
+//                    String[] split = file1.getPath().split("\\\\");
+//                    sb.append("_").append(split[split.length - 1]);
+//                    load(file1, sb, iFile);
+//                } else {
+//                    String[] split = file1.getPath().split("\\\\");
+//                    iFile.put(Identifier.of(namespace.toString(), split[split.length - 1].replace(".json", "")), file1);
+//                }
+//            }
+//        }
+//    }
 }

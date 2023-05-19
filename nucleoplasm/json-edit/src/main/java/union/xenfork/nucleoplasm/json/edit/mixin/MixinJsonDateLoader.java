@@ -5,14 +5,12 @@ import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
 import net.minecraft.resource.JsonDataLoader;
-import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
 
 import java.io.*;
@@ -23,8 +21,11 @@ import java.util.Map;
 @Mixin(JsonDataLoader.class)
 public class MixinJsonDateLoader {
 
+    private static final Map<Identifier, JsonElement> map = new HashMap<>();
+
     @Inject(method = "load", at = @At(value = "RETURN"))
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
+        map.clear();
         System.out.println(dataType);
         Path t = Nucleoplasm.dir.resolve(dataType);
         if (!t.toFile().exists()) {
@@ -59,6 +60,52 @@ public class MixinJsonDateLoader {
                 }
             });
         }
+        results.clear();
+        File[] files = t.toFile().listFiles();
+        if (files != null) {
+            for (File file : files) {
+                String parent = file.getParent();
+                String path = file.getPath();
+                String namespace = path
+                        .replace(parent, "")
+                        .replace(File.pathSeparator, "");
+                results.clear();
+                load(namespace, new StringBuilder(), file);
+            }
+        }
+        results.clear();
+        results.putAll(map);
+    }
 
+
+
+    private static void load(String namespace, StringBuilder path, File dir) {
+
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    String path1 = file
+                            .getPath()
+                            .replace(file.getParent(), "")
+                            .replace(File.pathSeparator, "");
+                    if (path.isEmpty()) {
+                        load(namespace, new StringBuilder(path).append(path1), file);
+                    } else {
+                        load(namespace, new StringBuilder(path).append("/").append(path1), file);
+                    }
+                } else {
+                    String path1 = file
+                            .getPath()
+                            .replace(file.getParent(), "")
+                            .replace(File.pathSeparator, "").replace(".json", "");
+                    try {
+                        JsonReader jr = new JsonReader(new FileReader(file));
+                        JsonElement paser = Streams.parse(jr);
+                        map.put(new Identifier(namespace, "%s/%s".formatted(path, path1)), paser);
+                    } catch (FileNotFoundException ignored) {}
+                }
+            }
+        }
     }
 }
