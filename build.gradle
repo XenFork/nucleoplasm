@@ -22,7 +22,6 @@ allprojects {
 subprojects {
     apply  plugin: 'maven-publish'
     apply  plugin: 'signing'
-
     for (final def p in no_fabric_projects.split(",")) {
         if (!project.name.contains(p)) {
             apply plugin: "fabric-loom"
