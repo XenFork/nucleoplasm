@@ -19,9 +19,9 @@ for (final def p in nucleoplasm_projects.split(",") ) {
     project(":$string").name = string.replace('/', '-')
 }
 
-for (final def p in no_fabric_projects.split(",")) {
-    include("draw_png")
-}
+//for (final def p in no_fabric_projects.split(",")) {
+//    include("draw_png")
+//}
 
 
 
