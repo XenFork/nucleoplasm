@@ -11,17 +11,15 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static java.util.Arrays.stream;
-
 public class ImgCrt {
     public final List<File> files = new ArrayList<>();
 
     public ImgCrt(File... files) {
-        this.files.addAll(Arrays.asList(files));
+        add(files);
     }
 
     public ImgCrt(Path... paths) {
-        files.addAll(stream(paths).map(Path::toFile).toList());
+        add(paths);
     }
 
     public void add(File... files) {
@@ -29,7 +27,7 @@ public class ImgCrt {
     }
 
     public void add(Path... paths) {
-        files.addAll(stream(paths).map(Path::toFile).toList());
+        files.addAll(Arrays.stream(paths).map(Path::toFile).toList());
     }
 
     public void create(String... messages) {
@@ -47,7 +45,6 @@ public class ImgCrt {
                 ig2.setPaint(Color.BLACK);
                 ig2.drawString(message, (width - stringWidth) / 2, height / 2 + stringHeight / 2 - height / 10);
                 try {
-
                     ImageIO.write(bi, "PNG", new File(items, message + ".png"));
                 } catch (IOException e) {
                     throw new RuntimeException(e);
@@ -61,37 +58,33 @@ public class ImgCrt {
      */
     public void createV() {
         IntStream.rangeClosed(1, 118).forEach(i -> {
-            create("v", 256, 256, i + "+", 25, 256-20-(14*((i + "+").length())), 30+20, Color.RED);
-            create("v", 256, 256, i + "-", 25, 256-20-(14*((i + "-").length())), 30+20, Color.RED);
-
+            create("v", 256, 256, i + "+", 25, 256 - 20 - (14 * ((i + "+").length())), 30 + 20, Color.RED);
+            create("v", 256, 256, i + "-", 25, 256 - 20 - (14 * ((i + "-").length())), 30 + 20, Color.RED);
         });
     }
 
     public void createNOA() {
-        IntStream.rangeClosed(1, 20).forEach(i -> {
-            create("noa", 256, 256, String.valueOf(i), 25, 256-20-(14*(String.valueOf(i).length())), 256-20-28, Color.RED);
-        });
+        IntStream.rangeClosed(1, 20).forEach(i ->
+            create("noa", 256, 256, String.valueOf(i), 25, 256 - 20 - (14 * (String.valueOf(i).length())), 256 - 20 - 28, Color.RED));
     }
 
     /**
      * @since 原子序数小标 atomic number
      */
     public void createAN() {
-        IntStream.rangeClosed(1, 118).forEach(i -> {
-            create("an", 256, 256, String.valueOf(i), 25, 30, 256-20-28, Color.MAGENTA);
-        });
+        IntStream.rangeClosed(1, 118).forEach(i ->
+            create("an", 256, 256, String.valueOf(i), 25, 30, 256 - 20 - 28, Color.MAGENTA));
     }
 
     /**
      * @since 原子质量数的小标 The number of atomic masses
      */
     public void createTNOAM() {
-        IntStream.rangeClosed(1, 294).forEach(i -> {
-            create("tnoam", 256, 256, String.valueOf(i), 25, 30, 30+20, Color.BLUE);
-        });
+        IntStream.rangeClosed(1, 294).forEach(i ->
+            create("tnoam", 256, 256, String.valueOf(i), 25, 30, 30 + 20, Color.BLUE));
     }
 
-    public void create(String filePath ,int width, int height, String message, int fontSize, int x, int y, Color color) {
+    public void create(String filePath, int width, int height, String message, int fontSize, int x, int y, Color color) {
         BufferedImage bi = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D ig2 = bi.createGraphics();
         Font font = new Font("Default", Font.BOLD, fontSize);
@@ -108,8 +101,8 @@ public class ImgCrt {
             ig2.drawString(message, x, y);
             try {
                 ImageIO.write(bi, "PNG", new File(file1, message + ".png"));
-            } catch (IOException ignored) {}
+            } catch (IOException ignored) {
+            }
         }
     }
-
 }
