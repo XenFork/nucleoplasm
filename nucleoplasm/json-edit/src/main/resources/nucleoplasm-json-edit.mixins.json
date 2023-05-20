@@ -4,7 +4,8 @@
   "package": "union.xenfork.nucleoplasm.json.edit.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "MixinRecipeManage"
+    "MixinLootManager",
+    "MixinRecipeManager"
   ],
   "client": [
   ],

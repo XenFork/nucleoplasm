@@ -1,17 +1,18 @@
 package union.xenfork.nucleoplasm.json.edit;
 
 import com.google.gson.JsonElement;
+import com.google.gson.internal.Streams;
+import com.google.gson.stream.JsonReader;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Nucleoplasm implements ModInitializer {
@@ -54,20 +55,45 @@ public class Nucleoplasm implements ModInitializer {
         });
     }
 
-//    public static void load(File file, StringBuilder namespace,Map<Identifier, File> iFile) {
-//        File[] files = file.listFiles();
-//        if (files != null) {
-//            for (File file1 : files) {
-//                if (file1.isDirectory()) {
-//                    StringBuilder sb = new StringBuilder(namespace);
-//                    String[] split = file1.getPath().split("\\\\");
-//                    sb.append("_").append(split[split.length - 1]);
-//                    load(file1, sb, iFile);
-//                } else {
-//                    String[] split = file1.getPath().split("\\\\");
-//                    iFile.put(Identifier.of(namespace.toString(), split[split.length - 1].replace(".json", "")), file1);
-//                }
-//            }
-//        }
-//    }
+    public static void loadRecipe(File file, StringBuilder namespace, StringBuilder path, Map<Identifier, File> iFile) {
+        File[] files = file.listFiles();
+        if (files != null && !Arrays.stream(files).toList().isEmpty()) {
+            for (File file1 : files) {
+                String replace = file
+                    .getPath()
+                    .replace("\\", "/")
+                    .replace(file1.getParent(), "")
+                    .replace("/", "");
+                if (file1.isDirectory()) {
+                    if (namespace == null) {
+                        namespace = new StringBuilder();
+                        namespace.append(replace);
+                    } else if (path == null) {
+                        path = new StringBuilder();
+                        path.append(replace);
+                    } else {
+                        path.append("_").append(replace);
+                    }
+                } else {
+                    if (namespace == null) namespace = new StringBuilder("null");
+                    if (path == null) path = new StringBuilder(replace.replace(".json", ""));
+                    else path.append("_").append(replace);
+                }
+
+            }
+        }
+    }
+
+    public static void parserRecipe(Map<Identifier, File> iFile, Map<Identifier, JsonElement> map) {
+        iFile.forEach((identifier, file) -> {
+            try {
+                JsonReader jr = new JsonReader(new FileReader(file));
+                JsonElement parse = Streams.parse(jr);
+                map.put(identifier, parse);
+            } catch (FileNotFoundException e) {
+                logger.error("Failed to read" + file, e);
+                System.out.println(e.getMessage());
+            }
+        });
+    }
 }

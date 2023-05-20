@@ -17,14 +17,13 @@ import java.util.Map;
 import static union.xenfork.nucleoplasm.json.edit.Nucleoplasm.*;
 
 @Mixin(RecipeManager.class)
-public class MixinRecipeManage {
+public class MixinRecipeManager {
     @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("HEAD"))
     private void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
         outputJson(map, recipe);
-
-//        map.clear();
-//        Map<Identifier, File> iFile = new HashMap<>();
-//        load(recipe.toFile(), new StringBuilder(), iFile);
-//        parser(map, iFile);
+        map.clear();
+        Map<Identifier, File> iFile = new HashMap<>();
+        loadRecipe(recipe.toFile(), null, null, iFile);
+        parserRecipe(iFile, map);
     }
 }
