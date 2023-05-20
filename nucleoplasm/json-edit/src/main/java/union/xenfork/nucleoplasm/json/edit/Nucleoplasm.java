@@ -45,10 +45,8 @@ public class Nucleoplasm implements ModInitializer {
             }
             Path path = namespace.resolve(id.getPath() + ".json");
             if (!Files.exists(path)) {
-                try {
-                    try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
-                        writer.write(json.toString());
-                    }
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
+                    writer.write(json.toString());
                 } catch (IOException e) {
                     logger.error("Failed to output json files", e);
                 }
