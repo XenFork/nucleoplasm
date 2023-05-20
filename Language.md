@@ -1,2 +1,0 @@
-- [简体中文](mds/README_szh.md)
-- [English(US)](README.md)

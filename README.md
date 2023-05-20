@@ -1,8 +1,6 @@
 # Nucleoplasm
 
-- [select language](Language.md)
-- [tutorial list]()
-- [no one sees the license](LICENSE)
+English (US) · [简体中文](README_szh.md)
 
 <h4>Welcome to the Nucleoplasm mod! We are committed to super science fiction.</h4>
 

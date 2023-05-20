@@ -1,8 +1,6 @@
 # Nucleoplasm
 
-- [选择语言](../Language.md)
-- [tutorial list]()
-- [no one sees the license](../LICENSE)
+[English (US)](README.md) · 简体中文
 
 <h4>欢迎使用核质模组！我们将致力于科幻的极致。</h4>
 

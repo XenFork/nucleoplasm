@@ -1,8 +1,9 @@
 plugins {
-    id('java')
-    id("fabric-loom").version("1.2-SNAPSHOT").apply(false)
+    id 'java'
+    id "fabric-loom" version "1.2-SNAPSHOT" apply false
 }
-setVersion(nucleoplasm_version)
+
+version = nucleoplasm_version
 
 allprojects {
     repositories {
@@ -20,8 +21,8 @@ allprojects {
 }
 
 subprojects {
-    apply  plugin: 'maven-publish'
-    apply  plugin: 'signing'
+    apply plugin: 'maven-publish'
+    apply plugin: 'signing'
 
     for (final def p in no_fabric_projects.split(",")) {
         if (!project.name.contains(p)) {
@@ -38,7 +39,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
         setVersion("${findProperty("${"$base_name-$p".replace('-', '_')}_version")}-${minecraft_version}")
 
         def targetJavaVersion =
-                Integer.parseInt(String.valueOf((sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17)))
+            Integer.parseInt(String.valueOf((sourceCompatibility = targetCompatibility = JavaVersion.VERSION_17)))
 
         dependencies {
             minecraft "com.mojang:minecraft:${minecraft_version}"
@@ -55,9 +56,9 @@ for (final def p in nucleoplasm_projects.split(",")) {
             filteringCharset charset
             filesMatching("fabric.mod.json") {
                 expand "version": version,
-                        "minecraft_version": alpha_version,
-                        "loader_version": loader_version,
-                        "nucleoplasm_api_version":nucleoplasm_api_dependencies_version
+                    "minecraft_version": alpha_version,
+                    "loader_version": loader_version,
+                    "nucleoplasm_api_version": nucleoplasm_api_dependencies_version
             }
         }
 
