@@ -23,7 +23,7 @@ public class MixinRecipeManager {
         outputJson(map, recipe);
         map.clear();
         Map<Identifier, File> iFile = new HashMap<>();
-        loadRecipe(recipe.toFile(), null, null, iFile);
-        parserRecipe(iFile, map);
+        load(recipe.toFile(), null, null, iFile, "_");
+        parser(iFile, map);
     }
 }
