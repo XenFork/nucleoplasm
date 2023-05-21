@@ -46,7 +46,7 @@ public abstract class MixinLootManager {
         return CompletableFuture.runAsync(() -> {
             Map<Identifier, JsonElement> map2 = new HashMap<>();
             JsonDataLoader.load(resourceManager, type.getId(), type.getGson(), map2);
-            Path t = Nucleoplasm.dir.resolve(type.getId());
+            Path t = Nucleoplasm.loot_table.resolve(type.getId());
             Nucleoplasm.outputJson(map2, t);
             Map<Identifier, File> iFile = new HashMap<>();
             Nucleoplasm.load(t.toFile(), null, null, iFile, "/");
