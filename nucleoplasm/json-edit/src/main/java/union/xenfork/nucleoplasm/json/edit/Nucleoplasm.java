@@ -30,43 +30,45 @@ public class Nucleoplasm implements ModInitializer {
         if (!Files.exists(defaultPath)) {
             try {
                 Files.createDirectories(defaultPath);
-                map.forEach((id, json) -> {
-                    Path namespace = defaultPath.resolve(id.getNamespace());
-                    if (!Files.exists(namespace)) {
-                        try {
-                            Files.createDirectory(namespace);
-                        } catch (IOException e) {
-                            logger.error("Failed to output json files", e);
-                            return;
-                        }
-                    }
-                    String p = id.getPath();
-                    Path path = namespace;
-                    if (p.contains("/")) {
-                        String[] split = p.split("/");
-                        for (int i = 0; i < split.length; i++)
-                            path = i == split.length - 1 ? path.resolve(split[i] + ".json") : path.resolve(split[i]);
-                    }
-                    if (!Files.exists(path.getParent())) {
-                        try {
-                            Files.createDirectories(path.getParent());
-                        } catch (IOException e) {
-                            logger.error("Failed to output json files", e);
-                            return;
-                        }
-                    }
-                    if (!Files.exists(path)) {
-                        try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
-                            writer.write(json.toString());
-                        } catch (IOException e) {
-                            logger.error("Failed to output json files", e);
-                        }
-                    }
-                });
             } catch (IOException e) {
                 logger.error("Failed to output json files", e);
             }
         }
+        map.forEach((id, json) -> {
+            Path namespace = defaultPath.resolve(id.getNamespace());
+            if (!Files.exists(namespace)) {
+                try {
+                    Files.createDirectory(namespace);
+                } catch (IOException e) {
+                    logger.error("Failed to output json files", e);
+                    return;
+                }
+            }
+            String p = id.getPath();
+            Path path = namespace;
+            if (p.contains("/")) {
+                String[] split = p.split("/");
+                for (int i = 0; i < split.length; i++)
+                    path = i == split.length - 1 ? path.resolve(split[i] + ".json") : path.resolve(split[i]);
+            } else {
+                path = path.resolve(p + ".json");
+            }
+            if (!Files.exists(path.getParent())) {
+                try {
+                    Files.createDirectories(path.getParent());
+                } catch (IOException e) {
+                    logger.error("Failed to output json files", e);
+                    return;
+                }
+            }
+            if (!Files.exists(path)) {
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(path.toFile()))) {
+                    writer.write(json.toString());
+                } catch (IOException e) {
+                    logger.error("Failed to output json files", e);
+                }
+            }
+        });
     }
 
     public static void load(File file, StringBuilder namespace, StringBuilder path, Map<Identifier, File> iFile, String splitStr) {
