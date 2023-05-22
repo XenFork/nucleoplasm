@@ -47,21 +47,14 @@ allprojects {
         maven { url 'https://s01.oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'https://maven.fabricmc.net/' }
     }
-
-
 }
 
 subprojects {
     apply plugin: 'maven-publish'
     apply plugin: 'signing'
 
-    for (final def p in no_fabric_projects.split(",")) {
-        if (!project.name.contains(p)) {
-            apply plugin: "fabric-loom"
-        } else {
-            apply plugin: "java"
-        }
-    }
+    for (final def p in no_fabric_projects.split(","))
+        apply plugin: "${!project.name.contains(p) ? "fabric-loom" : "java"}"
     setGroup(maven_group)
 }
 
