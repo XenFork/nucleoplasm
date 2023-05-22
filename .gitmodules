@@ -1,4 +1,1 @@
-[submodule "gradle"]
-	path = gradle
-	url = https://github.com/XenFork/gradle_wrapper_link.git
-	branch = fabric-gradle
+
