@@ -1,11 +1,13 @@
 package union.xenfork.nucleoplasm.json.edit.mixin;
 
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.loot.LootDataKey;
 import net.minecraft.loot.LootDataType;
 import net.minecraft.loot.LootManager;
 import net.minecraft.loot.LootTableReporter;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.resource.ResourceReloader;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.profiler.Profiler;
 import org.spongepowered.asm.mixin.Mixin;
