@@ -1,8 +1,37 @@
+import com.google.gson.Gson
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.code.gson:gson:2.10.1'
+    }
+}
+
 plugins {
     id('java')
     id("fabric-loom").version("1.2-SNAPSHOT").apply(false)
 }
 setVersion(nucleoplasm_version)
+
+ext {
+    def pre_url = "https://xenfork.github.io/all-project-version-selector/$base_name/"
+    def strings = "$base_name,fabric".split(",")
+    Gson gson = new Gson()
+
+    for (final def s in strings ) {
+        def url = new URL("$pre_url$s-version.json")
+        def reader = url.newReader()
+        Map json = gson.fromJson(reader, Map.class)
+        json.forEach {
+            k,v ->
+                set("$k", v)
+        }
+        reader.close()
+    }
+}
 
 allprojects {
     repositories {
