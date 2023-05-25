@@ -41,8 +41,8 @@ public class Nucleoplasm implements ModInitializer {
                     float yaw = entity.getYaw();
                     float pitch = player.getPitch();
                     System.out.printf("眼睛高低:%f", eyeHeight);
-                    System.out.printf("yaw: %f", yaw);
-                    System.out.printf("patch: %f", pitch);
+                    System.out.printf("左右向量: %f", yaw);
+                    System.out.printf("上下向量: %f", pitch);
                     System.out.println();
                 }
 
