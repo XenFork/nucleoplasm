@@ -34,6 +34,9 @@ dependencies {
 }
 ```
 
+## 下载授权
+baka4n (百科用户)
+
 ## nucleoplasm biology
 生物学实现中
 
