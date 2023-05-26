@@ -1,0 +1,20 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "#": {
+      "tag": "minecraft:planks"
+    },
+    "W": {
+      "tag": "minecraft:default_logs"
+    }
+  },
+  "pattern": [
+    "##",
+    "WW"
+  ],
+  "result": {
+    "item": "nucleoplasm_default:crafting_table"
+  },
+  "show_notification": false
+}
