@@ -15,25 +15,16 @@
 | nucleoplasm\-json\-edit   | 10% |
 | nucleoplasm\-nuclide      | 1%  |
 
-## nucleoplasm api
-内部兼容 quick-io数据库</br>
-内部兼容 snake-yaml</br>
-内部兼容 toml读写</br>
-#### 使用教学
-```groovy
-repositories {
-  maven { url 'https://chinawaremc.github.io/maven-repo/' }
-}
-dependencies {
-  modImplementation("io.github.xenfork:nucleoplasm-api-fabric:$nucleoplasm_api_dependencies_version-${minecraft_version}")
-  implementation("com.github.artbits:quickio:1.3.2")
-  implementation("com.moandjiezana.toml:toml4j:0.7.2")
-  implementation("org.yaml:snakeyaml:2.0")
-}
-```
-
 ## 下载授权
 baka4n (百科用户)
+
+## nucleoplasm json edit
+    这个模组旨在用 JSON 修改 Recipe<?> 类配方，属于魔改范畴。
+    这是核质模组的附属独立 Mod，不需要单独加入 API，目前只能在作者的 maven 库可以下载，之后会加入 mcmod 百科下载。
+    使用方法也很简单，初次生成的时候会在服务器目录或者 MC 目录生成 JSON 文件夹，JSON 文件夹会有一个 edit 文件夹，文件夹内的命名规则是：
+    包含模组名称的文件夹。 也可以是你自定义的英文名称
+    下级文件->英文名称的.json文件
+    目前不支持中文文件夹和中文名称。
 
 ## nucleoplasm biology
 生物学实现中

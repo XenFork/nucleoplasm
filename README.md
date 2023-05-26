@@ -15,22 +15,16 @@ English (US) · [简体中文](README_szh.md)
 | nucleoplasm\-json\-edit   | 10%          |
 | nucleoplasm\-nuclide      | 1%           |
 
-## nucleoplasm api
-internally compatible quick-io sql</br>
-internally compatible snake-yaml</br>
-internally toml read and write</br>
-#### 使用教学
-```groovy
-repositories {
-  maven { url 'https://chinawaremc.github.io/maven-repo/' }
-}
-dependencies {
-  modImplementation("io.github.xenfork:nucleoplasm-api-fabric:$nucleoplasm_api_dependencies_version-${minecraft_version}")
-  implementation("com.github.artbits:quickio:1.3.2")
-  implementation("com.moandjiezana.toml:toml4j:0.7.2")
-  implementation("org.yaml:snakeyaml:2.0")
-}
-```
+## nucleoplasm json edit
+    This mod aims to modify the Recipe<?> class recipe with JSON, which belongs to the category of magic modification.
+    This is an independent mod attached to the core mod. It does not need to be added to the API separately. Currently, it can only be downloaded from the author's maven repository, and will be downloaded from the mcmod encyclopedia later.
+    The method of use is also very simple. When it is first generated, a JSON folder will be generated in the server directory or MC directory. The JSON folder will have an edit folder. The naming rules in the folder are:
+    A folder containing the name of the mod. It can also be your custom English name
+    Subordinate file -> .json file with English name
+    Chinese folders and Chinese names are currently not supported.
+
+## nucleoplasm default
+default in progress
 
 ## nucleoplasm biology
 biology in progress
@@ -38,29 +32,8 @@ biology in progress
 ## nucleoplasm chemistry
 chemistry in progress
 
-## nucleoplasm colony
-Transplant mod of the Territory plugin
-
-## nucleoplasm command line
-Ported mod of permission group plugin
-
-## nucleoplasm deprecated
-Deprecated methods will be thrown into this
-
-## nucleoplasm describer
-Query the ported mod of the plug-in
-
-## nucleoplasm economy
-Ported mod of the economy plugin
-
-## nucleoplasm feature repair
-Bug fix tool, in development, original version or mod
-
 ## nucleoplasm interstellar
-Stargate plug-in re-engraving, along with interstellar mod
-
-## nucleoplasm normandy login
-Login plugin fork
+interstellar in progress
 
 ## nucleoplasm nuclide
 nuclide module core
