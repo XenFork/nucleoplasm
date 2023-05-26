@@ -25,7 +25,7 @@ public class Register {
         craftingTableBlock = Registry
             .register(
                 Registries.BLOCK,
-                Identifier.of(MODID, "crafting_table_block"),
+                Identifier.of(MODID, "crafting_table"),
                 new CraftTableBlock(AbstractBlock.Settings.create())
             );
         craftingTable = Registry
