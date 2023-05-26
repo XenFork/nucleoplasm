@@ -40,4 +40,5 @@ public class CraftTableBlock extends Block implements BlockEntityProvider {
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
         return new CraftTableBlockEntity(pos, state);
     }
+
 }
