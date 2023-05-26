@@ -1,8 +1,10 @@
 package union.xenfork.nucleoplasm.default_.machine;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CraftingTableBlock;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class CraftTableBlock extends Block {
+public class CraftTableBlock extends Block implements BlockEntityProvider {
     public CraftTableBlock(Settings settings) {
         super(settings);
 
@@ -31,5 +33,11 @@ public class CraftTableBlock extends Block {
     @Override
     public NamedScreenHandlerFactory createScreenHandlerFactory(BlockState state, World world, BlockPos pos) {
         return super.createScreenHandlerFactory(state, world, pos);
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new CraftTableBlockEntity(pos, state);
     }
 }
