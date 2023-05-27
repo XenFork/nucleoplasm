@@ -19,14 +19,17 @@ import static union.xenfork.nucleoplasm.json.edit.Nucleoplasm.*;
 
 @Mixin(RecipeManager.class)
 public class MixinRecipeManager {
-    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("RETURN"))
-    private void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
-        if (!Files.exists(recipe)) {
-            outputJson(map, recipe);
-        }
-        map.clear();
-        Map<Identifier, File> iFile = new HashMap<>();
-        load(recipe.toFile(), null, null, iFile, "_");
-        parser(iFile, map);
-    }
+//    @Inject(method = "apply(Ljava/util/Map;Lnet/minecraft/resource/ResourceManager;Lnet/minecraft/util/profiler/Profiler;)V", at = @At("RETURN"))
+//    private void apply(Map<Identifier, JsonElement> map, ResourceManager resourceManager, Profiler profiler, CallbackInfo ci) {
+//        map.forEach((id, __) -> {
+//            System.out.println(id);
+//        });
+//        if (!Files.exists(recipe)) {
+//            outputJson(map, recipe);
+//        }
+//        map.clear();
+//        Map<Identifier, File> iFile = new HashMap<>();
+//        load(recipe.toFile(), null, null, iFile, "_");
+//        parser(iFile, map);
+//    }
 }

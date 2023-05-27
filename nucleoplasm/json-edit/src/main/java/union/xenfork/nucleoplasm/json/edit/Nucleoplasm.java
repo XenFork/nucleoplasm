@@ -4,16 +4,26 @@ import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.api.ModContainer;
+import net.minecraft.resource.ResourceFinder;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Map;
+import java.util.stream.Stream;
 
 public class Nucleoplasm implements ModInitializer {
     public static final Logger logger = LoggerFactory.getLogger("nucleoplasm_json_edit");
@@ -23,6 +33,16 @@ public class Nucleoplasm implements ModInitializer {
 
     @Override
     public void onInitialize() {
+    }
+
+    public static void get(Path p) throws IOException {
+        if (Files.isDirectory(p)) {
+            Stream<Path> list = Files.list(p);
+            get(p);
+            list.close();
+        } else {
+            logger.info(String.valueOf(p));
+        }
     }
 
     public static void outputJson(Map<Identifier, JsonElement> map, Path defaultPath) {
