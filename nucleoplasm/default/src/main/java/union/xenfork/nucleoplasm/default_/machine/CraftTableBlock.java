@@ -3,14 +3,10 @@ package union.xenfork.nucleoplasm.default_.machine;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockEntityProvider;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.CraftingTableBlock;
 import net.minecraft.block.entity.BlockEntity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.recipe.ShapedRecipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.screen.NamedScreenHandlerFactory;
-import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.hit.BlockHitResult;
@@ -21,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 public class CraftTableBlock extends Block implements BlockEntityProvider {
     public CraftTableBlock(Settings settings) {
         super(settings);
-
     }
 
     @Override

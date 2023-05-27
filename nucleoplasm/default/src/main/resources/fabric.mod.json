@@ -9,6 +9,7 @@
     "repo": "https://github.com/baka4n/nucleoplasm_normandy_login"
   },
   "license": "MIT",
+  "accessWidener": "nucleoplasm-default.accesswidener",
   "icon": "assets/nucleoplasm_default/icon.png",
   "environment": "*",
   "entrypoints": {

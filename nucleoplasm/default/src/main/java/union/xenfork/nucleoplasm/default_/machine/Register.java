@@ -6,6 +6,8 @@ import net.minecraft.block.Block;
 import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
@@ -19,6 +21,7 @@ public class Register {
     public static final BlockItem craftingTable;
 
     public static final BlockEntityType<CraftTableBlockEntity> craftTableBlockEntity;
+
 
 
     static {
@@ -40,6 +43,14 @@ public class Register {
                 new Identifier(MODID, "crafting_table_entity"),
                 FabricBlockEntityTypeBuilder.create(CraftTableBlockEntity::new, craftingTableBlock).build()
             );
+    }
+
+    static <T extends Recipe<?>> RecipeType<T> register(final Identifier id) {
+        return Registry.register(Registries.RECIPE_TYPE, id, new RecipeType<T>() {
+            public String toString() {
+                return id.toString();
+            }
+        });
     }
 
 }
