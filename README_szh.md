@@ -6,14 +6,14 @@
 
 ## 该个分支包含的子模块
 
-| 项目                        | 完成度 |
+|            项目             | 完成度 |
 |:-------------------------:|:---:|
-| nucleoplasm\-biology      | 0%  |
-| nucleoplasm\-chemistry    | 2%  |
-| nucleoplasm\-default      | 1%  |
-| nucleoplasm\-interstellar | 0%  |
-| nucleoplasm\-json\-edit   | 10% |
-| nucleoplasm\-nuclide      | 1%  |
+|   nucleoplasm\-biology    | 1%  |
+|  nucleoplasm\-chemistry   | 2%  |
+|   nucleoplasm\-default    | 1%  |
+| nucleoplasm\-interstellar | 1%  |
+|  nucleoplasm\-json\-edit  | 10% |
+|   nucleoplasm\-nuclide    | 1%  |
 
 ## 下载授权
 baka4n (百科用户)
