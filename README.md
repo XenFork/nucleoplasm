@@ -6,14 +6,14 @@ English (US) · [简体中文](README_szh.md)
 
 ## The submodules contained in this branch
 
-| Project                   | Completeness |
+|          Project          | Completeness |
 |:-------------------------:|:------------:|
-| nucleoplasm\-biology      |      1%      |
-| nucleoplasm\-chemistry    |      2%      |
-| nucleoplasm\-default      |      1%      |
+|   nucleoplasm\-biology    |      1%      |
+|  nucleoplasm\-chemistry   |      2%      |
+|   nucleoplasm\-default    |      1%      |
 | nucleoplasm\-interstellar |      1%      |
-| nucleoplasm\-json\-edit   |     10%      |
-| nucleoplasm\-nuclide      |      1%      |
+|  nucleoplasm\-json\-edit  |     10%      |
+|   nucleoplasm\-nuclide    |      1%      |
 
 ## nucleoplasm json edit
     This mod aims to modify the Recipe<?> class recipe with JSON, which belongs to the category of magic modification.
