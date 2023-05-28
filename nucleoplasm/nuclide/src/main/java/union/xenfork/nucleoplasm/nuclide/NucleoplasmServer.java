@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.biology.server;
+package union.xenfork.nucleoplasm.nuclide;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 

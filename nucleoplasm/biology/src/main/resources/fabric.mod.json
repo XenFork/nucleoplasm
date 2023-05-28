@@ -18,10 +18,10 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.biology.server.NucleoplasmServer"
+      "union.xenfork.nucleoplasm.biology.NucleoplasmServer"
     ],
     "client": [
-      "union.xenfork.nucleoplasm.biology.client.NucleoplasmClient"
+      "union.xenfork.nucleoplasm.biology.NucleoplasmClient"
     ],
     "main": [
       "union.xenfork.nucleoplasm.biology.Nucleoplasm"

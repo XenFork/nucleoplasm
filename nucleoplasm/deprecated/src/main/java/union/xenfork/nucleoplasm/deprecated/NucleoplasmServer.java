@@ -2,7 +2,7 @@ package union.xenfork.nucleoplasm.deprecated;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 
-public class NucleoplasmServerDeprecated implements DedicatedServerModInitializer {
+public class NucleoplasmServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
 

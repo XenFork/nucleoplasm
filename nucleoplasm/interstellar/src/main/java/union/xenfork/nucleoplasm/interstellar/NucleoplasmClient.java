@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.biology.client;
+package union.xenfork.nucleoplasm.interstellar;
 
 import net.fabricmc.api.ClientModInitializer;
 

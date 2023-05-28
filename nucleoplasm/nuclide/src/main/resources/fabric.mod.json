@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "nucleoplasm_chemistry",
+  "id": "nucleoplasm_nuclide",
   "version": "${version}",
-  "name": "nucleoplasm_command_level",
+  "name": "nucleoplasm_nuclide",
   "description": "",
   "authors": [
     "XenFork Union",
@@ -14,22 +14,21 @@
     "repo": "https://github.com/XenFork/nucleoplasm"
   },
   "license": "MIT",
-  "icon": "assets/nucleoplasm_chemistry/icon.png",
+  "icon": "assets/nucleoplasm_nuclide/icon.png",
   "environment": "*",
-  "accessWidener": "nucleoplasm-chemistry.accesswidener",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.chemistry.NucleoplasmServer"
+      "union.xenfork.nucleoplasm.nuclide.NucleoplasmServer"
     ],
     "client": [
-      "union.xenfork.nucleoplasm.chemistry.NucleoplasmClient"
+      "union.xenfork.nucleoplasm.nuclide.NucleoplasmClient"
     ],
     "main": [
-      "union.xenfork.nucleoplasm.chemistry.Nucleoplasm"
+      "union.xenfork.nucleoplasm.nuclide.Nucleoplasm"
     ]
   },
   "mixins": [
-    "nucleoplasm-chemistry.mixins.json"
+    "nucleoplasm-nuclide.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

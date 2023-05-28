@@ -13,13 +13,13 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.deprecated.NucleoplasmServerDeprecated"
+      "union.xenfork.nucleoplasm.deprecated.NucleoplasmServer"
     ],
     "client": [
-      "union.xenfork.nucleoplasm.deprecated.NucleoplasmClientDeprecated"
+      "union.xenfork.nucleoplasm.deprecated.NucleoplasmClient"
     ],
     "main": [
-      "union.xenfork.nucleoplasm.deprecated.NucleoplasmDeprecated"
+      "union.xenfork.nucleoplasm.deprecated.Nucleoplasm"
     ]
   },
   "mixins": [

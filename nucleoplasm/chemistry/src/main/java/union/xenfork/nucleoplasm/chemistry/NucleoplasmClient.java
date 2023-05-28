@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.chemistry.client;
+package union.xenfork.nucleoplasm.chemistry;
 
 import net.fabricmc.api.ClientModInitializer;
 

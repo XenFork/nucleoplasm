@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.chemistry.server;
+package union.xenfork.nucleoplasm.interstellar;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 

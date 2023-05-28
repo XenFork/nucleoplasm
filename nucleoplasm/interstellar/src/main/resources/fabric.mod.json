@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "nucleoplasm_interstellar",
+  "version": "${version}",
+  "name": "nucleoplasm_interstellar",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": ""
+  },
+  "license": "MIT",
+  "icon": "assets/nucleoplasm_interstellar/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.interstellar.NucleoplasmServer"
+    ],
+    "client": [
+      "union.xenfork.nucleoplasm.interstellar.NucleoplasmClient"
+    ],
+    "main": [
+      "union.xenfork.nucleoplasm.interstellar.Nucleoplasm"
+    ]
+  },
+  "mixins": [
+    "nucleoplasm-nucleoplasm-interstellar.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
