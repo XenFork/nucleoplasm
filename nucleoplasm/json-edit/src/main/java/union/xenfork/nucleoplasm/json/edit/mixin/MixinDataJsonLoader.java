@@ -31,36 +31,39 @@ public class MixinDataJsonLoader {
     @Final
     private static Logger LOGGER;
 
-    @Shadow
-    @Final
-    private Gson gson;
-    private static final Map<String, Boolean> hasCreate = new HashMap<>();
+//    @Shadow
+//    @Final
+//    private Gson gson;
+//    private static final Map<String, Boolean> hasCreate = new HashMap<>();
 
 
 
-    private static void validate(String dataType) {
-        try(Stream<Path> list = Files.list(Nucleoplasm.dir)) {
-            List<Path> listList = list.toList();
-            for (Path path : listList)
-                try (Stream<Path> list1 = Files.list(path)) {
-                    List<Path> list1List = list1.toList();
-                    for (Path path1 : list1List)
-                        if (path1.toString().contains(dataType))
-                            hasCreate.put(dataType, true);
-                }
-        } catch (IOException e) {
-            LOGGER.error("fail to validate", e);
-        }
-
-    }
+//    private static void validate(String dataType) {
+//        try(Stream<Path> list = Files.list(Nucleoplasm.dir)) {
+//            List<Path> listList = list.toList();
+//            for (Path path : listList)
+//                try (Stream<Path> list1 = Files.list(path)) {
+//                    List<Path> list1List = list1.toList();
+//                    for (Path path1 : list1List)
+//                        if (path1.toString().contains(dataType))
+////                            hasCreate.put(dataType, true);
+//                }
+//        } catch (IOException e) {
+//            LOGGER.error("fail to validate", e);
+//        }
+//
+//    }
 
     @Inject(method = "load", at = @At("HEAD"), cancellable = true)
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
         ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
         System.out.println("--->" + dataType);
         Map<Identifier, Resource> resources = resourceFinder1.findResources(manager);
-        validate(dataType);
+//        validate(dataType);
         Path typePath = Nucleoplasm.dir.resolve(dataType);
+        resources.forEach((id, __) -> {
+            System.out.println(dataType + "-->" + id);
+        });
 
         if (!Files.exists(typePath)) {
             resources.forEach((id, resource) -> {
@@ -130,9 +133,6 @@ public class MixinDataJsonLoader {
                 } else {
                     String[] split = dataType.getParent().toString().replace("\\", "/").split("/");
                     Identifier identifier = new Identifier(split[split.length - 1],path1.toString().replace(dataType.toString(), "").replace("\\", "/").substring(1));
-                    if (dataType.toString().contains("loot_tables")) {
-                        System.out.println( dataType.toString().replace(dataType.getParent().toString(), "") + "-->" +identifier);
-                    }
                     Reader reader = Files.newBufferedReader(path1);
                     initReader(reader, gson, results, identifier);
                 }
