@@ -2,12 +2,9 @@ package union.xenfork.nucleoplasm.json.edit.mixin;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-import net.fabricmc.fabric.mixin.resource.conditions.SinglePreparationResourceReloaderMixin;
-import net.minecraft.loot.LootManager;
 import net.minecraft.resource.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.JsonHelper;
-import net.minecraft.util.profiler.Profiler;
 import org.slf4j.Logger;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,26 +26,10 @@ import java.util.Map;
 import java.util.stream.Stream;
 
 @Mixin(JsonDataLoader.class)
-public class MixinDataJsonLoader extends MixinSinglePreparationResourceReloader {
+public class MixinDataJsonLoader {
     @Shadow
     @Final
     private static Logger LOGGER;
-    @Shadow
-    @Final
-    private String dataType;
-    @Shadow
-    @Final
-    private Gson gson;
-
-    @SuppressWarnings("unchecked")
-    @Override
-    protected void nucleoplasm_synchronizer_lambda(ResourceManager resourceManager, Profiler profiler, Object prepared) {
-        profiler.push("Fabric resource conditions: %s".formatted(dataType));
-        Map<Identifier, JsonElement> prepared1 = (Map<Identifier, JsonElement>) prepared;
-        prepared1.forEach((id, json) -> {
-            System.out.println(id);
-        });
-    }
 
     private static final Map<String, Boolean> hasCreate = new HashMap<>();
 
@@ -73,27 +54,21 @@ public class MixinDataJsonLoader extends MixinSinglePreparationResourceReloader 
     @Inject(method = "load", at = @At("HEAD"), cancellable = true)
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
         ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
+        System.out.println("--->" + dataType);
         Map<Identifier, Resource> resources = resourceFinder1.findResources(manager);
         validate(dataType);
-        resources.forEach((id, __) -> LOGGER.error(id + __.toString()));
-        LOGGER.info("success");
-        LOGGER.info("success");
-        LOGGER.info("success");
+        Path typePath = Nucleoplasm.dir.resolve(dataType);
 
-        if (!hasCreate.containsKey(dataType)) {
+        if (!Files.exists(typePath)) {
             resources.forEach((id, resource) -> {
-                Path namespacePath = Nucleoplasm.dir.resolve(id.getNamespace());
+                Path namespacePath = typePath.resolve(id.getNamespace());
                 Path pathPath = namespacePath.resolve(id.getPath());
                 Path parent = pathPath.getParent();
                 try {
                     Files.createDirectories(namespacePath);
-                } catch (IOException e) {LOGGER.error("fail to load files", e);}
-                try {
                     Files.createDirectories(parent);
-                } catch (IOException e) {LOGGER.error("fail to load", e);}
-                try {
                     Files.createFile(pathPath);
-                } catch (IOException e) {LOGGER.error("fail to load", e);}
+                } catch (IOException e) {LOGGER.error("fail to load files", e);}
                 try {
                     BufferedReader reader = resource.getReader();
                     StringBuilder sb = new StringBuilder();
@@ -103,38 +78,29 @@ public class MixinDataJsonLoader extends MixinSinglePreparationResourceReloader 
                     }
                 } catch (IOException e) {LOGGER.error("error to read", e);}
             });
-            hasCreate.put(dataType, true);
-
         }
-        try(Stream<Path> list = Files.list(Nucleoplasm.dir)) {
+        try(Stream<Path> list = Files.list(typePath)) {
             List<Path> listList = list.toList();
             for (Path path : listList) {
                 try(Stream<Path> list1 = Files.list(path)) {
                     List<Path> list1List = list1.toList();
                     for (Path path1 : list1List) {
-                        if (path1.toString().contains(dataType)) {
-                            if (dataType.contains("recipes")) {
-                                initRecipe(path1, path1, gson, results);
-                            }
-                        }
+                        init(path1, path1, gson, results);
                     }
                 }
             }
         } catch (IOException e) {
             LOGGER.error("fail to init");
         }
-        if (dataType.contains("recipes")) {
-            ci.cancel();
-        }
-
+        ci.cancel();
     }
 
-    private static void initRecipe(Path dataType, Path path, Gson gson, Map<Identifier, JsonElement> results) {
+    private static void init(Path dataType, Path path, Gson gson, Map<Identifier, JsonElement> results) {
         try(Stream<Path> list = Files.list(path)) {
             List<Path> listList = list.toList();
             for (Path path1 : listList) {
                 if (Files.isDirectory(path1)) {
-                    initRecipe(dataType, path1, gson, results);
+                    init(dataType, path1, gson, results);
                 } else {
                     String[] split = dataType.getParent().toString().replace("\\", "/").split("/");
                     Identifier identifier = new Identifier(split[split.length - 1],path1.toString().replace(dataType.toString(), "").replace("\\", "/").substring(1));

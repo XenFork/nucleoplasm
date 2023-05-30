@@ -14,6 +14,7 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import union.xenfork.nucleoplasm.json.edit.properties.NucleoplasmProperties;
 
 import java.io.*;
 import java.net.URISyntaxException;
@@ -23,11 +24,13 @@ import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Properties;
 import java.util.stream.Stream;
 
 public class Nucleoplasm implements ModInitializer {
     public static final Logger logger = LoggerFactory.getLogger("nucleoplasm_json_edit");
     public static final Path dir = FabricLoader.getInstance().getGameDir().resolve("json");
+    public static final Path test_dir = FabricLoader.getInstance().getGameDir().resolve("test_json");
     public static final Path recipe = dir.resolve("recipes");
     public static final Path loot_table = dir.resolve("loot_table");
 
