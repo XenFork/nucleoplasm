@@ -31,6 +31,9 @@ public class MixinDataJsonLoader {
     @Final
     private static Logger LOGGER;
 
+    @Shadow
+    @Final
+    private Gson gson;
     private static final Map<String, Boolean> hasCreate = new HashMap<>();
 
 
@@ -79,6 +82,7 @@ public class MixinDataJsonLoader {
                 } catch (IOException e) {LOGGER.error("error to read", e);}
             });
         }
+
         try(Stream<Path> list = Files.list(typePath)) {
             List<Path> listList = list.toList();
             for (Path path : listList) {
@@ -95,6 +99,28 @@ public class MixinDataJsonLoader {
         ci.cancel();
     }
 
+    private static void initReader(Reader reader, Gson gson, Map<Identifier, JsonElement> results, Identifier identifier2) throws IOException {
+        try {
+            JsonElement jsonElement = JsonHelper.deserialize(gson, reader, JsonElement.class);
+            JsonElement jsonElement2 = results.put(identifier2, jsonElement);
+            if (jsonElement2 != null) {
+                throw new IllegalStateException("Duplicate data file ignored with ID " + identifier2);
+            }
+        } catch (Throwable var13) {
+            if (reader != null) {
+                try {
+                    reader.close();
+                } catch (Throwable var12) {
+                    var13.addSuppressed(var12);
+                }
+            }
+
+            throw var13;
+        }
+
+        reader.close();
+    }
+
     private static void init(Path dataType, Path path, Gson gson, Map<Identifier, JsonElement> results) {
         try(Stream<Path> list = Files.list(path)) {
             List<Path> listList = list.toList();
@@ -105,15 +131,10 @@ public class MixinDataJsonLoader {
                     String[] split = dataType.getParent().toString().replace("\\", "/").split("/");
                     Identifier identifier = new Identifier(split[split.length - 1],path1.toString().replace(dataType.toString(), "").replace("\\", "/").substring(1));
                     if (dataType.toString().contains("loot_tables")) {
-                        System.out.println(identifier);
+                        System.out.println( dataType.toString().replace(dataType.getParent().toString(), "") + "-->" +identifier);
                     }
-                    try (Reader reader = Files.newBufferedReader(path1)) {
-                        JsonElement deserialize = JsonHelper.deserialize(gson, reader, JsonElement.class);
-                        JsonElement put = results.put(identifier, deserialize);
-                        if (put != null) {
-                            throw new IllegalStateException("Duplicate data file ignored with ID " + put);
-                        }
-                    }
+                    Reader reader = Files.newBufferedReader(path1);
+                    initReader(reader, gson, results, identifier);
                 }
             }
         } catch (IOException e) {
