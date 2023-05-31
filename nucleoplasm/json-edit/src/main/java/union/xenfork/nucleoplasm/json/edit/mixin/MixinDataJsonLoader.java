@@ -56,50 +56,50 @@ public class MixinDataJsonLoader {
 
     @Inject(method = "load", at = @At("HEAD"), cancellable = true)
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
-        ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
-        System.out.println("--->" + dataType);
-        Map<Identifier, Resource> resources = resourceFinder1.findResources(manager);
-//        validate(dataType);
-        Path typePath = Nucleoplasm.dir.resolve(dataType);
-        resources.forEach((id, __) -> {
-            System.out.println(dataType + "-->" + id);
-        });
-
-        if (!Files.exists(typePath)) {
-            resources.forEach((id, resource) -> {
-                Path namespacePath = typePath.resolve(id.getNamespace());
-                Path pathPath = namespacePath.resolve(id.getPath());
-                Path parent = pathPath.getParent();
-                try {
-                    Files.createDirectories(namespacePath);
-                    Files.createDirectories(parent);
-                    Files.createFile(pathPath);
-                } catch (IOException e) {LOGGER.error("fail to load files", e);}
-                try {
-                    BufferedReader reader = resource.getReader();
-                    StringBuilder sb = new StringBuilder();
-                    reader.lines().forEach(str -> sb.append(str).append("\n"));
-                    try (BufferedWriter br = Files.newBufferedWriter(pathPath)) {
-                        br.write(sb.toString());
-                    }
-                } catch (IOException e) {LOGGER.error("error to read", e);}
-            });
-        }
-
-        try(Stream<Path> list = Files.list(typePath)) {
-            List<Path> listList = list.toList();
-            for (Path path : listList) {
-                try(Stream<Path> list1 = Files.list(path)) {
-                    List<Path> list1List = list1.toList();
-                    for (Path path1 : list1List) {
-                        init(path1, path1, gson, results);
-                    }
-                }
-            }
-        } catch (IOException e) {
-            LOGGER.error("fail to init");
-        }
-        ci.cancel();
+//        ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
+//        System.out.println("--->" + dataType);
+//        Map<Identifier, Resource> resources = resourceFinder1.findResources(manager);
+////        validate(dataType);
+//        Path typePath = Nucleoplasm.dir.resolve(dataType);
+//        resources.forEach((id, __) -> {
+//            System.out.println(dataType + "-->" + id);
+//        });
+//
+//        if (!Files.exists(typePath)) {
+//            resources.forEach((id, resource) -> {
+//                Path namespacePath = typePath.resolve(id.getNamespace());
+//                Path pathPath = namespacePath.resolve(id.getPath());
+//                Path parent = pathPath.getParent();
+//                try {
+//                    Files.createDirectories(namespacePath);
+//                    Files.createDirectories(parent);
+//                    Files.createFile(pathPath);
+//                } catch (IOException e) {LOGGER.error("fail to load files", e);}
+//                try {
+//                    BufferedReader reader = resource.getReader();
+//                    StringBuilder sb = new StringBuilder();
+//                    reader.lines().forEach(str -> sb.append(str).append("\n"));
+//                    try (BufferedWriter br = Files.newBufferedWriter(pathPath)) {
+//                        br.write(sb.toString());
+//                    }
+//                } catch (IOException e) {LOGGER.error("error to read", e);}
+//            });
+//        }
+//
+//        try(Stream<Path> list = Files.list(typePath)) {
+//            List<Path> listList = list.toList();
+//            for (Path path : listList) {
+//                try(Stream<Path> list1 = Files.list(path)) {
+//                    List<Path> list1List = list1.toList();
+//                    for (Path path1 : list1List) {
+//                        init(path1, path1, gson, results);
+//                    }
+//                }
+//            }
+//        } catch (IOException e) {
+//            LOGGER.error("fail to init");
+//        }
+//        ci.cancel();
     }
 
     private static void initReader(Reader reader, Gson gson, Map<Identifier, JsonElement> results, Identifier identifier2) throws IOException {
