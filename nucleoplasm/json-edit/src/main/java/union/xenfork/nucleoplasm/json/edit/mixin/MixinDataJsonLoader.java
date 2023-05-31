@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
 
 import java.io.BufferedReader;
@@ -54,9 +55,31 @@ public class MixinDataJsonLoader {
 //
 //    }
 
-    @Inject(method = "load", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "load", at = @At(value = "RETURN"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
-//        ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
+        ResourceFinder finder = ResourceFinder.json(dataType);
+        Map<Identifier, Resource> resources = finder.findResources(manager);
+
+        String s = Nucleoplasm.config.get("isLoader");
+        if (s.equals("false")) {
+            resources.forEach((id, resource) -> {
+                Path resolve = Nucleoplasm.dir.resolve(id.getNamespace()).resolve(id.getPath());
+                Path parent = resolve.getParent();
+                if (!Files.exists(parent)) try {
+                    Files.createDirectories(parent);
+                } catch (IOException e) {
+                    LOGGER.error("fail to create {}", parent);
+                }
+                try {
+                    Files.copy(resource.getInputStream(), resolve);
+                } catch (IOException e) {
+                    LOGGER.error("fail to copy {}", resolve);
+                }
+            });
+        }
+
+
+        //        ResourceFinder resourceFinder1 = ResourceFinder.json(dataType);
 //        System.out.println("--->" + dataType);
 //        Map<Identifier, Resource> resources = resourceFinder1.findResources(manager);
 ////        validate(dataType);

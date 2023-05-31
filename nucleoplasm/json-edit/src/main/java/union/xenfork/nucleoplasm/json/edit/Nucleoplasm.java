@@ -4,30 +4,32 @@ import com.google.gson.JsonElement;
 import com.google.gson.internal.Streams;
 import com.google.gson.stream.JsonReader;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.fabric.impl.resource.loader.ResourceManagerHelperImpl;
+import net.fabricmc.fabric.api.event.registry.FabricRegistryBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
-import net.minecraft.loot.LootDataType;
-import net.minecraft.resource.ResourceFinder;
-import net.minecraft.resource.ResourceManager;
+import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.fabricmc.loader.impl.ModContainerImpl;
+import net.minecraft.loot.LootManager;
+import net.minecraft.recipe.Recipe;
+import net.minecraft.recipe.RecipeType;
+import net.minecraft.registry.*;
+import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.resource.ResourcePackManager;
+import net.minecraft.server.Main;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import union.xenfork.nucleoplasm.json.edit.properties.NucleoplasmProperties;
 
 import java.io.*;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Properties;
 import java.util.stream.Stream;
 
 public class Nucleoplasm implements ModInitializer {
@@ -36,13 +38,35 @@ public class Nucleoplasm implements ModInitializer {
     public static final Path test_dir = FabricLoader.getInstance().getGameDir().resolve("test_json");
     public static final Path recipe = dir.resolve("recipes");
     public static final Path loot_table = dir.resolve("loot_table");
+    public static NJEConfigs config;
 
     @Override
     public void onInitialize() {
-        ServerLifecycleEvents.START_DATA_PACK_RELOAD.register((server, resourceManager) -> {
-            Collection<Identifier> ids = server.getLootManager().getIds(LootDataType.LOOT_TABLES);
-            for (Identifier id : ids) {
-
+        config = new NJEConfigs("nucleoplasm/njs/config.json");
+        try {
+            config.create();
+        } catch (IOException e) {
+            logger.error("fail to create", e);
+        }
+        ServerTickEvents.START_SERVER_TICK.register(server -> {
+            try {
+                config.load();
+            } catch (IOException e) {
+                logger.error("error load", e);
+            }
+        });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            try {
+                config.save();
+            } catch (IOException e) {
+                logger.error("don't save this config");
+            }
+        });
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            try {
+                config.save();
+            } catch (IOException e) {
+                logger.error("don't save this config");
             }
         });
     }
