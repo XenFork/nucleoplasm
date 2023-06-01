@@ -4,14 +4,11 @@
   "package": "union.xenfork.nucleoplasm.api.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "BlockEntityMixin",
-    "ChestBlockEntityMixin",
-    "ItemEntityMixin",
-    "ItemMixin",
-    "LockableContainerBlockEntityMixin",
-    "PlayerInventoryMixin",
-    "PlayerManagerMixin",
-    "ServerPlayerEntityMixin"
+    "item.ItemEntityMixin",
+    "item.ItemMixin",
+    "player.PlayerInventoryMixin",
+    "player.PlayerManagerMixin",
+    "player.ServerPlayerEntityMixin"
   ],
   "injectors": {
     "defaultRequire": 1

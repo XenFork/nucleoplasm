@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.api.mixin;
+package union.xenfork.nucleoplasm.api.mixin.item;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
