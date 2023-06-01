@@ -6,7 +6,6 @@
   "mixins": [
     "ItemEntityMixin",
     "ItemMixin",
-    "MixinDefaultList",
     "PlayerManagerMixin",
     "ServerPlayerEntityMixin"
   ],
