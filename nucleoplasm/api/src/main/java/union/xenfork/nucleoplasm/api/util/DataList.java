@@ -2,11 +2,11 @@ package union.xenfork.nucleoplasm.api.util;
 
 import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
-import com.github.artbits.quickio.core.IOEntity;
 import com.github.artbits.quickio.core.QuickIO;
-import net.minecraft.util.collection.DefaultedList;
+import net.minecraft.item.ItemStack;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.Nullable;
+import union.xenfork.nucleoplasm.api.quickio.minecraft.item.IItemStack;
 import union.xenfork.nucleoplasm.api.quickio.utils.ListEntity;
 
 import java.util.AbstractList;
@@ -74,6 +74,10 @@ public class DataList<E extends ListEntity> extends AbstractList<E> {
     @Override
     public int size() {
         return size;
+    }
+
+    public List<E> getAll() {
+        return collection.findAll();
     }
 
     @Override
