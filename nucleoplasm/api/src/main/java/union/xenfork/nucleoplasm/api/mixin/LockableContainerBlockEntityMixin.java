@@ -15,12 +15,25 @@ public class LockableContainerBlockEntityMixin extends BlockEntityMixin {
 
     @Shadow @Nullable private Text customName;
 
+    /**
+     * @author baka4n
+     * @reason extends
+     */
     @Overwrite
     public void readNbt(NbtCompound nbt) {
         super.readNbt(nbt);
         lock = ContainerLock.fromNbt(nbt);
         if (nbt.contains("CustomName", 8)) {
             customName = Text.Serializer.fromJson(nbt.getString("CustomName"));
+        }
+
+    }
+
+    protected void writeNbt(NbtCompound nbt) {
+        super.writeNbt(nbt);
+        this.lock.writeNbt(nbt);
+        if (this.customName != null) {
+            nbt.putString("CustomName", Text.Serializer.toJson(this.customName));
         }
 
     }

@@ -32,6 +32,7 @@ public class ChestBlockEntityMixin extends LockableContainerBlockEntityMixin {
 
     public ChestBlockEntityMixin() {
         inventory = new DataList<>("chest_"+((ChestBlockEntity)(Object)this).getPos(), IItemStack.class, size(), new IItemStack(ItemStack.EMPTY));
+        inventory.clear();
     }
 
     @Inject(
@@ -72,7 +73,7 @@ public class ChestBlockEntityMixin extends LockableContainerBlockEntityMixin {
             NbtCompound nbtCompound = nbtList.getCompound(i);
             int j = nbtCompound.getByte("Slot") & 255;
             if (j < stacks.size()) {
-                stacks.set(j, new IItemStack(ItemStack.fromNbt(nbtCompound)));
+                stacks.set(new IItemStack(ItemStack.fromNbt(nbtCompound), j));
             }
         }
 
@@ -80,9 +81,56 @@ public class ChestBlockEntityMixin extends LockableContainerBlockEntityMixin {
 
     protected void writeNbt(NbtCompound nbt) {
         super.writeNbt(nbt);
-        if (!this.serializeLootTable(nbt)) {
-            Inventories.writeNbt(nbt, this.inventory);
+        if (!((ChestBlockEntity)(Object)this).serializeLootTable(nbt)) {
+            writeNbt(nbt, this.inventory);
+        }
+    }
+
+    /**
+     * @author baka4n
+     * @reason get
+     */
+    @Overwrite
+    protected DefaultedList<ItemStack> getInvStackList() {
+        DefaultedList<ItemStack> stacks = DefaultedList.ofSize(inventory.size(), ItemStack.EMPTY);
+        for (int i = 0; i < this.inventory.size(); i++) {
+            stacks.set(i, this.inventory.get(i).get());
+        }
+        return stacks;
+    }
+
+    /**
+     * @author baka4n
+     * @reason set
+     */
+    @Overwrite
+    protected void setInvStackList(DefaultedList<ItemStack> list) {
+        for (int i = 0; i < list.size(); i++) {
+            this.inventory.set(new IItemStack(list.get(i), i));
+        }
+    }
+
+    private static NbtCompound writeNbt(NbtCompound nbt, DataList<IItemStack> stacks) {
+        return writeNbt(nbt, stacks, true);
+    }
+
+    private static NbtCompound writeNbt(NbtCompound nbt, DataList<IItemStack> stacks, boolean setIfEmpty) {
+        NbtList nbtList = new NbtList();
+
+        for(int i = 0; i < stacks.size(); ++i) {
+            ItemStack itemStack = stacks.get(i).get();
+            if (!itemStack.isEmpty()) {
+                NbtCompound nbtCompound = new NbtCompound();
+                nbtCompound.putByte("Slot", (byte)i);
+                itemStack.writeNbt(nbtCompound);
+                nbtList.add(nbtCompound);
+            }
         }
 
+        if (!nbtList.isEmpty() || setIfEmpty) {
+            nbt.put("Items", nbtList);
+        }
+
+        return nbt;
     }
 }
