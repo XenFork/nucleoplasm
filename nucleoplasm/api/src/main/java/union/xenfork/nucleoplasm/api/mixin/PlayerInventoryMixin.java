@@ -6,19 +6,14 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.inventory.Inventories;
-import net.minecraft.inventory.Inventory;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
-import net.minecraft.network.packet.s2c.play.ScreenHandlerSlotUpdateS2CPacket;
 import net.minecraft.recipe.RecipeMatcher;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.collection.DefaultedList;
 import net.minecraft.util.crash.CrashException;
 import net.minecraft.util.crash.CrashReport;
 import net.minecraft.util.crash.CrashReportSection;
@@ -29,13 +24,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import union.xenfork.nucleoplasm.api.quickio.minecraft.item.IItem;
 import union.xenfork.nucleoplasm.api.quickio.minecraft.item.IItemStack;
 import union.xenfork.nucleoplasm.api.util.DataList;
 
-import java.util.Iterator;
 import java.util.List;
-import java.util.function.Predicate;
 
 @Mixin(PlayerInventory.class)
 public class PlayerInventoryMixin {
@@ -59,6 +51,7 @@ public class PlayerInventoryMixin {
         new PlayerInventoryMixin();
     }
 
+    @SuppressWarnings("unused")
     public List<DataList<IItemStack>> getCombinedInventory() {
         return combinedInventory;
     }
@@ -251,6 +244,7 @@ public class PlayerInventoryMixin {
      * @author baka4n
      * @reason rewrite to sql
      */
+    @SuppressWarnings("DataFlowIssue")
     @Overwrite
     private int addStack(int slot, ItemStack stack) {
         Item item = stack.getItem();
@@ -271,14 +265,12 @@ public class PlayerInventoryMixin {
             j = ((PlayerInventory)(Object)this).getMaxCountPerStack() - itemStack.getCount();
         }
 
-        if (j == 0) {
-            return i;
-        } else {
+        if (j != 0) {
             i -= j;
             itemStack.increment(j);
             itemStack.setBobbingAnimationTime(5);
-            return i;
         }
+        return i;
     }
 
     /**
@@ -402,17 +394,13 @@ public class PlayerInventoryMixin {
      */
     @Overwrite
     public void removeOne(ItemStack stack) {
-
-        while (true) {
-            for (DataList<IItemStack> dataList : this.combinedInventory) {
-                for (int i = 0; i < dataList.size(); ++i) {
-                    if (dataList.get(i).get() == stack) {
-                        dataList.set(new IItemStack(ItemStack.EMPTY, i));
-                        break;
-                    }
+        for (DataList<IItemStack> dataList : this.combinedInventory) {
+            for (int i = 0; i < dataList.size(); ++i) {
+                if (dataList.get(i).get() == stack) {
+                    dataList.set(new IItemStack(ItemStack.EMPTY, i));
+                    break;
                 }
             }
-            break;
         }
     }
 
@@ -595,6 +583,7 @@ public class PlayerInventoryMixin {
      * @author baka4n
      * @reason rewrite to sql
      */
+    @SuppressWarnings("UnnecessaryLocalVariable")
     @Overwrite
     public void damageArmor(DamageSource damageSource, float amount, int[] slots) {
         if (!(amount <= 0.0F)) {
@@ -642,14 +631,10 @@ public class PlayerInventoryMixin {
      */
     @Overwrite
     public boolean contains(ItemStack stack) {
-        var var2 = this.combinedInventory.iterator();
 
-        while(var2.hasNext()) {
-            DataList<IItemStack> list = var2.next();
-            var var4 = list.iterator();
-
-            while(var4.hasNext()) {
-                ItemStack itemStack = var4.next().get();
+        for (DataList<IItemStack> list : this.combinedInventory) {
+            for (IItemStack iItemStack : list) {
+                ItemStack itemStack = iItemStack.get();
                 if (!itemStack.isEmpty() && ItemStack.canCombine(itemStack, stack)) {
                     return true;
                 }
@@ -695,12 +680,10 @@ public class PlayerInventoryMixin {
      */
     @Overwrite
     public void populateRecipeFinder(RecipeMatcher finder) {
-
         for (IItemStack iItemStack : this.main) {
             ItemStack itemStack = iItemStack.get();
             finder.addUnenchantedInput(itemStack);
         }
-
     }
 
 }
