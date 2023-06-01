@@ -53,4 +53,12 @@ public class PlayerDB<T extends PlayerEntity> {
     public void close() {
         db.close();
     }
+
+    public void clear() {
+        collection.deleteAll();
+    }
+
+    public long size() {
+        return collection.count();
+    }
 }
