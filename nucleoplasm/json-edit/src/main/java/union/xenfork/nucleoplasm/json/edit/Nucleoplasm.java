@@ -14,9 +14,8 @@ import java.nio.file.Path;
 public class Nucleoplasm implements ModInitializer {
     public static final Logger logger = LoggerFactory.getLogger("nucleoplasm_json_edit");
     public static final Path dir = FabricLoader.getInstance().getGameDir().resolve("json");
-    public static final Path test_dir = FabricLoader.getInstance().getGameDir().resolve("test_json");
     public static final Path recipe = dir.resolve("recipes");
-    public static final Path loot_table = dir.resolve("loot_table");
+    public static final Path loot_table = dir.resolve("loot_tables");
     public static NJEConfigs config;
 
     @Override
