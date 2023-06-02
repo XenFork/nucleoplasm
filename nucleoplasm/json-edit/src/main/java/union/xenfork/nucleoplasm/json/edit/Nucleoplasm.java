@@ -3,10 +3,10 @@ package union.xenfork.nucleoplasm.json.edit;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import union.xenfork.nucleoplasm.json.edit.registry.RegistryJsonUtil;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -15,9 +15,11 @@ public class Nucleoplasm implements ModInitializer {
     public static final Logger logger = LoggerFactory.getLogger("nucleoplasm_json_edit");
     public static final Path dir = FabricLoader.getInstance().getGameDir().resolve("json");
     public static final Path recipe = dir.resolve("recipes");
+    public static final Path registry = dir.resolve("registry");
     public static final Path loot_table = dir.resolve("loot_tables");
     public static final Path other = dir.resolve("other");
     public static NJEConfigs config;
+    public static RegistryJsonUtil jsonUtil = new RegistryJsonUtil(registry, logger);
 
     @Override
     public void onInitialize() {
@@ -27,13 +29,7 @@ public class Nucleoplasm implements ModInitializer {
         } catch (IOException e) {
             logger.error("fail to create", e);
         }
-        ServerTickEvents.START_SERVER_TICK.register(server -> {
-            try {
-                config.tick();
-            } catch (IOException e) {
-                logger.error("error load", e);
-            }
-        });
+
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             try {
                 config.save();
@@ -49,4 +45,5 @@ public class Nucleoplasm implements ModInitializer {
             }
         });
     }
+
 }
