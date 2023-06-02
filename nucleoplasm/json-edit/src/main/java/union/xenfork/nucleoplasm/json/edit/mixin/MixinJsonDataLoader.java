@@ -35,33 +35,6 @@ public class MixinJsonDataLoader {
     @Final
     private static Logger LOGGER;
 
-//    @Shadow
-//    @Final
-//    private Gson gson;
-//    private static final Map<String, Boolean> hasCreate = new HashMap<>();
-
-
-
-//    private static void validate(String dataType) {
-//        try(Stream<Path> list = Files.list(Nucleoplasm.dir)) {
-//            List<Path> listList = list.toList();
-//            for (Path path : listList)
-//                try (Stream<Path> list1 = Files.list(path)) {
-//                    List<Path> list1List = list1.toList();
-//                    for (Path path1 : list1List)
-//                        if (path1.toString().contains(dataType))
-////                            hasCreate.put(dataType, true);
-//                }
-//        } catch (IOException e) {
-//            LOGGER.error("fail to validate", e);
-//        }
-//
-//    }
-
-    @Shadow
-    @Final
-    private Gson gson;
-
     @Inject(method = "load", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
         if (dataType.contains("recipes")) {
