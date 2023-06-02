@@ -42,3 +42,16 @@ bin/
 .DS_Store
 
 .idea
+
+nucleoplasm/biology
+nucleoplasm/chemistry
+nucleoplasm/colony
+nucleoplasm/command-line
+nucleoplasm/default
+nucleoplasm/deprecated
+nucleoplasm/describer
+nucleoplasm/economy
+nucleoplasm/interstellar
+nucleoplasm/json-edit
+nucleoplasm/normandy-login
+nucleoplasm/nuclide
