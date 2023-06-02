@@ -42,3 +42,12 @@ bin/
 .DS_Store
 
 .idea
+
+nucleoplasm/api
+nucleoplasm/biology
+nucleoplasm/chemistry
+nucleoplasm/default
+nucleoplasm/deprecated
+nucleoplasm/feature-repair
+nucleoplasm/json-edit
+nucleoplasm/nuclide
