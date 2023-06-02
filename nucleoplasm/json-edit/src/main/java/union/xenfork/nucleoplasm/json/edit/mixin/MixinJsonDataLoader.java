@@ -30,7 +30,7 @@ import static union.xenfork.nucleoplasm.json.edit.Nucleoplasm.config;
 import static union.xenfork.nucleoplasm.json.edit.Nucleoplasm.recipe;
 
 @Mixin(JsonDataLoader.class)
-public class MixinDataJsonLoader {
+public class MixinJsonDataLoader {
     @Shadow
     @Final
     private static Logger LOGGER;
