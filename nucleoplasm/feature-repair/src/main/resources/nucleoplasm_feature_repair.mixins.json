@@ -4,7 +4,7 @@
   "package": "union.xenfork.nucleoplasm.feature.repair.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "SelfMixin"
+    "MixinVillagerTaskListProvider"
   ],
   "injectors": {
     "defaultRequire": 1

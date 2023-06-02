@@ -3,6 +3,7 @@
 - [select language](Language.md)
 - [tutorial list]()
 - [no one sees the license](LICENSE)
+- [fix bugs](FIX_BUGS.md)
 
 <h4>Welcome to the Nucleoplasm mod! We are committed to super science fiction.</h4>
 
