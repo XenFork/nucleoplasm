@@ -16,6 +16,7 @@ public class Nucleoplasm implements ModInitializer {
     public static final Path dir = FabricLoader.getInstance().getGameDir().resolve("json");
     public static final Path recipe = dir.resolve("recipes");
     public static final Path loot_table = dir.resolve("loot_tables");
+    public static final Path other = dir.resolve("other");
     public static NJEConfigs config;
 
     @Override
