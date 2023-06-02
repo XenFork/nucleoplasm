@@ -1,3 +1,7 @@
+loom {
+    accessWidenerPath = file("src/main/resources/nucleoplasm_feature_repair.accesswidener")
+}
+
 dependencies {
 
 }
