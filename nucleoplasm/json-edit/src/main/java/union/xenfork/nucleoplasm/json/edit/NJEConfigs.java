@@ -12,10 +12,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-public class NJEConfigs extends HashMap<String, String> {
+public class NJEConfigs extends HashMap<String, Object> {
     public final Type t = new TypeToken<NJEConfigs>(){}.getType();
     private final Gson gson = new Gson();
     private final String paths;
@@ -36,8 +34,11 @@ public class NJEConfigs extends HashMap<String, String> {
         }
     }
 
-    public void set(String k, String v) {
+    public void set(String k, Object v) {
         super.put(k, v);
+        try {
+            save();
+        } catch (IOException ignored) {}
     }
 
     public void clear() {
@@ -50,10 +51,16 @@ public class NJEConfigs extends HashMap<String, String> {
 
     public void save() throws IOException {
         Path config = FabricLoader.getInstance().getConfigDir().resolve(paths);
+        Path parent = config.getParent();
+        if (!Files.exists(parent)) Files.createDirectories(parent);
         BufferedWriter bw = Files.newBufferedWriter(config);
         String json = gson.toJson(this, t);
         bw.write(json);
         bw.close();
+    }
+
+    public void tick() throws IOException {
+        load();
     }
 
     public void load() throws IOException {
@@ -67,7 +74,7 @@ public class NJEConfigs extends HashMap<String, String> {
         Path parent = config.getParent();
         if (!Files.exists(parent)) Files.createDirectories(parent);
         if (!Files.exists(config)) {
-            super.put("isLoader", "false");
+            super.put("isLoader", false);
             save();
         } else {
             load();
