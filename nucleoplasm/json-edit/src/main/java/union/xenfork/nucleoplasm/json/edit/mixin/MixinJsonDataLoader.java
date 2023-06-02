@@ -35,10 +35,11 @@ public class MixinJsonDataLoader {
     @Final
     private static Logger LOGGER;
 
-    @Inject(method = "load", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci) {
+    @Inject(method = "load", at = @At(value = "INVOKE", target = "Ljava/util/Set;iterator()Ljava/util/Iterator;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private static void load(ResourceManager manager, String dataType, Gson gson, Map<Identifier, JsonElement> results, CallbackInfo ci, ResourceFinder resourceFinder) {
+        pre(manager, dataType, resourceFinder);
+        LOGGER.info(dataType);
         if (dataType.contains("recipes")) {
-            preRecipes(manager, dataType);
             results.clear();
             loadRecipes(recipe, recipe, gson, results);
             ci.cancel();
@@ -72,8 +73,7 @@ public class MixinJsonDataLoader {
         }
     }
 
-    private static void preRecipes(ResourceManager manager, String dataType) {
-        ResourceFinder finder = ResourceFinder.json(dataType);
+    private static void pre(ResourceManager manager, String dataType, ResourceFinder finder) {
         List<String> namespaces = new ArrayList<>();
         String namespace;
         Map<Identifier, Resource> resources = finder.findResources(manager);
