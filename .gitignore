@@ -42,3 +42,11 @@ bin/
 .DS_Store
 
 .idea
+
+nucleoplasm/api
+nucleoplasm/colony
+nucleoplasm/command-line
+nucleoplasm/describer
+nucleoplasm/economy
+nucleoplasm/feature-repair
+nucleoplasm/normandy-login
