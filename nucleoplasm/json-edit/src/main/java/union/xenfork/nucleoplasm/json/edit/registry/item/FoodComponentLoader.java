@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
+import net.minecraft.item.FoodComponents;
 import union.xenfork.nucleoplasm.json.edit.registry.effect.StatusEffectInstanceLoader;
 
 import java.util.HashMap;
@@ -50,5 +51,17 @@ public class FoodComponentLoader {
         foodComponentLoader.snack = snack;
         foodComponentLoader.statusEffects = statusEffects;
         return foodComponentLoader;
+    }
+
+    public FoodComponent getFoodComponent() {
+        FoodComponent.Builder builder = new FoodComponent.Builder();
+        builder.hunger(hunger).saturationModifier(saturationModifier);
+        if (meat) builder.meat();
+        if (alwaysEdible) builder.alwaysEdible();
+        if (snack) builder.snack();
+        statusEffects.forEach((s, f) -> {
+            builder.statusEffect(s.getStatusEffectInstance(), f);
+        });
+        return builder.build();
     }
 }

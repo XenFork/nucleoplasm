@@ -13,17 +13,29 @@ public class StatusEffectCategoryLoader {
     @SerializedName("formatting")
     private FormattingLoader loader;
 
-    public static StatusEffectCategoryLoader create(String value, FormattingLoader formattingLoader) {
-        StatusEffectCategoryLoader loader = new StatusEffectCategoryLoader();
-        loader.value = value;
-        loader.loader = formattingLoader;
-        return loader;
+    public StatusEffectCategoryLoader(StatusEffectCategory category) {
+        value = category.name();
+        loader = FormattingLoader.create(category.getFormatting());
     }
 
     public static StatusEffectCategoryLoader create(StatusEffectCategory category) {
-        StatusEffectCategoryLoader loader = new StatusEffectCategoryLoader();
-        loader.value = category.name();
-        loader.loader = FormattingLoader.create(category.getFormatting());
+        return new StatusEffectCategoryLoader(category);
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public FormattingLoader getLoader() {
         return loader;
+    }
+
+    public StatusEffectCategory getStatusEffecctCategory() {
+        for (StatusEffectCategory statusEffectCategory : StatusEffectCategory.values()) {
+            if (value.equals(statusEffectCategory.name())) {
+                return statusEffectCategory;
+            }
+        }
+        return null;
     }
 }

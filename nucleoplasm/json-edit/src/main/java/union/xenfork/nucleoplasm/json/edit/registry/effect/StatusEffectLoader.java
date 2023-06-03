@@ -2,6 +2,8 @@ package union.xenfork.nucleoplasm.json.edit.registry.effect;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import union.xenfork.nucleoplasm.json.edit.registry.util.StatusEffectCategoryLoader;
 
 /**
@@ -14,17 +16,22 @@ public class StatusEffectLoader {
     @SerializedName("color")
     private int color;
 
-    public static StatusEffectLoader create(StatusEffectCategoryLoader category, int color) {
-        StatusEffectLoader loader = new StatusEffectLoader();
-        loader.category = category;
-        loader.color = color;
-        return loader;
+    public StatusEffectLoader(StatusEffect effectType) {
+        category = StatusEffectCategoryLoader.create(effectType.getCategory());
+        color = effectType.getColor();
     }
 
+
     public static StatusEffectLoader create(StatusEffect effectType) {
-        StatusEffectLoader loader = new StatusEffectLoader();
-        loader.category = StatusEffectCategoryLoader.create(effectType.getCategory());
-        loader.color = effectType.getColor();
-        return loader;
+        return new StatusEffectLoader(effectType);
+    }
+
+    public StatusEffect getStatusEffect() {
+        for (StatusEffect statusEffect : Registries.STATUS_EFFECT) {
+            if (statusEffect.getCategory().name().equals(category.getValue())) {
+                return statusEffect;
+            }
+        }
+        return null;
     }
 }

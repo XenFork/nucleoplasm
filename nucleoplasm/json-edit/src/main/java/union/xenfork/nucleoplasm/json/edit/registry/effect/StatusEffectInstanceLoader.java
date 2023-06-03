@@ -2,6 +2,7 @@ package union.xenfork.nucleoplasm.json.edit.registry.effect;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.registry.Registries;
 
 import java.util.Optional;
 
@@ -55,5 +56,9 @@ public class StatusEffectInstanceLoader {
         if (first.hiddenEffect != null) loader.hiddenEffect = StatusEffectInstanceLoader.create(first.hiddenEffect);
         first.getFactorCalculationData().ifPresent(calculationData -> loader.factorCalculationData = FactorCalculationDataLoader.create(calculationData));
         return loader;
+    }
+
+    public StatusEffectInstance getStatusEffectInstance() {
+        return new StatusEffectInstance(type.getStatusEffect(), duration, amplifier, ambient, showParticles, showIcon, hiddenEffect.getStatusEffectInstance(), Optional.of(factorCalculationData.getFactorCalculationData()));
     }
 }

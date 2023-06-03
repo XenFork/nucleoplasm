@@ -54,4 +54,8 @@ public class FactorCalculationDataLoader {
         loader.factorPreviousFrame = factorCalculationData.factorPreviousFrame;
         return loader;
     }
+
+    public FactorCalculationData getFactorCalculationData() {
+        return new FactorCalculationData(paddingDuration, factorStart, factorTarget, factorCurrent, effectChangedTimestamp, factorPreviousFrame, hadEffectLastTick);
+    }
 }

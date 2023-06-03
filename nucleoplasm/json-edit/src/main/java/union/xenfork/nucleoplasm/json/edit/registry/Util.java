@@ -17,6 +17,7 @@ import static union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoa
 import static union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader.initItem;
 import static union.xenfork.nucleoplasm.json.edit.registry.item.util.AliasedBlockItemLoader.initAliasedBlockItem;
 import static union.xenfork.nucleoplasm.json.edit.registry.item.util.MinecartItemLoader.initMinecartItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.OnAStickItemLoader.initOnAStickItemLoader;
 import static union.xenfork.nucleoplasm.json.edit.registry.item.util.OperatorOnlyBlockItemLoader.initOperatorOnlyBlockItem;
 import static union.xenfork.nucleoplasm.json.edit.registry.item.util.PlaceableOnWaterItemLoader.initPlaceableOnWaterItem;
 import static union.xenfork.nucleoplasm.json.edit.registry.item.util.SaddleItemLoader.initSaddleItem;
@@ -28,7 +29,9 @@ public class Util {
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static void switchUtil(Logger logger, Object t, Path itemPath) {
         Path resolve = preInit(logger, (Item) t, itemPath);
-        if (t instanceof MinecartItem item)
+        if (t instanceof OnAStickItem<?> item)
+            initOnAStickItemLoader(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof MinecartItem item)
             initMinecartItem(logger, item, Registries.ITEM, resolve);
         else if (t instanceof SaddleItem item)
             initSaddleItem(logger, item, Registries.ITEM, resolve);
