@@ -1,10 +1,11 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.s;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.ScaffoldingItem;
 import net.minecraft.registry.DefaultedRegistry;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -24,15 +25,5 @@ public class ScaffoldingItemLoader extends BlockItemLoader {
 
     public static ScaffoldingItemLoader create(ScaffoldingItem item, DefaultedRegistry<Item> registry) {
         return new ScaffoldingItemLoader(item, registry);
-    }
-
-    public static void initScaffoldingItem(Logger logger, ScaffoldingItem item, DefaultedRegistry<Item> registry, Path path) {
-        ScaffoldingItemLoader load = ScaffoldingItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  = Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 }

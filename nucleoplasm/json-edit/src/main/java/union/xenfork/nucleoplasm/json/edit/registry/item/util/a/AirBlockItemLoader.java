@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.a;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.AirBlockItem;
@@ -8,6 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -33,15 +34,6 @@ public class AirBlockItemLoader extends ItemLoader {
         return new AirBlockItemLoader(item, registry);
     }
 
-    public static void initAirBlockItem(Logger logger, AirBlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        AirBlockItemLoader load = AirBlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  = Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
 
     public Identifier getBlock_identifier() {
         String[] split = block_identifier.split(":");

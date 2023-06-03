@@ -1,5 +1,8 @@
 accessWidener       v2          named
 accessible          class       net/minecraft/registry/RegistryLoader$RegistryLoadable
+accessible          class       net/minecraft/recipe/Ingredient$Entry
+accessible          class       net/minecraft/recipe/Ingredient$TagEntry
+accessible          class       net/minecraft/recipe/Ingredient$StackEntry
 
 accessible          method      net/minecraft/loot/LootManager                                              load                    (Lnet/minecraft/loot/LootDataType;Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;
 
@@ -16,3 +19,8 @@ accessible          field       net/minecraft/item/VerticallyAttachableBlockItem
 accessible          field       net/minecraft/item/MinecartItem                                             type                    Lnet/minecraft/entity/vehicle/AbstractMinecartEntity$Type;
 accessible          field       net/minecraft/item/OnAStickItem                                             target                  Lnet/minecraft/entity/EntityType;
 accessible          field       net/minecraft/item/OnAStickItem                                             damagePerUse            I
+accessible          field       net/minecraft/item/BoatItem                                                 type                    Lnet/minecraft/entity/vehicle/BoatEntity$Type;
+accessible          field       net/minecraft/item/BoatItem                                                 chest                   Z
+accessible          field       net/minecraft/recipe/Ingredient                                             entries                 [Lnet/minecraft/recipe/Ingredient$Entry;
+accessible          field       net/minecraft/recipe/Ingredient$TagEntry                                    tag                     Lnet/minecraft/registry/tag/TagKey;
+accessible          field       net/minecraft/recipe/Ingredient$StackEntry                                  stack                   Lnet/minecraft/item/ItemStack;

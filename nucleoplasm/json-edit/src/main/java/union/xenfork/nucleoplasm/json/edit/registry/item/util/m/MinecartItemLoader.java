@@ -1,13 +1,13 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.m;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.entity.vehicle.AbstractMinecartEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.MinecartItem;
-import net.minecraft.item.SaddleItem;
 import net.minecraft.registry.DefaultedRegistry;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -36,13 +36,4 @@ public class MinecartItemLoader extends ItemLoader {
         return AbstractMinecartEntity.Type.valueOf(type);
     }
 
-    public static void initMinecartItem(Logger logger, MinecartItem item, DefaultedRegistry<Item> registry, Path path) {
-        MinecartItemLoader load = MinecartItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-            bufferedWriter.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
 }

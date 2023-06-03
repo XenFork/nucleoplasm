@@ -1,10 +1,11 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.s;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.SaddleItem;
 import net.minecraft.registry.DefaultedRegistry;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -24,15 +25,5 @@ public class SaddleItemLoader extends ItemLoader {
 
     public static SaddleItemLoader create(SaddleItem item, DefaultedRegistry<Item> registry) {
         return new SaddleItemLoader(item, registry);
-    }
-
-    public static void initSaddleItem(Logger logger, SaddleItem item, DefaultedRegistry<Item> registry, Path path) {
-        SaddleItemLoader load = SaddleItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-            bufferedWriter.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 }

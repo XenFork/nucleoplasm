@@ -6,6 +6,7 @@ import net.minecraft.registry.*;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.SettingsLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -18,7 +19,7 @@ import static union.xenfork.nucleoplasm.json.edit.registry.Util.gson;
  * @author baka4n
  * {@link Item}
  */
-public class ItemLoader {
+public class ItemLoader implements InitImpl {
     @SerializedName("class_name")
     private String class_name;
     @SerializedName("id")
@@ -36,15 +37,7 @@ public class ItemLoader {
         return new ItemLoader(item, registry);
     }
 
-    public static void initItem(Logger logger, Item item, DefaultedRegistry<Item> registry, Path path) {
-        ItemLoader load = ItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-            bufferedWriter.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
+
 
     public String getClass_name() {
         return class_name;
@@ -57,5 +50,15 @@ public class ItemLoader {
 
     public SettingsLoader getSettings() {
         return settings;
+    }
+
+    @Override
+    public void init(Logger logger, Path path) {
+        String json = gson.toJson(this);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            bufferedWriter.write(json);
+        } catch (IOException e) {
+            logger.info("fail create to {}", path);
+        }
     }
 }

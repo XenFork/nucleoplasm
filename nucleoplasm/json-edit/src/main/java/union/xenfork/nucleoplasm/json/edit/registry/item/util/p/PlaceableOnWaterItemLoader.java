@@ -1,10 +1,11 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.p;
 
 import net.minecraft.item.Item;
 import net.minecraft.item.PlaceableOnWaterItem;
 import net.minecraft.registry.DefaultedRegistry;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -22,18 +23,7 @@ public class PlaceableOnWaterItemLoader extends BlockItemLoader {
         super(item, registry);
     }
 
-
     public static PlaceableOnWaterItemLoader create(PlaceableOnWaterItem item, DefaultedRegistry<Item> registry) {
         return new PlaceableOnWaterItemLoader(item, registry);
-    }
-
-    public static void initPlaceableOnWaterItem(Logger logger, PlaceableOnWaterItem item, DefaultedRegistry<Item> registry, Path path) {
-        PlaceableOnWaterItemLoader load = PlaceableOnWaterItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  = Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 }

@@ -1,12 +1,11 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.a;
 
 import net.minecraft.item.AliasedBlockItem;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.VerticallyAttachableBlockItem;
 import net.minecraft.registry.DefaultedRegistry;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -26,15 +25,5 @@ public class AliasedBlockItemLoader extends BlockItemLoader {
 
     public static AliasedBlockItemLoader create(AliasedBlockItem item, DefaultedRegistry<Item> registry) {
         return new AliasedBlockItemLoader(item, registry);
-    }
-
-    public static void initAliasedBlockItem(Logger logger, AliasedBlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        AliasedBlockItemLoader load = AliasedBlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  = Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 }

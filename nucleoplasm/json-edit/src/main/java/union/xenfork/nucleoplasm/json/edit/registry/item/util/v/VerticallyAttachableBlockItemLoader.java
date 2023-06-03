@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.util;
+package union.xenfork.nucleoplasm.json.edit.registry.item.util.v;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;
@@ -8,6 +8,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -31,16 +32,6 @@ public class VerticallyAttachableBlockItemLoader extends BlockItemLoader {
 
     public static VerticallyAttachableBlockItemLoader create(VerticallyAttachableBlockItem item, DefaultedRegistry<Item> registry) {
         return new VerticallyAttachableBlockItemLoader(item, registry);
-    }
-
-    public static void initVerticallyAttachableBlockItem(Logger logger, VerticallyAttachableBlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        VerticallyAttachableBlockItemLoader load = VerticallyAttachableBlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  = Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 
     public Identifier getWall_block_identifier() {

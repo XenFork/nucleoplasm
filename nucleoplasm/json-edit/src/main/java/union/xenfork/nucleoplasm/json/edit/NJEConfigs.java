@@ -2,6 +2,7 @@ package union.xenfork.nucleoplasm.json.edit;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.BufferedReader;
@@ -15,7 +16,7 @@ import java.util.List;
 
 public class NJEConfigs extends HashMap<String, Object> {
     public final Type t = new TypeToken<NJEConfigs>(){}.getType();
-    private final Gson gson = new Gson();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     private final String paths;
     public NJEConfigs(String paths) {
         super();
