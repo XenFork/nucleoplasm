@@ -2,8 +2,8 @@ package union.xenfork.nucleoplasm.json.edit.registry.effect;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import union.xenfork.nucleoplasm.json.edit.registry.item.noinit.FactorCalculationDataLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.noinit.StatusEffectLoader;
+
+import java.util.Optional;
 
 /**
  * @author baka4n
@@ -27,4 +27,33 @@ public class StatusEffectInstanceLoader {
     @SerializedName("factorCalculationData")
     private FactorCalculationDataLoader factorCalculationData;
 
+    public static StatusEffectInstanceLoader create(StatusEffectLoader type,
+                                                    int duration,
+                                                    int amplifier,
+                                                    boolean showParticles,
+                                                    boolean showIcon,
+                                                    StatusEffectInstanceLoader hiddenEffect,
+                                                    FactorCalculationDataLoader factorCalculationData) {
+        StatusEffectInstanceLoader loader = new StatusEffectInstanceLoader();
+        loader.type = type;
+        loader.duration = duration;
+        loader.amplifier = amplifier;
+        loader.showParticles = showParticles;
+        loader.showIcon = showIcon;
+        loader.hiddenEffect = hiddenEffect;
+        loader.factorCalculationData = factorCalculationData;
+        return loader;
+    }
+
+    public static StatusEffectInstanceLoader create(StatusEffectInstance first) {
+        StatusEffectInstanceLoader loader = new StatusEffectInstanceLoader();
+        loader.type = StatusEffectLoader.create(first.getEffectType());
+        loader.duration = first.getDuration();
+        loader.amplifier = first.getAmplifier();
+        loader.showParticles = first.shouldShowParticles();
+        loader.showIcon = first.shouldShowIcon();
+        if (first.hiddenEffect != null) loader.hiddenEffect = StatusEffectInstanceLoader.create(first.hiddenEffect);
+        first.getFactorCalculationData().ifPresent(calculationData -> loader.factorCalculationData = FactorCalculationDataLoader.create(calculationData));
+        return loader;
+    }
 }
