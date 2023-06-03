@@ -1,12 +1,18 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item;
+package union.xenfork.nucleoplasm.json.edit.registry.item.def;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.registry.*;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import union.xenfork.nucleoplasm.json.edit.registry.util.FormattingLoader;
+import org.slf4j.Logger;
+import union.xenfork.nucleoplasm.json.edit.registry.item.SettingsLoader;
+
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
+import static union.xenfork.nucleoplasm.json.edit.registry.Util.gson;
 
 /**
  * @author baka4n
@@ -30,12 +36,23 @@ public class ItemLoader {
         return new ItemLoader(item, registry);
     }
 
+    public static void initItem(Logger logger, Item item, DefaultedRegistry<Item> registry, Path path) {
+        ItemLoader load = ItemLoader.create(item, registry);
+        String json = gson.toJson(load);
+        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
+            bufferedWriter.write(json);
+        } catch (IOException e) {
+            logger.info("fail create to {}", path);
+        }
+    }
+
     public String getClass_name() {
         return class_name;
     }
 
-    public String getIdentifier() {
-        return identifier;
+    public Identifier getIdentifier() {
+        String[] split = identifier.split(":");
+        return Identifier.of(split[0], split[1]);
     }
 
     public SettingsLoader getSettings() {

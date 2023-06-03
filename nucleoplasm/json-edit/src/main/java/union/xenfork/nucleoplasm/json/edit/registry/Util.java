@@ -3,76 +3,54 @@ package union.xenfork.nucleoplasm.json.edit.registry;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.minecraft.item.*;
-import net.minecraft.registry.DefaultedRegistry;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
 import org.slf4j.Logger;
-import union.xenfork.nucleoplasm.json.edit.registry.item.*;
-import union.xenfork.nucleoplasm.json.edit.registry.util.FormattingLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.util.AliasedBlockItemLoader;
 
-import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.AirBlockItemLoader.initAirBlockItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.def.BlockItemLoader.initBlockItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader.initItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.AliasedBlockItemLoader.initAliasedBlockItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.MinecartItemLoader.initMinecartItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.OperatorOnlyBlockItemLoader.initOperatorOnlyBlockItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.PlaceableOnWaterItemLoader.initPlaceableOnWaterItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.SaddleItemLoader.initSaddleItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.ScaffoldingItemLoader.initScaffoldingItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.TallBlockItemLoader.initTallBlockItem;
+import static union.xenfork.nucleoplasm.json.edit.registry.item.util.VerticallyAttachableBlockItemLoader.initVerticallyAttachableBlockItem;
+
 public class Util {
     public static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
     public static void switchUtil(Logger logger, Object t, Path itemPath) {
-        if (t instanceof VerticallyAttachableBlockItem item) {
-            Path resolve = preInit(logger, item, itemPath);
+        Path resolve = preInit(logger, (Item) t, itemPath);
+        if (t instanceof MinecartItem item)
+            initMinecartItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof SaddleItem item)
+            initSaddleItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof AliasedBlockItem item)
+            initAliasedBlockItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof ScaffoldingItem item)
+            initScaffoldingItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof TallBlockItem item)
+            initTallBlockItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof OperatorOnlyBlockItem item)
+            initOperatorOnlyBlockItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof PlaceableOnWaterItem item)
+            initPlaceableOnWaterItem(logger, item, Registries.ITEM, resolve);
+        else if (t instanceof VerticallyAttachableBlockItem item)
             initVerticallyAttachableBlockItem(logger, item, Registries.ITEM, resolve);
-        } else if (t instanceof AirBlockItem item) {
-            Path resolve = preInit(logger, item, itemPath);
+        else if (t instanceof AirBlockItem item)
             initAirBlockItem(logger, item, Registries.ITEM, resolve);
-        } else if (t instanceof BlockItem item) {
-            Path resolve = preInit(logger, item, itemPath);
+        else if (t instanceof BlockItem item)
             initBlockItem(logger, item, Registries.ITEM, resolve);
-        } else if (t instanceof Item item) {
-            Path resolve = preInit(logger, item, itemPath);
+        else if (t instanceof Item item)
             initItem(logger, item, Registries.ITEM, resolve);
-        }
-    }
 
-    public static void initVerticallyAttachableBlockItem(Logger logger, VerticallyAttachableBlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        VerticallyAttachableBlockItemLoader load = VerticallyAttachableBlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  =Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
-
-    public static void initAirBlockItem(Logger logger, AirBlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        AirBlockItemLoader load = AirBlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  =Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
-
-    public static void initBlockItem(Logger logger, BlockItem item, DefaultedRegistry<Item> registry, Path path) {
-        BlockItemLoader load = BlockItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try(BufferedWriter bw  =Files.newBufferedWriter(path)) {
-            bw.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
-    }
-
-    public static void initItem(Logger logger, Item item, DefaultedRegistry<Item> registry, Path path) {
-        ItemLoader load = ItemLoader.create(item, registry);
-        String json = gson.toJson(load);
-        try (BufferedWriter bufferedWriter = Files.newBufferedWriter(path)) {
-            bufferedWriter.write(json);
-        } catch (IOException e) {
-            logger.info("fail create to {}", path);
-        }
     }
 
     public static <T extends Item> Path preInit(Logger logger, T item, Path itemPath) {

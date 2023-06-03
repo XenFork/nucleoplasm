@@ -1,6 +1,8 @@
 accessWidener       v2          named
-accessible          method      net/minecraft/loot/LootManager                                              load                    (Lnet/minecraft/loot/LootDataType;Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;
 accessible          class       net/minecraft/registry/RegistryLoader$RegistryLoadable
+
+accessible          method      net/minecraft/loot/LootManager                                              load                    (Lnet/minecraft/loot/LootDataType;Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;
+
 accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      paddingDuration         I
 accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorStart             F
 accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorTarget            F
@@ -11,3 +13,6 @@ accessible          field       net/minecraft/entity/effect/StatusEffectInstance
 accessible          field       net/minecraft/entity/effect/StatusEffectInstance                            hiddenEffect            Lnet/minecraft/entity/effect/StatusEffectInstance;
 accessible          field       net/minecraft/item/AirBlockItem                                             block                   Lnet/minecraft/block/Block;
 accessible          field       net/minecraft/item/VerticallyAttachableBlockItem                            wallBlock               Lnet/minecraft/block/Block;
+accessible          field       net/minecraft/item/MinecartItem                                             type                    Lnet/minecraft/entity/vehicle/AbstractMinecartEntity$Type;
+accessible          field       net/minecraft/item/OnAStickItem                                             target                  Lnet/minecraft/entity/EntityType;
+accessible          field       net/minecraft/item/OnAStickItem                                             damagePerUse            I
