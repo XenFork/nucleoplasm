@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.def;
+package union.xenfork.nucleoplasm.json.edit.registry.item.item;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;

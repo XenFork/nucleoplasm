@@ -3,7 +3,7 @@ package union.xenfork.nucleoplasm.json.edit.registry.item.util.noInit;
 import net.minecraft.item.FireworkStarItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.DefaultedRegistry;
-import union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.ItemLoader;
 
 /**
  * @author baka4n
