@@ -19,17 +19,27 @@ public class ItemStackLoader {
     @SerializedName("nbt")
     private NbtLoader nbt;
     public ItemStackLoader(ItemStack stack) {
-        item = Registries.ITEM.getId(stack.getItem()).toString();
-        count = stack.getCount();
-        if (stack.getNbt() != null) nbt = new NbtLoader(stack.getNbt());
+        Item item1 = stack.getItem();
+        if (item1 != null) {
+            item = Registries.ITEM.getId(item1).toString();
+            count = stack.getCount();
+            if (stack.getNbt() != null) nbt = new NbtLoader(stack.getNbt());
+        } else {
+            item = "";
+        }
+
     }
 
     public ItemStack getStack() {
-        String[] split = item.split(":");
-        ItemStack itemStack = new ItemStack(Registries.ITEM.get(Identifier.of(split[0], split[1])), count);
-        if (nbt != null) {
-            itemStack.setNbt(nbt.getNbt());
+        if (item.isEmpty()) {
+            return ItemStack.EMPTY;
+        } else {
+            String[] split = item.split(":");
+            ItemStack itemStack = new ItemStack(Registries.ITEM.get(Identifier.of(split[0], split[1])), count);
+            if (nbt != null) {
+                itemStack.setNbt(nbt.getNbt());
+            }
+            return itemStack;
         }
-        return itemStack;
     }
 }
