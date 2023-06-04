@@ -86,6 +86,7 @@ public class Util {
      * @param <T> {@link Item}
      */
     public static <T extends Item> ItemLoader switchUtilItem(T t, DefaultedRegistry<Item> registry) {
+
         if (t instanceof SmithingTemplateItem) {
             return new SmithingTemplateItemLoader((SmithingTemplateItem) t, registry);
         } else if (t instanceof MusicDiscItem) {

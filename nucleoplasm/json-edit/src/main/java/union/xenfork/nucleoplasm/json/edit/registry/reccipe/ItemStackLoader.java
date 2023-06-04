@@ -18,7 +18,7 @@ public class ItemStackLoader {
     private int count;
     @SerializedName("nbt")
     private NbtLoader nbt;
-    public ItemStackLoader(@NotNull ItemStack stack) {
+    public ItemStackLoader(ItemStack stack) {
         item = Registries.ITEM.getId(stack.getItem()).toString();
         count = stack.getCount();
         if (stack.getNbt() != null) nbt = new NbtLoader(stack.getNbt());

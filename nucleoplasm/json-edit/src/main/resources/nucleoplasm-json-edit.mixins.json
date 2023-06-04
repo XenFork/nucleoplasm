@@ -5,7 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "MixinJsonDataLoader",
-    "MixinLootManager"
+    "MixinLootManager",
+    "enums.MixinArmorMaterials"
   ],
   "client": [
   ],
