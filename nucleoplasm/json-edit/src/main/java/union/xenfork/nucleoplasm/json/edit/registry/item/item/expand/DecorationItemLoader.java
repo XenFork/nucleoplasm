@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit;
+package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.entity.EntityType;

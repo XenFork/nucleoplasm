@@ -22,7 +22,6 @@ public class BucketItemLoader extends ItemLoader {
     }
 
     public Fluid getFluid() {
-        String[] split = fluid.split(":");
-        return Registries.FLUID.get(Identifier.of(split[0], split[1]));
+        return Registries.FLUID.get(new Identifier(fluid.split(":")));
     }
 }

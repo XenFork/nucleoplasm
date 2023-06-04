@@ -3,7 +3,7 @@ package union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit;
 import net.minecraft.item.Item;
 import net.minecraft.item.SwordItem;
 import net.minecraft.registry.DefaultedRegistry;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.ToolItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tools.ToolItemLoader;
 
 /**
  * @author baka4n

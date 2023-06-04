@@ -7,24 +7,20 @@ import net.minecraft.registry.DefaultedRegistry;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.*;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.BlockItemLoader;
 import union.xenfork.nucleoplasm.json.edit.registry.item.item.ItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.AliasedBlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.*;
 import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.armor.ArmorItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.OperatorOnlyBlockItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.PlaceableOnWaterItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.ScaffoldingItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.TallBlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.BlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.*;
 import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.vertically.VerticallyAttachableBlockItemLoader;
 import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.vertically.extand.BannerItemLoader;
 import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.bucket.BucketItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.ranged.RangedWeaponItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.ranged.extand.BowItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.ToolItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.expand.mining.MiningToolItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.expand.mining.expand.AxeItemLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit.DecorationItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.bucket.expand.EntityBucketItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.horsearmor.HorseArmorItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tools.ToolItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tools.expand.mining.MiningToolItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.PowderSnowBucketItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.SmithingTemplateItemLoader;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -41,14 +37,14 @@ public class Util {
         } else if (t instanceof ArmorItem) {
             loader = new ArmorItemLoader((ArmorItem) t, registry);
         } else if (t instanceof BucketItem) {
-            loader = new BucketItemLoader((BucketItem) t, registry);
+            if (t instanceof EntityBucketItem) {
+                loader = new EntityBucketItemLoader((EntityBucketItem) t, registry);
+            } else {
+                loader = new BucketItemLoader((BucketItem) t, registry);
+            }
         } else if (t instanceof ToolItem) {
             if (t instanceof MiningToolItem) {
-                if (t instanceof AxeItem) {
-                    loader = new AxeItemLoader((AxeItem) t, registry);
-                } else {
-                    loader = new MiningToolItemLoader((MiningToolItem) t, registry);
-                }
+                loader = new MiningToolItemLoader((MiningToolItem) t, registry);
             } else {
                 loader = new ToolItemLoader((ToolItem) t, registry);
             }
@@ -59,18 +55,8 @@ public class Util {
     }
 
     public static <T extends Item> ItemLoader switchUtilBlockItem(T t, DefaultedRegistry<Item> registry) {
-        if (t instanceof DecorationItem) {
-            return new DecorationItemLoader((DecorationItem) t, registry);
-        } else if (t instanceof BundleItem) {
-            return new BundleItemLoader((BundleItem) t, registry);
-        } else if (t instanceof BrushItem) {
-            return new BrushItemLoader((BrushItem) t, registry);
-        } else if (t instanceof RangedWeaponItem) {
-            if (t instanceof BowItem) {
-                return new BowItemLoader((BowItem) t, registry);
-            } else {
-                return new RangedWeaponItemLoader((RangedWeaponItem) t, registry);
-            }
+        if (t instanceof PowderSnowBucketItem) {
+            return new PowderSnowBucketItemLoader((PowderSnowBucketItem) t, registry);
         } else if (t instanceof VerticallyAttachableBlockItem) {
             if (t instanceof BannerItem) {
                 return new BannerItemLoader((BannerItem) t, registry);
@@ -100,7 +86,23 @@ public class Util {
      * @param <T> {@link Item}
      */
     public static <T extends Item> ItemLoader switchUtilItem(T t, DefaultedRegistry<Item> registry) {
-        if (t instanceof BannerPatternItem) {
+        if (t instanceof SmithingTemplateItem) {
+            return new SmithingTemplateItemLoader((SmithingTemplateItem) t, registry);
+        } else if (t instanceof MusicDiscItem) {
+            return new MusicDiscItemLoader((MusicDiscItem) t, registry);
+        } else if (t instanceof DecorationItem) {
+            return new DecorationItemLoader((DecorationItem) t, registry);
+        } else if (t instanceof BundleItem) {
+            return new BundleItemLoader((BundleItem) t, registry);
+        } else if (t instanceof BrushItem) {
+            return new BrushItemLoader((BrushItem) t, registry);
+        } else if (t instanceof GoatHornItem) {
+            return new GoatHornItemLoader((GoatHornItem) t, registry);
+        } else if (t instanceof DyeItem) {
+            return new DyeItemLoader((DyeItem) t, registry);
+        } else if (t instanceof HorseArmorItem) {
+            return new HorseArmorItemLoader((HorseArmorItem) t, registry);
+        } else if (t instanceof BannerPatternItem) {
             return new BannerPatternItemLoader((BannerPatternItem) t, registry);
         } else if (t instanceof SaddleItem) {
             return new SaddleItemLoader((SaddleItem) t, registry);

@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.expand.mining;
+package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tools.expand.mining;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.block.Block;
@@ -8,7 +8,7 @@ import net.minecraft.registry.DefaultedRegistry;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tool.ToolItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.tools.ToolItemLoader;
 
 /**
  * @author baka4n
