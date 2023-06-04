@@ -6,7 +6,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.Item.Settings;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.DefaultedRegistry;
-import union.xenfork.nucleoplasm.json.edit.registry.item.def.ItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.ItemLoader;
 import union.xenfork.nucleoplasm.json.edit.registry.util.FormattingLoader;
 
 /**

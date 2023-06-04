@@ -6,7 +6,7 @@ import net.minecraft.registry.*;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import union.xenfork.nucleoplasm.json.edit.registry.item.SettingsLoader;
-import union.xenfork.nucleoplasm.json.edit.registry.item.util.InitImpl;
+import union.xenfork.nucleoplasm.json.edit.registry.item.InitImpl;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
