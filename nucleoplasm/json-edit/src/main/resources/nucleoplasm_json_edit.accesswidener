@@ -39,7 +39,7 @@ accessible          field       net/minecraft/item/SmithingTemplateItem         
 accessible          field       net/minecraft/item/ArmorMaterials                                           durabilityMultiplier        I
 accessible          field       net/minecraft/item/ArmorMaterials                                           protectionAmounts           Ljava/util/EnumMap;
 accessible          field       net/minecraft/item/ArmorMaterials                                           repairIngredientSupplier    Lnet/minecraft/util/Lazy;
-
+accessible          field       net/minecraft/util/Lazy                                                     supplier                    Ljava/util/function/Supplier;
 
 
 

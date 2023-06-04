@@ -1,10 +1,11 @@
 package union.xenfork.nucleoplasm.json.edit.registry.enums;
 
 import com.google.gson.annotations.SerializedName;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.ArmorMaterials;
-import net.minecraft.recipe.Ingredient;
 import oshi.util.tuples.Pair;
 import union.xenfork.nucleoplasm.json.edit.registry.item.InitImpl;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.ItemLoader;
 import union.xenfork.nucleoplasm.json.edit.registry.reccipe.IngredientLoader;
 
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ArmorMaterialsLoader implements InitImpl {
     @SerializedName("knockbackResistance")
     private float knockbackResistance;
     @SerializedName("repairIngredientSupplier")
-    private IngredientLoader repairIngredientSupplier;
+    private ArrayList<ItemLoader> repairIngredientSupplier;
 
 
     public ArmorMaterialsLoader(ArmorMaterials armorMaterials) {
@@ -39,12 +40,7 @@ public class ArmorMaterialsLoader implements InitImpl {
         enchantability = armorMaterials.getEnchantability();
         equipSound = armorMaterials.getEquipSound().getId().toString();
         toughness = armorMaterials.getToughness();
-        knockbackResistance = armorMaterials.getKnockbackResistance();
-        var repairIngredient = armorMaterials.repairIngredientSupplier;
-        if (repairIngredient != null) {
-            this.repairIngredientSupplier = new IngredientLoader(repairIngredient.get());
-        }
-        
-
+        knockbackResistance = (armorMaterials).getKnockbackResistance();
+//        repairIngredientSupplier = new IngredientLoader(armorMaterials.getRepairIngredient());
     }
 }

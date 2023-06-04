@@ -21,12 +21,12 @@ public class MixinArmorMaterials {
 
     static {
         Path armorMaterials = Nucleoplasm.dir.resolve("enums").resolve("materials").resolve("armor");
-        if (Files.exists(armorMaterials)) try {
+        if (!Files.exists(armorMaterials)) try {
             Files.createDirectories(armorMaterials);
         } catch (IOException ignored) {}
         for (ArmorMaterials armorMaterial : field_7888) {
             ArmorMaterialsLoader loader = new ArmorMaterialsLoader(armorMaterial);
-            loader.init(Nucleoplasm.logger, armorMaterials.resolve(armorMaterial.name()));
+            loader.init(Nucleoplasm.logger, armorMaterials.resolve(armorMaterial.name() + ".json"));
         }
     }
 

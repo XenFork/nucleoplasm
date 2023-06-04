@@ -21,9 +21,14 @@ public class ItemStackLoader {
     public ItemStackLoader(ItemStack stack) {
         Item item1 = stack.getItem();
         if (item1 != null) {
-            item = Registries.ITEM.getId(item1).toString();
-            count = stack.getCount();
-            if (stack.getNbt() != null) nbt = new NbtLoader(stack.getNbt());
+            for (Item item2 : Registries.ITEM) {
+                if (item1.equals(item2)) {
+                    item = Registries.ITEM.getId(item1).toString();
+                    count = stack.getCount();
+                    if (stack.getNbt() != null) nbt = new NbtLoader(stack.getNbt());
+                    break;
+                }
+            }
         } else {
             item = "";
         }
