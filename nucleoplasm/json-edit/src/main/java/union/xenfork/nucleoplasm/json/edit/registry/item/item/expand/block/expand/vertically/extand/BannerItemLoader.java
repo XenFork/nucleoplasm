@@ -1,9 +1,9 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit;
+package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.vertically.extand;
 
 import net.minecraft.item.BannerItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.DefaultedRegistry;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.VerticallyAttachableBlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.vertically.VerticallyAttachableBlockItemLoader;
 
 /**
  * @author baka4n

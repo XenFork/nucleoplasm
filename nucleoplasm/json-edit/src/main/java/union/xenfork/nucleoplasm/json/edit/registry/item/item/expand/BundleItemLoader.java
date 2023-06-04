@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit;
+package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand;
 
 import net.minecraft.item.BundleItem;
 import net.minecraft.item.Item;

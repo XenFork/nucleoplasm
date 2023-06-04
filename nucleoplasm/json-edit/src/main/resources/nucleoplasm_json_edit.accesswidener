@@ -24,3 +24,8 @@ accessible          field       net/minecraft/item/BoatItem                     
 accessible          field       net/minecraft/recipe/Ingredient                                             entries                 [Lnet/minecraft/recipe/Ingredient$Entry;
 accessible          field       net/minecraft/recipe/Ingredient$TagEntry                                    tag                     Lnet/minecraft/registry/tag/TagKey;
 accessible          field       net/minecraft/recipe/Ingredient$StackEntry                                  stack                   Lnet/minecraft/item/ItemStack;
+accessible          field       net/minecraft/item/BucketItem                                               fluid                   Lnet/minecraft/fluid/Fluid;
+accessible          field       net/minecraft/item/MiningToolItem                                           effectiveBlocks         Lnet/minecraft/registry/tag/TagKey;
+accessible          field       net/minecraft/item/MiningToolItem                                           miningSpeed             F
+accessible          field       net/minecraft/item/DecorationItem                                           entityType              Lnet/minecraft/entity/EntityType;
+

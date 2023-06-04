@@ -21,11 +21,13 @@ public class RegistryJsonUtil {
     }
 
     public void init(Logger logger, String title) {
-        Path itemPath = registry.resolve(title);
+        Path itemPath = this.registry.resolve(title);
         for (Item item : Registries.ITEM) {
             Identifier id = Registries.ITEM.getId(item);
             logger.info(id + "-->" + item.getClass().getName());
-            Util.switchUtil(logger, item, itemPath);
+            if (id.getNamespace().equals("minecraft")) {
+                Util.switchUtil(logger, item, itemPath, Registries.ITEM);
+            }
 //            Class<? extends Item> aClass = item.getClass();
 //            var constructors = aClass.getDeclaredConstructors();
 //            Identifier id = Registries.ITEM.getId(item);

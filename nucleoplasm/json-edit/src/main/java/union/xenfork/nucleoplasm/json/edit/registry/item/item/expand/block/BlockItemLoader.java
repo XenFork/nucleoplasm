@@ -1,6 +1,7 @@
 package union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block;
 
 import com.google.gson.annotations.SerializedName;
+import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.DefaultedRegistry;
@@ -25,8 +26,8 @@ public class BlockItemLoader extends ItemLoader {
         return new BlockItemLoader(item, registry);
     }
 
-    public Identifier getBlock_identifier() {
+    public Block getBlock() {
         String[] split = block_identifier.split(":");
-        return Identifier.of(split[0], split[1]);
+        return Registries.BLOCK.get(Identifier.of(split[0], split[1]));
     }
 }

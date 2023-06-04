@@ -3,7 +3,7 @@ package union.xenfork.nucleoplasm.json.edit.registry.item.item.noInit;
 import net.minecraft.item.Item;
 import net.minecraft.item.SkullItem;
 import net.minecraft.registry.DefaultedRegistry;
-import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.VerticallyAttachableBlockItemLoader;
+import union.xenfork.nucleoplasm.json.edit.registry.item.item.expand.block.expand.vertically.VerticallyAttachableBlockItemLoader;
 
 /**
  * @author baka4n
