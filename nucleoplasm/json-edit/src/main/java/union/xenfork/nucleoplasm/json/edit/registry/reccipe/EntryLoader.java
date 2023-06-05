@@ -13,9 +13,10 @@ public class EntryLoader {
     public EntryLoader(ItemStack... stacks) {
         this.stacks = new ArrayList<>();
         for (ItemStack stack : stacks) {
-            this.stacks.add(new ItemStackLoader(stack));
+            this.stacks.add(new ItemStackLoader(stack.getItem(), stack.getCount(), stack.getNbt()));
         }
     }
+
 
     public Collection<ItemStack> getStacks() {
         return stacks.stream().map(ItemStackLoader::getStack).toList();

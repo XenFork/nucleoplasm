@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.registry.item;
+package union.xenfork.nucleoplasm.json.edit.registry.face;
 
 import net.minecraft.item.Item;
 import net.minecraft.registry.DefaultedRegistry;

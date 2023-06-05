@@ -2,7 +2,9 @@ package union.xenfork.nucleoplasm.json.edit.registry.reccipe;
 
 import com.google.gson.annotations.SerializedName;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -33,6 +35,16 @@ public class ItemStackLoader {
             item = "";
         }
 
+    }
+
+    public ItemStackLoader(ItemConvertible item, int count, NbtCompound nbt) {
+        if (item.asItem() != null) {
+            this.item = Registries.ITEM.getId(item.asItem()).toString();
+            this.count = count;
+            if (nbt != null) {
+                this.nbt = new NbtLoader(nbt);
+            }
+        }
     }
 
     public ItemStack getStack() {

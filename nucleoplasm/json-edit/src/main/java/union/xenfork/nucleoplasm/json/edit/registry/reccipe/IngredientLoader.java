@@ -1,15 +1,10 @@
 package union.xenfork.nucleoplasm.json.edit.registry.reccipe;
 
 import com.google.gson.annotations.SerializedName;
-import net.minecraft.item.ItemStack;
 import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.Registries;
 import oshi.util.tuples.Pair;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.stream.Stream;
 
 /**
  * @author baka4n
@@ -25,8 +20,10 @@ public class IngredientLoader {
             if (entry instanceof Ingredient.TagEntry tagEntry) {
                 types.add(new Pair<>(tagEntry.getClass().getName(), new TagEntryLoader(tagEntry)));
             } else if (entry instanceof Ingredient.StackEntry stackEntry) {
-                types.add(new Pair<>(stackEntry.getClass().getName(), new StakEntryLoader(stackEntry)));
+                types.add(new Pair<>(stackEntry.getClass().getName(), new StackEntryLoader(stackEntry)));
             }
         }
     }
+
+
 }
