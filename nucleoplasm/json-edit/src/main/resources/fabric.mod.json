@@ -36,5 +36,15 @@
     "fabric": "*",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "net/minecraft/item/Item": ["union/xenfork/nucleoplasm/json/edit/face/GetSettings"],
+      "net/minecraft/item/Item$Settings": ["union/xenfork/nucleoplasm/json/edit/face/GetSettingsSettings"],
+      "net/minecraft/item/FoodComponent": ["union/xenfork/nucleoplasm/json/edit/face/GetFoodComponent"],
+      "net/minecraft/resource/featuretoggle/FeatureSet": ["union/xenfork/nucleoplasm/json/edit/face/GetFeatureSet"],
+      "net/minecraft/entity/effect/StatusEffectInstance": ["union/xenfork/nucleoplasm/json/edit/face/GetStatusEffectInstance"],
+      "net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData": ["union/xenfork/nucleoplasm/json/edit/face/GetFactorCalculationData"]
+    }
   }
 }

@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import union.xenfork.nucleoplasm.json.edit.registry.RegistryJsonUtil;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -19,7 +18,7 @@ public class Nucleoplasm implements ModInitializer {
     public static final Path loot_table = dir.resolve("loot_tables");
     public static final Path other = dir.resolve("other");
     public static NJEConfigs config;
-    public static final RegistryJsonUtil jsonUtil = new RegistryJsonUtil(registry, logger);
+
 
     @Override
     public void onInitialize() {

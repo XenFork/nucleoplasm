@@ -7,39 +7,12 @@ accessible          class       net/minecraft/recipe/Ingredient$StackEntry
 accessible          method      net/minecraft/loot/LootManager                                              load                        (Lnet/minecraft/loot/LootDataType;Lnet/minecraft/resource/ResourceManager;Ljava/util/concurrent/Executor;Ljava/util/Map;)Ljava/util/concurrent/CompletableFuture;
 accessible          method      net/minecraft/util/Identifier                                               <init>                      ([Ljava/lang/String;)V
 
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      paddingDuration             I
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorStart                 F
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorTarget                F
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorCurrent               F
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      effectChangedTimestamp      I
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      factorPreviousFrame         F
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData      hadEffectLastTick           Z
-accessible          field       net/minecraft/entity/effect/StatusEffectInstance                            hiddenEffect                Lnet/minecraft/entity/effect/StatusEffectInstance;
-accessible          field       net/minecraft/item/AirBlockItem                                             block                       Lnet/minecraft/block/Block;
-accessible          field       net/minecraft/item/VerticallyAttachableBlockItem                            wallBlock                   Lnet/minecraft/block/Block;
-accessible          field       net/minecraft/item/MinecartItem                                             type                        Lnet/minecraft/entity/vehicle/AbstractMinecartEntity$Type;
-accessible          field       net/minecraft/item/OnAStickItem                                             target                      Lnet/minecraft/entity/EntityType;
-accessible          field       net/minecraft/item/OnAStickItem                                             damagePerUse                I
-accessible          field       net/minecraft/item/BoatItem                                                 type                        Lnet/minecraft/entity/vehicle/BoatEntity$Type;
-accessible          field       net/minecraft/item/BoatItem                                                 chest                       Z
-accessible          field       net/minecraft/recipe/Ingredient                                             entries                     [Lnet/minecraft/recipe/Ingredient$Entry;
-accessible          field       net/minecraft/recipe/Ingredient$TagEntry                                    tag                         Lnet/minecraft/registry/tag/TagKey;
-accessible          field       net/minecraft/recipe/Ingredient$StackEntry                                  stack                       Lnet/minecraft/item/ItemStack;
-accessible          field       net/minecraft/item/BucketItem                                               fluid                       Lnet/minecraft/fluid/Fluid;
-accessible          field       net/minecraft/item/MiningToolItem                                           effectiveBlocks             Lnet/minecraft/registry/tag/TagKey;
-accessible          field       net/minecraft/item/MiningToolItem                                           miningSpeed                 F
-accessible          field       net/minecraft/item/DecorationItem                                           entityType                  Lnet/minecraft/entity/EntityType;
-accessible          field       net/minecraft/item/HorseArmorItem                                           entityTexture               Ljava/lang/String;
-accessible          field       net/minecraft/item/EntityBucketItem                                         entityType                  Lnet/minecraft/entity/EntityType;
-accessible          field       net/minecraft/item/EntityBucketItem                                         emptyingSound               Lnet/minecraft/sound/SoundEvent;
-accessible          field       net/minecraft/item/GoatHornItem                                             instrumentTag               Lnet/minecraft/registry/tag/TagKey;
-accessible          field       net/minecraft/item/PowderSnowBucketItem                                     placeSound                  Lnet/minecraft/sound/SoundEvent;
-accessible          field       net/minecraft/item/SmithingTemplateItem                                     appliesToText               Lnet/minecraft/text/Text;
-accessible          field       net/minecraft/item/SmithingTemplateItem                                     titleText                   Lnet/minecraft/text/Text;
-accessible          field       net/minecraft/item/ArmorMaterials                                           durabilityMultiplier        I
-accessible          field       net/minecraft/item/ArmorMaterials                                           protectionAmounts           Ljava/util/EnumMap;
-accessible          field       net/minecraft/item/ArmorMaterials                                           repairIngredientSupplier    Lnet/minecraft/util/Lazy;
-accessible          field       net/minecraft/util/Lazy                                                     supplier                    Ljava/util/function/Supplier;
+
+
+
+
+
+
 
 
 
