@@ -7,7 +7,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import union.xenfork.nucleoplasm.json.edit.face.GetFoodComponent;
+import union.xenfork.nucleoplasm.json.edit.face.net.minecraft.item.GetFoodComponent;
 
 import java.util.List;
 

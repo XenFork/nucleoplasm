@@ -3,7 +3,6 @@ package union.xenfork.nucleoplasm.json.edit.mixin.net.minecraft.item;
 import net.minecraft.SharedConstants;
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.util.Rarity;
 import org.jetbrains.annotations.Nullable;
@@ -15,10 +14,10 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import union.xenfork.nucleoplasm.json.edit.face.GetSettings;
+import union.xenfork.nucleoplasm.json.edit.face.net.minecraft.item.GetItem;
 
 @Mixin(Item.class)
-public class MixinItem implements GetSettings {
+public class MixinItem implements GetItem {
     @Shadow
     @Final
     private static Logger LOGGER;

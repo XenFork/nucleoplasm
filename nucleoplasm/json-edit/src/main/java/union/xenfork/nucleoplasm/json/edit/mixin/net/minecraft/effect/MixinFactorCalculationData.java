@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import union.xenfork.nucleoplasm.json.edit.face.GetFactorCalculationData;
+import union.xenfork.nucleoplasm.json.edit.face.net.minecraft.effect.GetFactorCalculationData;
 
 @Mixin(StatusEffectInstance.FactorCalculationData.class)
 public class MixinFactorCalculationData implements GetFactorCalculationData {

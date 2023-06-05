@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.face;
+package union.xenfork.nucleoplasm.json.edit.face.net.minecraft.resource.featuretoggle;
 
 import net.minecraft.resource.featuretoggle.FeatureUniverse;
 

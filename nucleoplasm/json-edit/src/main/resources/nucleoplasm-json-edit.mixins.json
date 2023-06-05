@@ -5,12 +5,13 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "net.minecraft.effect.MixinFactorCalculationData",
-    "net.minecraft.resource.MixinJsonDataLoader",
-    "net.minecraft.loot.MixinLootManager",
     "net.minecraft.effect.MixinStatusEffectInstance",
     "net.minecraft.item.MixinFoodComponent",
     "net.minecraft.item.MixinItem",
     "net.minecraft.item.MixinItemSettings",
+    "net.minecraft.item.map.MixinMapBannerMarker",
+    "net.minecraft.loot.MixinLootManager",
+    "net.minecraft.resource.MixinJsonDataLoader",
     "net.minecraft.resource.featuretoggle.MixinFeatureSet"
   ],
   "client": [

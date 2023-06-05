@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.face;
+package union.xenfork.nucleoplasm.json.edit.face.net.minecraft.item;
 
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.effect.StatusEffectInstance;
