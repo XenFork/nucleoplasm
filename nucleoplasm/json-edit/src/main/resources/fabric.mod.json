@@ -44,7 +44,7 @@
       "net/minecraft/item/FoodComponent": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetFoodComponent"],
       "net/minecraft/resource/featuretoggle/FeatureSet": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/resource/featuretoggle/GetFeatureSet"],
       "net/minecraft/entity/effect/StatusEffectInstance": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetStatusEffectInstance"],
-      "net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetFactorCalculationData"]
+      "net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetFactorCalculationData"],
       "net/minecraft/item/map/MapBannerMarker": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/map/GetMapBannerMarker"]
     }
   }
