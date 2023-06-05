@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.face.net.minecraft.effect;
+package union.xenfork.nucleoplasm.json.edit.face.net.minecraft.entity.effect;
 
 public interface GetFactorCalculationData {
     int getPaddingDuration();

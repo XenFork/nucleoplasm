@@ -4,8 +4,8 @@
   "package": "union.xenfork.nucleoplasm.json.edit.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "net.minecraft.effect.MixinFactorCalculationData",
-    "net.minecraft.effect.MixinStatusEffectInstance",
+    "net.minecraft.entity.effect.MixinFactorCalculationData",
+    "net.minecraft.entity.effect.MixinStatusEffectInstance",
     "net.minecraft.item.MixinFoodComponent",
     "net.minecraft.item.MixinItem",
     "net.minecraft.item.MixinItemSettings",
