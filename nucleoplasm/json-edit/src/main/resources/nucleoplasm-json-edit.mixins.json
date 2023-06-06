@@ -5,8 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "register.MixinItem",
-    "register.MixinItem$MixinSettings",
     "register.MixinItems",
+    "register.MixinItemSettings",
     "resource.MixinJsonDataLoader"
   ],
   "server": [

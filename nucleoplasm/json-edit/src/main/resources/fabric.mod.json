@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "${modid}",
+  "id": "nucleoplasm_json_edit",
   "version": "${version}",
-  "name": "${modid}",
+  "name": "nucleoplasm_json_edit",
   "description": "",
   "authors": [
     "XenFork Union",
