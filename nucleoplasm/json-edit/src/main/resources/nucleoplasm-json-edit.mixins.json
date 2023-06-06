@@ -5,6 +5,8 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "net.minecraft.advancement.MixinAdvancement",
+    "net.minecraft.advancement.MixinAdvancementCriterion",
+    "net.minecraft.advancement.MixinAdvancementDisplay",
     "net.minecraft.entity.effect.MixinFactorCalculationData",
     "net.minecraft.entity.effect.MixinStatusEffectInstance",
     "net.minecraft.item.MixinFoodComponent",
