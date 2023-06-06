@@ -4,21 +4,10 @@
   "package": "union.xenfork.nucleoplasm.json.edit.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "net.minecraft.advancement.MixinAdvancement",
-    "net.minecraft.advancement.MixinAdvancementCriterion",
-    "net.minecraft.advancement.MixinAdvancementDisplay",
-    "net.minecraft.advancement.MixinAdvancementRewards",
-    "net.minecraft.entity.effect.MixinFactorCalculationData",
-    "net.minecraft.entity.effect.MixinStatusEffectInstance",
-    "net.minecraft.item.MixinFoodComponent",
-    "net.minecraft.item.MixinItemSettings",
-    "net.minecraft.item.MixinItem",
-    "net.minecraft.item.MixinItems",
-    "net.minecraft.item.map.MixinMapBannerMarker",
-    "net.minecraft.loot.MixinLootManager",
-    "net.minecraft.resource.MixinJsonDataLoader",
-    "net.minecraft.resource.featuretoggle.MixinFeatureSet",
-    "net.minecraft.resource.featuretoggle.MixinFeatureUniverse"
+    "net.minecraft.resource.MixinJsonDataLoader"
+  ],
+  "server": [
+
   ],
   "client": [
   ],
