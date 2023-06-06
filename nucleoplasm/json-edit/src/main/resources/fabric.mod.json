@@ -42,6 +42,7 @@
       "net/minecraft/advancement/Advancement": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancement"],
       "net/minecraft/advancement/AdvancementCriterion": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementCriterion"],
       "net/minecraft/advancement/AdvancementDisplay": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementDisplay"],
+      "net/minecraft/advancement/AdvancementRewards": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementRewards"],
       "net/minecraft/item/Item": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetItem"],
       "net/minecraft/item/Item$Settings": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetSettings"],
       "net/minecraft/item/FoodComponent": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetFoodComponent"],
