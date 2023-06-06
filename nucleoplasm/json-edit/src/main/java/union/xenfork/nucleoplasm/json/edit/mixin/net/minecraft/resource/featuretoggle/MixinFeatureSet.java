@@ -34,7 +34,12 @@ public class MixinFeatureSet implements GetFeatureSet {
 
     @Override
     public void setUniverse(@Nullable FeatureUniverse universe) {
-        this.universe = universe;
+        if (this.universe == null || universe == null) {
+            this.universe = universe;
+        } else {
+            this.universe.setName(universe.getName());
+
+        }
     }
 
     @Override
