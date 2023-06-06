@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.mixin.register;
+package union.xenfork.nucleoplasm.json.edit.mixin;
 
 import net.minecraft.item.FoodComponent;
 import net.minecraft.item.Item;

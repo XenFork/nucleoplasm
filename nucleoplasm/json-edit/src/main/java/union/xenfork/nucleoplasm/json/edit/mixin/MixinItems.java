@@ -1,8 +1,7 @@
-package union.xenfork.nucleoplasm.json.edit.mixin.register;
+package union.xenfork.nucleoplasm.json.edit.mixin;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import io.github.baka4n.RegisterItemGsonGen;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -11,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
-import union.xenfork.nucleoplasm.json.edit.gson.ClassGson;
 import union.xenfork.nucleoplasm.json.edit.gson.ItemGson;
 
 import java.io.BufferedWriter;

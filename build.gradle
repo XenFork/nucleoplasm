@@ -72,11 +72,11 @@ for (final def p in nucleoplasm_projects.split(",")) {
         }
 
         processResources {
+            filteringCharset charset
             inputs.property "version", version
             inputs.property "minecraft_version", alpha_version
             inputs.property "loader_version", loader_version
             inputs.property "nucleoplasm_api_version", nucleoplasm_api_dependencies_version
-            filteringCharset charset
             filesMatching("fabric.mod.json") {
                 expand "version": version,
                     "minecraft_version": alpha_version,
