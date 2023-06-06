@@ -1,32 +1,71 @@
 package union.xenfork.nucleoplasm.json.edit.mixin.register;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import io.github.baka4n.RegisterItemGsonGen;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
 
+import java.io.BufferedWriter;
+import java.io.IOException;
+import java.lang.reflect.Field;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(Items.class)
 public class MixinItems {
-    @Shadow
-    @Final
-    public static Item AIR;
-
-    @Shadow
-    @Final
-    public static Item STONE;
-    private static Map<String, Item> map = new HashMap<>();
+    private static final Gson gson =
+        new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
+    private static final Map<String, Item> map = new HashMap<>();
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void clinitReturn(CallbackInfo ci) {
-        map.put(Registries.ITEM.getId(AIR).toString(), AIR);
-        map.put(Registries.ITEM.getId(STONE).toString(), STONE);
+        for (Field field : Items.class.getFields()) {
+            field.setAccessible(true);
+            try {
+                Item o = (Item)field.get(null);
+                String string = Registries.ITEM.getId(o).toString();
+                if (!map.containsKey(string)) {
+                    map.put(string, o);
+                }
+            } catch (IllegalAccessException e) {
+                Nucleoplasm.logger.error("{} is don't load", field);
+            }
+        }
+        map.forEach((id, item) -> {
+            String pathString = id.replace(":", "/") + ".json";
+            Path itemPath = Nucleoplasm.registry.resolve("item");
+            var tPath = itemPath.resolve(pathString);
+            var tParent = tPath.getParent();
+            if (!Files.exists(tParent)) {
+                try {
+                    Files.createDirectories(tParent);
+                } catch (IOException e) {
+                    Nucleoplasm.logger.error("fail to create dir {}", tParent);
+                }
+            }
+            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(tPath)) {
+
+            } catch (IOException e) {
+                Nucleoplasm.logger.error("fail to create {}", tPath);
+            }
+            RegisterItemGsonGen gen = new RegisterItemGsonGen();
+            gen.map.put("test", "test");
+
+        });
+    }
+
+    private static Item get() {
+        return null;
     }
 }
