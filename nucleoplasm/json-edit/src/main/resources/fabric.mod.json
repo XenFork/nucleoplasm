@@ -44,6 +44,9 @@
     "loom:injected_interfaces": {
       "net/minecraft/item/Item": [
         "union/xenfork/nucleoplasm/json/edit/face/GetItem"
+      ],
+      "net/minecraft/item/Item$Settings": [
+        "union/xenfork/nucleoplasm/json/edit/face/GetItemSettings"
       ]
     }
   }

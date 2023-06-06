@@ -4,9 +4,10 @@
   "package": "union.xenfork.nucleoplasm.json.edit.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "resource.MixinJsonDataLoader",
     "register.MixinItem",
-    "register.MixinItems"
+    "register.MixinItem$MixinSettings",
+    "register.MixinItems",
+    "resource.MixinJsonDataLoader"
   ],
   "server": [
   ],
