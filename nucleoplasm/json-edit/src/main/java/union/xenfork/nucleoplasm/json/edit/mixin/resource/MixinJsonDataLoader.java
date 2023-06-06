@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.json.edit.mixin.net.minecraft.resource;
+package union.xenfork.nucleoplasm.json.edit.mixin.resource;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;

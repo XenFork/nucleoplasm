@@ -42,7 +42,10 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-
+      "net/minecraft/item/Item": [
+        "union/xenfork/nucleoplasm/json/edit/face/GetItem"
+      ]
     }
   }
+
 }

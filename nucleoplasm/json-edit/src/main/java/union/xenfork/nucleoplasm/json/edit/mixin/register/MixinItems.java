@@ -11,6 +11,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
+import union.xenfork.nucleoplasm.json.edit.gson.ClassGson;
+import union.xenfork.nucleoplasm.json.edit.gson.ItemGson;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -54,15 +56,23 @@ public class MixinItems {
                     Nucleoplasm.logger.error("fail to create dir {}", tParent);
                 }
             }
-            try (BufferedWriter bufferedWriter = Files.newBufferedWriter(tPath)) {
-
+            try (BufferedWriter bw = Files.newBufferedWriter(tPath)) {
+                ItemGson itemGson = new ItemGson(item);
+                String json = gson.toJson(itemGson);
+                bw.write(json);
+//                ClassGson classGson = new ClassGson(item);
+//                String json = gson.toJson(classGson);
+//                bw.write(json);
             } catch (IOException e) {
                 Nucleoplasm.logger.error("fail to create {}", tPath);
             }
-            RegisterItemGsonGen gen = new RegisterItemGsonGen();
-            gen.map.put("test", "test");
+
 
         });
+    }
+
+    private static void createDir() {
+
     }
 
     private static Item get() {
