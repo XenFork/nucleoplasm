@@ -73,6 +73,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
 
         processResources {
             inputs.property "version", version
+            inputs.property "modid", project.name.replace("-", "_")
             inputs.property "minecraft_version", alpha_version
             inputs.property "loader_version", loader_version
             inputs.property "nucleoplasm_api_version", nucleoplasm_api_dependencies_version
@@ -81,7 +82,8 @@ for (final def p in nucleoplasm_projects.split(",")) {
                 expand "version": version,
                     "minecraft_version": alpha_version,
                     "loader_version": loader_version,
-                    "nucleoplasm_api_version": nucleoplasm_api_dependencies_version
+                    "nucleoplasm_api_version": nucleoplasm_api_dependencies_version,
+                    "modid": project.name.replace("-", "_")
             }
         }
 

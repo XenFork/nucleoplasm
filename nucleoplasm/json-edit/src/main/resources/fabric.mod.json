@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "id": "nucleoplasm_json_edit",
+  "id": "${modid}",
   "version": "${version}",
-  "name": "nucleoplasm_json_edit",
+  "name": "${modid}",
   "description": "",
   "authors": [
     "XenFork Union",
@@ -11,7 +11,10 @@
     "Funny Developers"
   ],
   "contact": {
-    "repo": "https://github.com/XenFork/nucleoplasm"
+    "homepage": "https://github.com/XenFork",
+    "issues": "https://github.com/XenFork/nucleoplasm/issues",
+    "sources": "https://github.com/XenFork/nucleoplasm",
+    "repo": "https://github.com/ChinaWareMC/maven-repo"
   },
   "accessWidener": "nucleoplasm_json_edit.accesswidener",
   "license": "MIT",
@@ -39,18 +42,45 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/advancement/Advancement": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancement"],
-      "net/minecraft/advancement/AdvancementCriterion": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementCriterion"],
-      "net/minecraft/advancement/AdvancementDisplay": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementDisplay"],
-      "net/minecraft/advancement/AdvancementRewards": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementRewards"],
-      "net/minecraft/item/Item": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetItem"],
-      "net/minecraft/item/Item$Settings": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetSettings"],
-      "net/minecraft/item/FoodComponent": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetFoodComponent"],
-      "net/minecraft/resource/featuretoggle/FeatureSet": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/resource/featuretoggle/GetFeatureSet"],
-      "net/minecraft/resource/featuretoggle/FeatureUniverse": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/resource/featuretoggle/GetFeatureUniverse"],
-      "net/minecraft/entity/effect/StatusEffectInstance": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetStatusEffectInstance"],
-      "net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetFactorCalculationData"],
-      "net/minecraft/item/map/MapBannerMarker": ["union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/map/GetMapBannerMarker"]
+      "net/minecraft/advancement/Advancement": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancement"
+      ],
+      "net/minecraft/advancement/AdvancementCriterion": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementCriterion"
+      ],
+      "net/minecraft/advancement/AdvancementDisplay": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementDisplay"
+      ],
+      "net/minecraft/advancement/AdvancementRewards": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/advancement/GetAdvancementRewards"
+      ],
+      "net/minecraft/item/Item$Settings": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetSettings"
+      ],
+      "net/minecraft/item/Item": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetItem"
+      ],
+      "net/minecraft/item/Items": [
+        "union/xenfork/nucleoplasm/json/edit/face/Get<java.nio.file.Path>"
+      ],
+      "net/minecraft/item/FoodComponent": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/GetFoodComponent"
+      ],
+      "net/minecraft/resource/featuretoggle/FeatureSet": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/resource/featuretoggle/GetFeatureSet"
+      ],
+      "net/minecraft/resource/featuretoggle/FeatureUniverse": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/resource/featuretoggle/GetFeatureUniverse"
+      ],
+      "net/minecraft/entity/effect/StatusEffectInstance": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetStatusEffectInstance"
+      ],
+      "net/minecraft/entity/effect/StatusEffectInstance$FactorCalculationData": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/entity/effect/GetFactorCalculationData"
+      ],
+      "net/minecraft/item/map/MapBannerMarker": [
+        "union/xenfork/nucleoplasm/json/edit/face/net/minecraft/item/map/GetMapBannerMarker"
+      ]
     }
   }
 }

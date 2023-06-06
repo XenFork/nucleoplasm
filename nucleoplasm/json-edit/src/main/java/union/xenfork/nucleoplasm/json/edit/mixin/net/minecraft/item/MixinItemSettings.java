@@ -28,11 +28,10 @@ public class MixinItemSettings implements GetSettings {
     boolean fireproof;
 
     @Shadow
-    @Nullable
-    private FoodComponent foodComponent;
+    @Nullable FoodComponent foodComponent;
 
     @Shadow
-    private FeatureSet requiredFeatures;
+    FeatureSet requiredFeatures;
 
     @Override
     public int getMaxCount() {
