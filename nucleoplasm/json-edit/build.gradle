@@ -1,10 +1,10 @@
 loom {
-    runs {
-        client {
-            inherit client
-            vmArg "-Dmixin.debug.export=true"
-        }
-    }
+//    runs {
+//        client {
+//            inherit client
+//            vmArg "-Dmixin.debug.export=true"
+//        }
+//    }
     accessWidenerPath = file("src/main/resources/nucleoplasm_json_edit.accesswidener")
 }
 
