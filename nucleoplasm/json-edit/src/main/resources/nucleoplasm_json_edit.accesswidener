@@ -1,5 +1,23 @@
 accessWidener       v2          named
 accessible          method      net/minecraft/util/Identifier                                               <init>                      ([Ljava/lang/String;)V
+accessible field net/minecraft/item/Item$Settings maxCount I
+accessible field net/minecraft/item/Item$Settings maxDamage I
+accessible field net/minecraft/item/Item$Settings recipeRemainder Lnet/minecraft/item/Item;
+accessible field net/minecraft/item/Item$Settings rarity Lnet/minecraft/util/Rarity;
+accessible field net/minecraft/item/Item$Settings foodComponent Lnet/minecraft/item/FoodComponent;
+accessible field net/minecraft/item/Item$Settings fireproof Z
+accessible field net/minecraft/item/Item$Settings requiredFeatures Lnet/minecraft/resource/featuretoggle/FeatureSet;
+accessible field net/minecraft/resource/featuretoggle/FeatureSet universe Lnet/minecraft/resource/featuretoggle/FeatureUniverse;
+accessible field net/minecraft/resource/featuretoggle/FeatureSet featuresMask J
+
+
+
+
+
+
+
+
+
 
 
 

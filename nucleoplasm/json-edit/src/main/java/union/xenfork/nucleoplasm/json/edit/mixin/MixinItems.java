@@ -10,8 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
-import union.xenfork.nucleoplasm.json.edit.gson.ItemGson;
+import union.xenfork.nucleoplasm.json.edit.gson.ItemSettingsGson;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.lang.reflect.Field;
@@ -47,33 +48,29 @@ public class MixinItems {
             Path itemPath = Nucleoplasm.registry.resolve("item");
             var tPath = itemPath.resolve(pathString);
             var tParent = tPath.getParent();
-            if (!Files.exists(tParent)) {
-                try {
-                    Files.createDirectories(tParent);
+            if (!Nucleoplasm.config.containsKey("itemRegistry") || Nucleoplasm.config.get("itemRegistry") instanceof Boolean b && !b) {
+                if (!Files.exists(tParent)) {
+                    try {
+                        Files.createDirectories(tParent);
+                    } catch (IOException e) {
+                        Nucleoplasm.logger.error("fail to create dir {}", tParent);
+                    }
+                }
+                try (BufferedWriter bw = Files.newBufferedWriter(tPath)) {
+                    ItemSettingsGson settingsGson = (ItemSettingsGson) item.get();
+                    String json = gson.toJson(settingsGson);
+                    bw.write(json);
                 } catch (IOException e) {
-                    Nucleoplasm.logger.error("fail to create dir {}", tParent);
+                    Nucleoplasm.logger.error("fail to create {}", tPath);
                 }
             }
-            try (BufferedWriter bw = Files.newBufferedWriter(tPath)) {
-                ItemGson itemGson = new ItemGson(item);
-                String json = gson.toJson(itemGson);
-                bw.write(json);
-//                ClassGson classGson = new ClassGson(item);
-//                String json = gson.toJson(classGson);
-//                bw.write(json);
+            try (BufferedReader br = Files.newBufferedReader(tPath)) {
+                //noinspection unchecked
+                item.set(gson.fromJson(br, ItemSettingsGson.class));
             } catch (IOException e) {
-                Nucleoplasm.logger.error("fail to create {}", tPath);
+                Nucleoplasm.logger.error("fail to load {}", tPath);
             }
-
-
         });
-    }
-
-    private static void createDir() {
-
-    }
-
-    private static Item get() {
-        return null;
+        Nucleoplasm.config.set("itemRegistry", true);
     }
 }
