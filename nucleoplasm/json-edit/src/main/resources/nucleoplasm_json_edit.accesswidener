@@ -8,8 +8,10 @@ accessible field net/minecraft/item/Item$Settings foodComponent Lnet/minecraft/i
 accessible field net/minecraft/item/Item$Settings fireproof Z
 accessible field net/minecraft/item/Item$Settings requiredFeatures Lnet/minecraft/resource/featuretoggle/FeatureSet;
 accessible field net/minecraft/resource/featuretoggle/FeatureSet universe Lnet/minecraft/resource/featuretoggle/FeatureUniverse;
+mutable field net/minecraft/resource/featuretoggle/FeatureSet universe Lnet/minecraft/resource/featuretoggle/FeatureUniverse;
 accessible field net/minecraft/resource/featuretoggle/FeatureSet featuresMask J
-
+mutable field net/minecraft/resource/featuretoggle/FeatureSet featuresMask J
+accessible method net/minecraft/resource/LifecycledResourceManagerImpl parseResourceFilter (Lnet/minecraft/resource/ResourcePack;)Lnet/minecraft/resource/metadata/ResourceFilter;
 
 
 

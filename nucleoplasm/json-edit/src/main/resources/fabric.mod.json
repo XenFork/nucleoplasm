@@ -42,16 +42,6 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "net/minecraft/item/Item": [
-        "union/xenfork/nucleoplasm/json/edit/face/Get",
-        "union/xenfork/nucleoplasm/json/edit/face/GetSettings"
-      ],
-      "net/minecraft/item/FoodComponent": [
-        "union/xenfork/nucleoplasm/json/edit/face/Get"
-      ],
-      "net/minecraft/entity/effect/StatusEffectInstance": [
-        "union/xenfork/nucleoplasm/json/edit/face/Get"
-      ]
     }
   }
 }
