@@ -71,6 +71,10 @@ public abstract class MixinFoodComponent implements Get<FoodComponentGson> {
         fcg.meat = isMeat();
         fcg.alwaysEdible = isAlwaysEdible();
         fcg.snack = isSnack();
+        for (Pair<StatusEffectInstance, Float> statusEffect : getStatusEffects()) {
+            if (fcg.statusEffects == null) fcg.statusEffects = new ArrayList<>();
+            fcg.statusEffects.add(new Pair<>(statusEffect.getFirst()))
+        }
         fcg.statusEffects = new ArrayList<>(getStatusEffects());
         return fcg;
     }
