@@ -9,7 +9,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
-import union.xenfork.nucleoplasm.json.edit.face.Get;
 
 import java.lang.reflect.Field;
 import java.util.HashMap;
@@ -17,7 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 
 @Mixin(StatusEffects.class)
-public class MixinStatusEffects implements Get<Map<String, StatusEffect>> {
+public class MixinStatusEffects {
     private static final Map<String, StatusEffect> map = new HashMap<>();
 
     @Inject(method = "<clinit>", at = @At("RETURN"))
@@ -36,8 +35,5 @@ public class MixinStatusEffects implements Get<Map<String, StatusEffect>> {
         }
     }
 
-    @Override
-    public Map<String, StatusEffect> get() {
-        return map;
-    }
+
 }

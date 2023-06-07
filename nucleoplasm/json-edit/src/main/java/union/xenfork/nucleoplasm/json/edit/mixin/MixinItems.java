@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
-import union.xenfork.nucleoplasm.json.edit.face.Get;
 import union.xenfork.nucleoplasm.json.edit.gson.ItemSettingsGson;
 
 import java.io.BufferedReader;
@@ -23,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(Items.class)
-public class MixinItems implements Get<Map<String, Item>> {
+public class MixinItems {
     private static final Gson gson =
         new GsonBuilder()
             .setPrettyPrinting()
@@ -73,10 +72,5 @@ public class MixinItems implements Get<Map<String, Item>> {
             }
         });
         Nucleoplasm.config.set("itemRegistry", true);
-    }
-
-    @Override
-    public Map<String, Item> get() {
-        return map;
     }
 }
