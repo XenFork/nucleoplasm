@@ -1,8 +1,9 @@
 package union.xenfork.nucleoplasm_normandy_login.quickio.nnl;
 
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.quickio.utils.PlayerDB;
-import union.xenfork.nucleoplasm_normandy_login.NucleoplasmNormandyLogin;
+import union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
@@ -28,6 +29,27 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
         entity1.isLogin = false;
     }
 
+    public void register(PlayerEntity entity, String password, String verify) {
+        T entity1 = findEntity(entity);
+        if (password.equals(verify) && password.isEmpty()) {
+            entity1.password = password;
+            entity1.isLogin = true;
+            entity.sendMessage(Text.of("register success"));
+            return;
+        }
+        entity.sendMessage(Text.of("You have already registered"));
+    }
+
+    public void login(PlayerEntity entity, String password) {
+        T entity1 = findEntity(entity);
+        if (entity1.password.equals(password)) {
+            entity1.isLogin = true;
+            entity.sendMessage(Text.of("login success"));
+            return;
+        }
+        entity.sendMessage(Text.of("Wrong password"));
+    }
+
     @Override
     public void add(T t) {
         super.add(t);
@@ -37,7 +59,7 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
         try {
             collection.save(tClass.getDeclaredConstructor().newInstance(entity));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            NucleoplasmNormandyLogin.logger.error(e.getMessage());
+            NucleoplasmNormandyLoginServer.logger.error(e.getMessage());
         }
     }
 
