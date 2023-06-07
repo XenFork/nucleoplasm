@@ -8,7 +8,8 @@
     "MixinItem",
     "MixinItems",
     "MixinJsonDataLoader",
-    "MixinStatusEffectInstance"
+    "MixinStatusEffectInstance",
+    "MixinStatusEffects"
   ],
   "server": [
   ],

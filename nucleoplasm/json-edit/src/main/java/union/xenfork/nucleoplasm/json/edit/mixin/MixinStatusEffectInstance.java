@@ -66,9 +66,8 @@ public class MixinStatusEffectInstance implements Get<StatusEffectInstanceGson> 
         amplifier = gson.amplifier;
         hiddenEffect = gson.hiddenEffect;
         duration = gson.duration;
-        factorCalculationData = Optional.of(gson.factorCalculationData);
+        factorCalculationData = Optional.ofNullable(gson.factorCalculationData);
         showIcon = gson.showIcon;
         showParticles = gson.showParticles;
-
     }
 }

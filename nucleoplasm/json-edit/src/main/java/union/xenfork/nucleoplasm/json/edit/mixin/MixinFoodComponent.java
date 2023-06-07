@@ -9,9 +9,11 @@ import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
 import union.xenfork.nucleoplasm.json.edit.face.Get;
 import union.xenfork.nucleoplasm.json.edit.gson.FoodComponentGson;
+import union.xenfork.nucleoplasm.json.edit.gson.StatusEffectInstanceGson;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Mixin(FoodComponent.class)
 public abstract class MixinFoodComponent implements Get<FoodComponentGson> {
@@ -73,9 +75,8 @@ public abstract class MixinFoodComponent implements Get<FoodComponentGson> {
         fcg.snack = isSnack();
         for (Pair<StatusEffectInstance, Float> statusEffect : getStatusEffects()) {
             if (fcg.statusEffects == null) fcg.statusEffects = new ArrayList<>();
-            fcg.statusEffects.add(new Pair<>(statusEffect.getFirst()))
+            fcg.statusEffects.add(new Pair<>((StatusEffectInstanceGson) statusEffect.getFirst().get(), statusEffect.getSecond()));
         }
-        fcg.statusEffects = new ArrayList<>(getStatusEffects());
         return fcg;
     }
 
@@ -86,6 +87,10 @@ public abstract class MixinFoodComponent implements Get<FoodComponentGson> {
         meat = foodComponentGson.meat;
         alwaysEdible = foodComponentGson.alwaysEdible;
         snack = foodComponentGson.snack;
-        statusEffects = foodComponentGson.statusEffects;
+        ArrayList<Pair<StatusEffectInstance, Float>> statusEffects1 = new ArrayList<>();
+        for (Pair<StatusEffectInstanceGson, Float> statusEffect : foodComponentGson.statusEffects) {
+            statusEffects.add(new Pair<>(new StatusEffectInstance(statusEffect.getFirst().type, statusEffect.getFirst().duration, statusEffect.getFirst().amplifier, statusEffect.getFirst().ambient, statusEffect.getFirst().showParticles, statusEffect.getFirst().showIcon, statusEffect.getFirst().hiddenEffect, Optional.ofNullable(statusEffect.getFirst().factorCalculationData)), statusEffect.getSecond()));
+        }
+        statusEffects = statusEffects1;
     }
 }
