@@ -3,7 +3,6 @@ package union.xenfork.nucleoplasm.api.quickio.utils;
 import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.QuickIO;
-import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 import union.xenfork.nucleoplasm.api.quickio.GroupEntity;
 
 import java.lang.reflect.InvocationTargetException;

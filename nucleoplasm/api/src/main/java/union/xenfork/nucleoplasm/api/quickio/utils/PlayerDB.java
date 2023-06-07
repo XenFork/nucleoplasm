@@ -3,12 +3,9 @@ package union.xenfork.nucleoplasm.api.quickio.utils;
 import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.QuickIO;
-import union.xenfork.nucleoplasm.api.NucleoplasmApi;
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.Objects;
-import java.util.UUID;
 
 public class PlayerDB<T extends PlayerEntity> {
     private final DB db;
