@@ -1,11 +1,10 @@
 package union.xenfork.nucleoplasm.json.edit.gson;
 
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import org.jetbrains.annotations.Nullable;
 
 public class StatusEffectInstanceGson {
-    public StatusEffect type;
+    public String type;
     public int duration;
     public int amplifier;
     public boolean ambient;

@@ -3,6 +3,8 @@ package union.xenfork.nucleoplasm.json.edit.mixin;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffectInstance.FactorCalculationData;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -48,7 +50,7 @@ public class MixinStatusEffectInstance implements Get<StatusEffectInstanceGson> 
     @Override
     public StatusEffectInstanceGson get() {
         StatusEffectInstanceGson gson = new StatusEffectInstanceGson();
-        gson.type = type;
+        gson.type = String.valueOf(Registries.STATUS_EFFECT.getId(type));
         gson.ambient = ambient;
         gson.amplifier = amplifier;
         gson.hiddenEffect = hiddenEffect;
@@ -61,7 +63,9 @@ public class MixinStatusEffectInstance implements Get<StatusEffectInstanceGson> 
 
     @Override
     public void set(StatusEffectInstanceGson gson) {
-        type = gson.type;
+        if (!gson.type.equals("null")) {
+            type = Registries.STATUS_EFFECT.get(new Identifier(gson.type.split(":")));
+        }
         ambient = gson.ambient;
         amplifier = gson.amplifier;
         hiddenEffect = gson.hiddenEffect;

@@ -3,6 +3,8 @@ package union.xenfork.nucleoplasm.json.edit.mixin;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.FoodComponent;
+import net.minecraft.registry.Registries;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
@@ -89,7 +91,7 @@ public abstract class MixinFoodComponent implements Get<FoodComponentGson> {
         snack = foodComponentGson.snack;
         ArrayList<Pair<StatusEffectInstance, Float>> statusEffects1 = new ArrayList<>();
         for (Pair<StatusEffectInstanceGson, Float> statusEffect : foodComponentGson.statusEffects) {
-            statusEffects.add(new Pair<>(new StatusEffectInstance(statusEffect.getFirst().type, statusEffect.getFirst().duration, statusEffect.getFirst().amplifier, statusEffect.getFirst().ambient, statusEffect.getFirst().showParticles, statusEffect.getFirst().showIcon, statusEffect.getFirst().hiddenEffect, Optional.ofNullable(statusEffect.getFirst().factorCalculationData)), statusEffect.getSecond()));
+            statusEffects.add(new Pair<>(new StatusEffectInstance(Registries.STATUS_EFFECT.get(new Identifier(statusEffect.getFirst().type.split(":"))), statusEffect.getFirst().duration, statusEffect.getFirst().amplifier, statusEffect.getFirst().ambient, statusEffect.getFirst().showParticles, statusEffect.getFirst().showIcon, statusEffect.getFirst().hiddenEffect, Optional.ofNullable(statusEffect.getFirst().factorCalculationData)), statusEffect.getSecond()));
         }
         statusEffects = statusEffects1;
     }

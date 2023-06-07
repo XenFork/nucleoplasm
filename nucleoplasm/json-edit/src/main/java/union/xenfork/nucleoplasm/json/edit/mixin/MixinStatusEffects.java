@@ -13,7 +13,6 @@ import union.xenfork.nucleoplasm.json.edit.Nucleoplasm;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 @Mixin(StatusEffects.class)
 public class MixinStatusEffects {
@@ -25,7 +24,7 @@ public class MixinStatusEffects {
             field.setAccessible(true);
             try {
                 StatusEffect o = (StatusEffect)field.get(null);
-                String string = Objects.requireNonNull(Registries.STATUS_EFFECT.getId(o)).toString();
+                String string = String.valueOf(Registries.STATUS_EFFECT.getId(o));
                 if (!map.containsKey(string)) {
                     map.put(string, o);
                 }
