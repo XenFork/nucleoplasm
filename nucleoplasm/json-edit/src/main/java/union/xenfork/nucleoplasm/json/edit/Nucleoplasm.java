@@ -17,17 +17,11 @@ public class Nucleoplasm implements ModInitializer {
     public static final Path registry = dir.resolve("registry");
     public static final Path loot_table = dir.resolve("loot_tables");
     public static final Path other = dir.resolve("other");
-    public static NJEConfigs config;
+    public static NJEConfigs config = new NJEConfigs("nucleoplasm/njs/config.json");
 
 
     @Override
     public void onInitialize() {
-        config = new NJEConfigs("nucleoplasm/njs/config.json");
-        try {
-            config.create();
-        } catch (IOException e) {
-            logger.error("fail to create", e);
-        }
 
         ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
             try {

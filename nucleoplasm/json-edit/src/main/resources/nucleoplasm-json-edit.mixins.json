@@ -7,7 +7,6 @@
     "MixinFoodComponent",
     "MixinItem",
     "MixinItems",
-    "MixinItemSettings",
     "MixinJsonDataLoader"
   ],
   "server": [

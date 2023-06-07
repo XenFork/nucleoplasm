@@ -14,6 +14,8 @@ import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 
+import static union.xenfork.nucleoplasm.json.edit.Nucleoplasm.logger;
+
 public class NJEConfigs extends HashMap<String, Object> {
     public final Type t = new TypeToken<NJEConfigs>(){}.getType();
     private final Gson gson = new GsonBuilder().setPrettyPrinting().create();
@@ -21,6 +23,11 @@ public class NJEConfigs extends HashMap<String, Object> {
     public NJEConfigs(String paths) {
         super();
         this.paths = paths;
+        try {
+            create();
+        } catch (IOException e) {
+            logger.error("fail to create", e);
+        }
     }
     public NJEConfigs(String paths,List<String> ks, List<String> vs) {
         super();
@@ -70,7 +77,7 @@ public class NJEConfigs extends HashMap<String, Object> {
         super.putAll(gson.fromJson(br, t));
     }
 
-    public void create() throws IOException {
+    private void create() throws IOException {
         Path config = FabricLoader.getInstance().getConfigDir().resolve(paths);
         Path parent = config.getParent();
         if (!Files.exists(parent)) Files.createDirectories(parent);
