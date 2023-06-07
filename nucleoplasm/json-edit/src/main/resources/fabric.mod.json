@@ -39,16 +39,5 @@
     "fabric": "*",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
-  },
-  "custom": {
-    "loom:injected_interfaces": {
-      "net/minecraft/item/Item$Settings": [
-        "union/xenfork/nucleoplasm/json/edit/face/GetItemSettings"
-      ],
-      "net/minecraft/item/Item": [
-        "union/xenfork/nucleoplasm/json/edit/face/GetItem"
-      ]
-    }
   }
-
 }
