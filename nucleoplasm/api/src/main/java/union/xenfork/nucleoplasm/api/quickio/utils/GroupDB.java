@@ -25,9 +25,7 @@ public class GroupDB<T extends GroupEntity> {
             t.extends_group = extends_group;
             t.permission = permission;
             collection.save(t);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            NucleoplasmApi.logger.info(e.getMessage());
-        }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {}
     }
 
     public void remove(String group_name) {

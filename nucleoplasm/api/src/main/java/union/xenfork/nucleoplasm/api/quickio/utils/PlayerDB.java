@@ -34,9 +34,7 @@ public class PlayerDB<T extends PlayerEntity> {
             t.y = entity.getY();
             t.z = entity.getZ();
             collection.save(t);
-        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            NucleoplasmApi.logger.info(e.getMessage());
-        }
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException ignored) {}
     }
 
     public void remove(net.minecraft.entity.player.PlayerEntity entity) {
