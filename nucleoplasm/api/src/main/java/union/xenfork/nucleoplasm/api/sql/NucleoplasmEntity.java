@@ -31,6 +31,9 @@ public class NucleoplasmEntity {
     @SerializedName("is invisible")
     public boolean is_invisible;//是否隐身
 
+    @SerializedName("password")
+    public String password;
+
     public static NucleoplasmEntity of(Consumer<NucleoplasmEntity> consumer) {
         NucleoplasmEntity entity = new NucleoplasmEntity();
         consumer.accept(entity);
