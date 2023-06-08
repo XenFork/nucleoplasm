@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm_normandy_login.common;
+package union.xenfork.nucleoplasm.normandy.login.common;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.server.command.ServerCommandSource;

@@ -1,9 +1,9 @@
-package union.xenfork.nucleoplasm_normandy_login.quickio.nnl;
+package union.xenfork.nucleoplasm.normandy.login.quickio.nnl;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.quickio.utils.PlayerDB;
-import union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer;
+import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.Objects;
@@ -59,7 +59,7 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
         try {
             collection.save(tClass.getDeclaredConstructor().newInstance(entity));
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            NucleoplasmNormandyLoginServer.logger.error(e.getMessage());
+            NucleoplasmServer.logger.error(e.getMessage());
         }
     }
 

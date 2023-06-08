@@ -1,10 +1,9 @@
-package union.xenfork.nucleoplasm_normandy_login.common;
+package union.xenfork.nucleoplasm.normandy.login.common;
 
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer;
+import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.getString;
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
@@ -18,7 +17,7 @@ public class LoginCommon implements Impl {
 
     public static int login(ServerCommandSource source, String password) {
         PlayerEntity player = source.getPlayer();
-        NucleoplasmNormandyLoginServer.nnlPlayerDB.login(player, password);
+        NucleoplasmServer.nnlPlayerDB.login(player, password);
         return 1;
     }
 

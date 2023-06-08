@@ -1,19 +1,9 @@
-package union.xenfork.nucleoplasm_normandy_login.common;
+package union.xenfork.nucleoplasm.normandy.login.common;
 
-import com.github.artbits.quickio.api.Collection;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
-import com.mojang.brigadier.arguments.StringArgumentType;
-import com.mojang.brigadier.builder.ArgumentBuilder;
-import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.argument.ColorArgumentType;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
-import union.xenfork.nucleoplasm_normandy_login.quickio.nnl.NNLPlayerEntity;
-import union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer;
+import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.getString;
 import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
@@ -23,7 +13,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 public class RegisterCommon implements Impl {
 
     public static int register(ServerCommandSource source, String p, String vp) {
-        var db = NucleoplasmNormandyLoginServer.nnlPlayerDB;
+        var db = NucleoplasmServer.nnlPlayerDB;
         final PlayerEntity player = source.getPlayer();
         db.register(player, p, vp);
         return 1;

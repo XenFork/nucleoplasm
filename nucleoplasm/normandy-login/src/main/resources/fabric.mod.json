@@ -13,7 +13,7 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer"
+      "union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer"
     ]
   },
   "mixins": [

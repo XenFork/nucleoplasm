@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm_normandy_login.event;
+package union.xenfork.nucleoplasm.normandy.login.event;
 
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
@@ -8,13 +8,12 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
-import union.xenfork.nucleoplasm_normandy_login.quickio.nnl.NNLPlayerDB;
-import union.xenfork.nucleoplasm_normandy_login.quickio.nnl.NNLPlayerEntity;
-import union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer;
+import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerDB;
+import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerEntity;
 
 import java.util.List;
 
-import static union.xenfork.nucleoplasm_normandy_login.server.NucleoplasmNormandyLoginServer.nnlPlayerDB;
+import static union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer.nnlPlayerDB;
 
 public class Server {
     public static void init() {

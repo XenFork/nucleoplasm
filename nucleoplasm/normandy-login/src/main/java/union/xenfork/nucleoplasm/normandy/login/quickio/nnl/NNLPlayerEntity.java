@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm_normandy_login.quickio.nnl;
+package union.xenfork.nucleoplasm.normandy.login.quickio.nnl;
 
 import union.xenfork.nucleoplasm.api.quickio.PlayerEntity;
 
