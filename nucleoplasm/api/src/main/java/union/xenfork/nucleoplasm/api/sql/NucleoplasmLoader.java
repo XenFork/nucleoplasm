@@ -3,6 +3,7 @@ package union.xenfork.nucleoplasm.api.sql;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.io.BufferedReader;
@@ -72,6 +73,10 @@ public class NucleoplasmLoader<T extends NucleoplasmEntity> {
         } else {
             return playerEntity.get(entityName);
         }
+    }
+
+    public NucleoplasmEntity findEntity(PlayerEntity entity) {
+        return playerEntity.get(entity.getEntityName());
     }
 
     public String de(String message) {
