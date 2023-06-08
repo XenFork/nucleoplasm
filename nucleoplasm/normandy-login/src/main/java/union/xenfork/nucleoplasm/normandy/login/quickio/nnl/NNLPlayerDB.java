@@ -16,6 +16,11 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
     @Override
     public void add(PlayerEntity entity) {
         super.add(entity);
+        T entity1 = findEntity(entity);
+        entity1.isLogin = false;
+        entity1.first_join_time = entity.getServer().getTimeReference();
+        entity1.Last_join_time = entity.getServer().getTimeReference();
+        entity1.health = entity.getHealth();
     }
 
     @Override

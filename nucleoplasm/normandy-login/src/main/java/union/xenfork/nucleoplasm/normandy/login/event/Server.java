@@ -19,7 +19,6 @@ import static union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer.nnlPlay
 public class Server {
     public static void init() {
         serverStarted();
-        playerLogin();
         playerLoginOut();
         blockBreak();
         pickupItem();
@@ -99,6 +98,15 @@ public class Server {
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(player -> {
             NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
             entity.isLogin = false;
+            entity.x = player.getX();
+            entity.y = player.getY();
+            entity.z = player.getZ();
+            if (entity.health > 0) {
+                entity.health = player.getHealth();
+            } else {
+                entity.health = player.getMaxHealth();
+            }
+
         });
     }
 
@@ -110,35 +118,15 @@ public class Server {
             List<ServerPlayerEntity> players = world.getPlayers();
             for (ServerPlayerEntity player : players) {
                 NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
+                if (entity == null) {
+                    nnlPlayerDB.add(player);
+                    entity = nnlPlayerDB.findEntity(player);
+                }
                 if (!entity.isLogin) {
                     player.teleport(entity.x, entity.y, entity.z);
                     player.setHealth(entity.health);
-                    player.closeHandledScreen();
                     player.changeGameMode(GameMode.SURVIVAL);
                 }
-            }
-        });
-    }
-
-    /**
-     * @since 玩家登录服务器事件
-     */
-    private static void playerLogin() {
-        ServerPlayerEvents.LOGIN_EVENT.register(player -> {
-            NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
-            if (entity == null) {
-                nnlPlayerDB.add(player);
-                NNLPlayerEntity entity1 = nnlPlayerDB.findEntity(player);
-                entity1.isLogin = false;
-                entity1.first_join_time = player.server.getTimeReference();
-                entity1.Last_join_time = player.server.getTimeReference();
-                entity1.health = player.getHealth();
-            } else {
-                entity.x = player.getX();
-                entity.y = player.getY();
-                entity.z = player.getZ();
-                entity.Last_join_time = player.server.getTimeReference();
-                entity.health = player.getHealth();
             }
         });
     }
