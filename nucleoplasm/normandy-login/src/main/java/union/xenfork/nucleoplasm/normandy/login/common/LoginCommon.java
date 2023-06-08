@@ -22,7 +22,7 @@ public class LoginCommon {
     public static int login(ServerCommandSource source, String password) {
         PlayerEntity player = source.getPlayer();
         if (player != null) {
-            NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity((ServerPlayerEntity) player);
+            NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
             if (password.equals(entity.password)) {
                 entity.is_login = true;
 

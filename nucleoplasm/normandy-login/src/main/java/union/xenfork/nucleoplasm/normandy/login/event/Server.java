@@ -36,7 +36,7 @@ public class Server {
 
     private static void attackBlock(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         AttackBlockCallback.EVENT.register((player, world, hand, pos, direction) -> {
-            var entity = nnl.findEntity((ServerPlayerEntity) player);
+            var entity = nnl.findEntity(player);
             if (!entity.is_login) return ActionResult.FAIL;
             return ActionResult.PASS;
         });//攻击方块时候取消事件
@@ -45,7 +45,7 @@ public class Server {
     private static void attackEntity(NucleoplasmLoader<NucleoplasmEntity> nnl) {
 
         AttackEntityCallback.EVENT.register((player, world, hand, entity, hitResult) -> {
-            var nnlPlayerEntity = nnl.findEntity((ServerPlayerEntity) player);
+            var nnlPlayerEntity = nnl.findEntity(player);
             if (!nnlPlayerEntity.is_login) return ActionResult.FAIL;
             return ActionResult.PASS;
         });//没有登录之前取消攻击实体的功能
@@ -68,7 +68,7 @@ public class Server {
     private static void interactItem(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         UseItemCallback.EVENT.register((player, world, hand) -> {
 
-            var entity = nnl.findEntity((ServerPlayerEntity) player);
+            var entity = nnl.findEntity(player);
             if (!entity.is_login) return TypedActionResult.fail(player.getStackInHand(hand));
             return TypedActionResult.pass(player.getStackInHand(hand));
         });//使用物品的时候取消事件
@@ -79,7 +79,7 @@ public class Server {
      */
     private static void interactBlock(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         UseBlockCallback.EVENT.register((player, world, hand, hitResult) -> {
-            var entity = nnl.findEntity((ServerPlayerEntity) player);
+            var entity = nnl.findEntity(player);
             if (!entity.is_login) return ActionResult.FAIL;
             return ActionResult.PASS;
         });//使用方块取消事件
@@ -90,7 +90,7 @@ public class Server {
      */
     private static void blockBreak(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         PlayerBlockBreakEvents.BEFORE.register((world, player, pos, state, blockEntity) -> {
-            NucleoplasmEntity entity = nnl.findEntity((ServerPlayerEntity) player);
+            NucleoplasmEntity entity = nnl.findEntity(player);
             return entity.is_login;
         });//没有登录之前取消方块破坏
     }
@@ -145,7 +145,7 @@ public class Server {
      */
     private static void pickupItem(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         ItemEvents.PICK_ITEM_EVENT.register((player, entity) -> {
-            NucleoplasmEntity entity1 = nnl.findEntity((ServerPlayerEntity) player);
+            NucleoplasmEntity entity1 = nnl.findEntity(player);
 
             if (!entity1.is_login) {
                 return ActionResult.FAIL;
@@ -158,8 +158,6 @@ public class Server {
      * @since 服务器停止事件
      */
     private static void serverStopped(NucleoplasmLoader<NucleoplasmEntity> nnl) {
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
-            nnl.save();
-        });
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> nnl.save());
     }
 }

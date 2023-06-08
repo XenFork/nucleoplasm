@@ -21,10 +21,5 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
         Server.init(nnl);
-
-        CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
-            LoginCommon.register(dispatcher);
-            RegisterCommon.register(dispatcher);
-        });
     }
 }
