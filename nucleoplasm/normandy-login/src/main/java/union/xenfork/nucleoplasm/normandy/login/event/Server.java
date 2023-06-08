@@ -11,12 +11,9 @@ import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
-import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerEntity;
 
 import java.util.List;
 import java.util.Objects;
-
-import static union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer.nnlPlayerDB;
 
 public class Server {
     public static void init(NucleoplasmLoader<NucleoplasmEntity> nnl) {
@@ -99,6 +96,9 @@ public class Server {
         ServerPlayerEvents.LOGIN_EVENT.register(player -> {
             NucleoplasmEntity entity = nnl.findEntity(player);
             entity.login_time = Objects.requireNonNull(player.getServer()).getTimeReference();
+            entity.x = player.getX();
+            entity.y = player.getY();
+            entity.z = player.getZ();
         });
     }
 

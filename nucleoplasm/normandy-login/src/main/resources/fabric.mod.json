@@ -14,9 +14,6 @@
   "entrypoints": {
     "server": [
       "union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer"
-    ],
-    "main": [
-      "union.xenfork.nucleoplasm.normandy.login.Nucleoplasm"
     ]
   },
   "mixins": [

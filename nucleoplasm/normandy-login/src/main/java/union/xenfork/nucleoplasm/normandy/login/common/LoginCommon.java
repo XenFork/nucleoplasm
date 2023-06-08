@@ -1,6 +1,9 @@
 package union.xenfork.nucleoplasm.normandy.login.common;
 
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.context.CommandContext;
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -12,24 +15,19 @@ import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class LoginCommon {
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(literal("login")
-                .then(argument("password", greedyString())
-                        .executes(ctx -> login(ctx.getSource(), getString(ctx, "password")))));
-    }
+public class LoginCommon implements Command<ServerCommandSource> {
 
-    public static int login(ServerCommandSource source, String password) {
-        PlayerEntity player = source.getPlayer();
+    @Override
+    public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
+        PlayerEntity player = context.getSource().getPlayer();
+        String password = context.getArgument("password", String.class);
         if (player != null) {
             NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
             if (password.equals(entity.password)) {
                 entity.is_login = true;
-
             }
             player.setInvulnerable(false);
         }
         return 1;
     }
-
 }
