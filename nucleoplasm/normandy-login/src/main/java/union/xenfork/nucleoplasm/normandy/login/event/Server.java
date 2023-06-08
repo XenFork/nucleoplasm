@@ -4,6 +4,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.GameMode;
@@ -13,6 +14,7 @@ import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerDB;
 import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerEntity;
 
 import java.util.List;
+import java.util.Objects;
 
 import static union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer.nnlPlayerDB;
 
@@ -101,12 +103,6 @@ public class Server {
             entity.x = player.getX();
             entity.y = player.getY();
             entity.z = player.getZ();
-            if (entity.health > 0) {
-                entity.health = player.getHealth();
-            } else {
-                entity.health = player.getMaxHealth();
-            }
-
         });
     }
 
@@ -123,8 +119,15 @@ public class Server {
                     entity = nnlPlayerDB.findEntity(player);
                 }
                 if (!entity.isLogin) {
+                    if (Objects.requireNonNull(player.getServer()).getTimeReference() % 100 == 0) {
+                        if (entity.password.isEmpty()) {
+                            player.sendMessage(Text.of("please use /register password verify-password"));
+                        } else {
+                            player.sendMessage(Text.of("please use /login password"));
+                        }
+                    }
                     player.teleport(entity.x, entity.y, entity.z);
-                    player.setHealth(entity.health);
+                    player.setInvulnerable(true);
                     player.changeGameMode(GameMode.SURVIVAL);
                 }
             }

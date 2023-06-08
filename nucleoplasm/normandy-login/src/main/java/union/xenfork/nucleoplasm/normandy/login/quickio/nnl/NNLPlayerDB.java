@@ -39,6 +39,7 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
         if (password.equals(verify) && password.isEmpty()) {
             entity1.password = password;
             entity1.isLogin = true;
+            entity.setInvulnerable(false);
             entity.sendMessage(Text.of("register success"));
             return;
         }
@@ -47,8 +48,13 @@ public class NNLPlayerDB<T extends NNLPlayerEntity> extends PlayerDB<T> {
 
     public void login(PlayerEntity entity, String password) {
         T entity1 = findEntity(entity);
+        if (entity1.password.isEmpty()) {
+            entity.sendMessage(Text.of("please use /register password verify-password"));
+            return;
+        }
         if (entity1.password.equals(password)) {
             entity1.isLogin = true;
+            entity.setInvulnerable(false);
             entity.sendMessage(Text.of("login success"));
             return;
         }

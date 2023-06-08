@@ -10,7 +10,7 @@ import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class RegisterCommon implements Impl {
+public class RegisterCommon {
 
     public static int register(ServerCommandSource source, String p, String vp) {
         var db = NucleoplasmServer.nnlPlayerDB;
@@ -19,8 +19,7 @@ public class RegisterCommon implements Impl {
         return 1;
     }
 
-    @Override
-    public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         dispatcher.register(literal("register")
                 .then(argument("password", greedyString())
                         .then(argument("verify_password", greedyString())

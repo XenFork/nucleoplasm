@@ -10,10 +10,12 @@ import static com.mojang.brigadier.arguments.StringArgumentType.greedyString;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class LoginCommon implements Impl {
-//    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-//
-//    }
+public class LoginCommon {
+    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+        dispatcher.register(literal("login")
+                .then(argument("password", greedyString())
+                        .executes(ctx -> login(ctx.getSource(), getString(ctx, "password")))));
+    }
 
     public static int login(ServerCommandSource source, String password) {
         PlayerEntity player = source.getPlayer();
@@ -21,10 +23,4 @@ public class LoginCommon implements Impl {
         return 1;
     }
 
-    @Override
-    public void register(CommandDispatcher<ServerCommandSource> dispatcher) {
-        dispatcher.register(literal("login")
-                .then(argument("password", greedyString())
-                                .executes(ctx -> login(ctx.getSource(), getString(ctx, "password")))));
-    }
 }
