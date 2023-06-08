@@ -16,6 +16,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
+@SuppressWarnings("unused")
 public class NucleoplasmLoader<T extends NucleoplasmEntity> {
     public final Map<String, NucleoplasmEntity> playerEntity = new HashMap<>();
     public static final Path path = FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/data");
@@ -62,11 +63,16 @@ public class NucleoplasmLoader<T extends NucleoplasmEntity> {
             NucleoplasmEntity t = T.of(it -> {
                 it.uuid = entity.getUuid().toString();
                 it.fly = entity.isFallFlying();
+                it.login_time = Objects.requireNonNull(entity.getServer()).getTimeReference();
                 it.first_join_time = Objects.requireNonNull(entity.getServer()).getTimeReference();
                 it.gamemode = entity.interactionManager.getGameMode().name();
                 it.is_invincible = entity.isInvulnerable();
                 it.is_invisible = entity.isInvisible();
                 it.is_login = false;
+                it.password = "";
+                it.x = entity.getX();
+                it.y = entity.getY();
+                it.z = entity.getZ();
             });
             playerEntity.put(entityName, t);
             return t;
