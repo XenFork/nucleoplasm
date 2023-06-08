@@ -16,18 +16,20 @@ public class RegisterCommand implements Command<ServerCommandSource> {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player != null) {
             NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
-            if (entity.password.isEmpty()) {
+            if (entity.password == null || entity.password.isEmpty()) {
                 String p = context.getArgument("password", String.class);
                 String vp = context.getArgument("confirm_password", String.class);
                 if (p.equals(vp)) {
                     entity.password = p;
                     entity.is_login = true;
                     player.setInvulnerable(false);
-                    return Command.SINGLE_SUCCESS;
+                    return SINGLE_SUCCESS;
                 }
             } else {
                 throw new SimpleCommandExceptionType(new LiteralMessage("You have already registered!")).create();
             }
+        } else {
+            throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
         }
         return 0;
     }

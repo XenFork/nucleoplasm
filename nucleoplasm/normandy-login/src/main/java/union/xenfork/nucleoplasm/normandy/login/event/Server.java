@@ -1,9 +1,12 @@
 package union.xenfork.nucleoplasm.normandy.login.event;
 
+import com.mojang.brigadier.LiteralMessage;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.GameMode;
@@ -95,11 +98,8 @@ public class Server {
     private static void playerLogin(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         ServerPlayerEvents.LOGIN_EVENT.register(player -> {
             NucleoplasmEntity entity = nnl.findEntity(player);
+            entity.is_login = false;
             entity.login_time = Objects.requireNonNull(player.getServer()).getTimeReference();
-            entity.x = player.getX();
-            entity.y = player.getY();
-            entity.z = player.getZ();
-            if (entity.password == null) entity.password = "";
         });
     }
 
@@ -114,7 +114,6 @@ public class Server {
             entity.y = player.getY();
             entity.z = player.getZ();
             entity.last_logout_time = Objects.requireNonNull(player.getServer()).getTimeReference();
-
 
 //            NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
 //            entity.isLogin = false;
@@ -132,10 +131,18 @@ public class Server {
             List<ServerPlayerEntity> players = world.getPlayers();
             for (ServerPlayerEntity player : players) {
                 NucleoplasmEntity entity = nnl.findEntity(player);
+
                 if (!entity.is_login) {
                     player.teleport(entity.x, entity.y, entity.z);
                     player.setInvulnerable(true);
                     player.changeGameMode(GameMode.SURVIVAL);
+                    if (Objects.requireNonNull(player.getServer()).getTimeReference() % 996 == 0) {
+                        if (entity.password == null || entity.password.isEmpty()) {
+                            player.sendMessage(Text.literal("Please enter/register password confirm-password, for registration"));
+                        } else {
+                            player.sendMessage(Text.literal("Please enter the/login password, to log in"));
+                        }
+                    }
                 }
             }
         });
@@ -159,6 +166,11 @@ public class Server {
      * @since 服务器停止事件
      */
     private static void serverStopped(NucleoplasmLoader<NucleoplasmEntity> nnl) {
-        ServerLifecycleEvents.SERVER_STOPPED.register(server -> nnl.save());
+        ServerLifecycleEvents.SERVER_STOPPED.register(server -> {
+            nnl.playerEntity.forEach((s, nucleoplasmEntity) -> {
+                nucleoplasmEntity.is_login = false;
+            });
+            nnl.save();
+        });
     }
 }
