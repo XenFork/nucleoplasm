@@ -2,6 +2,8 @@ package union.xenfork.nucleoplasm.api.sql;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.function.Consumer;
+
 public class NucleoplasmEntity {
     @SerializedName("UUID")
     public String uuid;
@@ -29,7 +31,9 @@ public class NucleoplasmEntity {
     @SerializedName("is invisible")
     public boolean is_invisible;//是否隐身
 
-    public static NucleoplasmEntity of() {
-        return new NucleoplasmEntity();
+    public static NucleoplasmEntity of(Consumer<NucleoplasmEntity> consumer) {
+        NucleoplasmEntity entity = new NucleoplasmEntity();
+        consumer.accept(entity);
+        return entity;
     }
 }

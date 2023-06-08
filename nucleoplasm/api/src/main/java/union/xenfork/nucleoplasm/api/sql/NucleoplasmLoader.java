@@ -5,13 +5,15 @@ import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class NucleoplasmLoader<T extends NucleoplasmEntity> {
     public final Map<String, NucleoplasmEntity> playerEntity = new HashMap<>();
@@ -25,25 +27,58 @@ public class NucleoplasmLoader<T extends NucleoplasmEntity> {
         if (Files.exists(data)) try {
             Files.createDirectories(data);
         } catch (IOException ignored) {}
+        load();
     }
 
-    public void findEntity(ServerPlayerEntity entity) {
-        String entityName = entity.getEntityName();
-//        Path path1 = data.resolve(entityName + ".json");
-        if (!playerEntity.containsKey(entityName)) {
-            try {
-                T t = tClass.getDeclaredConstructor().newInstance();
-                t.uuid = entity.getUuid().toString();
-                t.fly = entity.isFallFlying();
-                t.first_join_time = Objects.requireNonNull(entity.getServer()).getTimeReference();
+    public void load() {
+        try (Stream<Path> list = Files.list(data)) {
+            for (Path p : list.toList()) {
+                try (BufferedReader br = Files.newBufferedReader(p)) {
+                    String[] split = p.toString().replace("\\", "/").split("/");
+                    playerEntity.put(de(split[split.length - 1]), gson.fromJson(br, tClass));
+                }
+            }
+        } catch (IOException ignored) {}
+    }
 
-                t.gamemode = entity.interactionManager.getGameMode().name();
-                t.is_invincible = entity.isInvulnerable();
-                t.is_invisible = entity.isInvisible();
-                t.is_login = false;
-                playerEntity.put(t,)
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                     NoSuchMethodException ignored) {}
+    public void save() {
+        for (Map.Entry<String, NucleoplasmEntity> entry : playerEntity.entrySet()) {
+            String entityName = entry.getKey();
+            NucleoplasmEntity entity = entry.getValue();
+            Path resolve = data.resolve(en(entityName));
+            if (!Files.exists(resolve)) {
+                try(BufferedWriter bw = Files.newBufferedWriter(resolve)) {
+                    String json = gson.toJson(entity);
+                    bw.write(json);
+                } catch (IOException ignored) {}
+            }
         }
+    }
+
+    public NucleoplasmEntity findEntity(ServerPlayerEntity entity) {
+        String entityName = entity.getEntityName();
+        if (!playerEntity.containsKey(entityName)) {
+            NucleoplasmEntity t = T.of(it -> {
+                it.uuid = entity.getUuid().toString();
+                it.fly = entity.isFallFlying();
+                it.first_join_time = Objects.requireNonNull(entity.getServer()).getTimeReference();
+                it.gamemode = entity.interactionManager.getGameMode().name();
+                it.is_invincible = entity.isInvulnerable();
+                it.is_invisible = entity.isInvisible();
+                it.is_login = false;
+            });
+            playerEntity.put(entityName, t);
+            return t;
+        } else {
+            return playerEntity.get(entityName);
+        }
+    }
+
+    public String de(String message) {
+        return message.replace(".json", "");
+    }
+
+    public String en(String message) {
+        return message + ".json";
     }
 }
