@@ -3,15 +3,10 @@
   "minVersion": "0.8",
   "package": "union.xenfork.nucleoplasm.normandy.login.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-
-  ],
-  "server": [
-    "MixinCommand"
-  ],
-  "client": [
-  ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "server": [
+    "MixinServerCommand"
+  ]
 }

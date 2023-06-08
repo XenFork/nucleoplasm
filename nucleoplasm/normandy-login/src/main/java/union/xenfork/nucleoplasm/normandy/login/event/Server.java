@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.player.*;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.world.GameMode;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerDB;
@@ -112,6 +113,8 @@ public class Server {
                 if (!entity.isLogin) {
                     player.teleport(entity.x, entity.y, entity.z);
                     player.setHealth(entity.health);
+                    player.closeHandledScreen();
+                    player.changeGameMode(GameMode.SURVIVAL);
                 }
             }
         });
