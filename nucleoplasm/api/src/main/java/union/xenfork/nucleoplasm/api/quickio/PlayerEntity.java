@@ -17,6 +17,5 @@ public class PlayerEntity extends IOEntity {
     public double x, y, z;
 
     public PlayerEntity() {
-
     }
 }

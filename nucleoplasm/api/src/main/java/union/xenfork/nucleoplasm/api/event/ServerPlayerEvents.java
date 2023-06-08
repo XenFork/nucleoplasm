@@ -44,7 +44,7 @@ public final class ServerPlayerEvents {
                     });
 
     public interface ServerPlayerInventory {
-        void inventory(PlayerEntity player, DefaultedList<ItemStack> mainHand, DefaultedList<ItemStack> offHand, DefaultedList<ItemStack> armor);
+        void inventory(ServerPlayerEntity player, DefaultedList<ItemStack> mainHand, DefaultedList<ItemStack> offHand, DefaultedList<ItemStack> armor);
     }
     public interface ServerPlayerLogin {
         void login(ServerPlayerEntity player);
