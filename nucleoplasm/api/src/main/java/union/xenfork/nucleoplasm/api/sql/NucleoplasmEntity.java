@@ -33,6 +33,11 @@ public class NucleoplasmEntity {
 
     @SerializedName("password")
     public String password;
+    @SerializedName("public rsa")
+    public String rsaKeyPU;
+
+    @SerializedName("private rsa")
+    public String rsaKeyPR;
 
     public static NucleoplasmEntity of(Consumer<NucleoplasmEntity> consumer) {
         NucleoplasmEntity entity = new NucleoplasmEntity();

@@ -5,12 +5,21 @@ import com.google.gson.GsonBuilder;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
+import org.apache.commons.codec.binary.Base64;
 
+import javax.crypto.Cipher;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.*;
+import java.security.interfaces.RSAPrivateCrtKey;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
+import java.security.spec.PKCS8EncodedKeySpec;
+import java.security.spec.X509EncodedKeySpec;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -73,12 +82,42 @@ public class NucleoplasmLoader<T extends NucleoplasmEntity> {
                 it.x = entity.getX();
                 it.y = entity.getY();
                 it.z = entity.getZ();
+                try {
+                    KeyPairGenerator gen = KeyPairGenerator.getInstance("RSA");
+                    gen.initialize(1024, new SecureRandom());
+                    KeyPair keyPair = gen.generateKeyPair();
+                    RSAPrivateKey privateKey = (RSAPrivateKey) keyPair.getPrivate();
+                    RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
+                    it.rsaKeyPU = new String(Base64.encodeBase64(publicKey.getEncoded()));
+                    it.rsaKeyPR = new String(Base64.encodeBase64(privateKey.getEncoded()));
+                } catch (NoSuchAlgorithmException ignored) {}
             });
             playerEntity.put(entityName, t);
             return t;
         } else {
             return playerEntity.get(entityName);
         }
+    }
+
+    public String publicCrypt(ServerPlayerEntity entity, String password) throws Exception {
+        NucleoplasmEntity entity1 = findEntity(entity);
+        byte[] decoded = Base64.decodeBase64(entity1.rsaKeyPU);
+        RSAPublicKey pubKey = (RSAPublicKey) KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(decoded));
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+        return Base64.encodeBase64String(cipher.doFinal(password.getBytes(StandardCharsets.UTF_8)));
+    }
+
+    public String decrypt(String password, ServerPlayerEntity entity) throws Exception{
+        NucleoplasmEntity entity1 = findEntity(entity);
+        byte[] inputByte = Base64.decodeBase64(password.getBytes(StandardCharsets.UTF_8));
+
+        byte[] decoded = Base64.decodeBase64(entity1.rsaKeyPR);
+        RSAPrivateKey priKey = (RSAPrivateKey) KeyFactory.getInstance("RSA").generatePrivate(new PKCS8EncodedKeySpec(decoded));
+
+        Cipher cipher = Cipher.getInstance("RSA");
+        cipher.init(Cipher.DECRYPT_MODE, priKey);
+        return new String(cipher.doFinal(inputByte));
     }
 
     public NucleoplasmEntity findEntity(PlayerEntity entity) {
