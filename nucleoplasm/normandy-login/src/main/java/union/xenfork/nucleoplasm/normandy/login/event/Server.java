@@ -10,6 +10,8 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.GameMode;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
+import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
+import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
 import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerDB;
 import union.xenfork.nucleoplasm.normandy.login.quickio.nnl.NNLPlayerEntity;
 
@@ -19,12 +21,13 @@ import java.util.Objects;
 import static union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer.nnlPlayerDB;
 
 public class Server {
-    public static void init() {
+    public static void init(NucleoplasmLoader<NucleoplasmEntity> nnl) {
+        worldTick(nnl);
         serverStarted();
         playerLoginOut();
         blockBreak();
         pickupItem();
-        worldTick();
+
         interactBlock();
         interactItem();
         interactEntity();
@@ -98,38 +101,36 @@ public class Server {
      */
     private static void playerLoginOut() {
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(player -> {
-            NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
-            entity.isLogin = false;
-            entity.x = player.getX();
-            entity.y = player.getY();
-            entity.z = player.getZ();
+//            NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
+//            entity.isLogin = false;
+//            entity.x = player.getX();
+//            entity.y = player.getY();
+//            entity.z = player.getZ();
         });
     }
 
     /**
      * @since 世界滴答事件
      */
-    private static void worldTick() {
+    private static void worldTick(NucleoplasmLoader<NucleoplasmEntity> nnl) {
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             List<ServerPlayerEntity> players = world.getPlayers();
             for (ServerPlayerEntity player : players) {
-                NNLPlayerEntity entity = nnlPlayerDB.findEntity(player);
-                if (entity == null) {
-                    nnlPlayerDB.add(player);
-                    entity = nnlPlayerDB.findEntity(player);
-                }
-                if (!entity.isLogin) {
-                    if (Objects.requireNonNull(player.getServer()).getTimeReference() % 100 == 0) {
-                        if (entity.password.isEmpty()) {
-                            player.sendMessage(Text.of("please use /register password verify-password"));
-                        } else {
-                            player.sendMessage(Text.of("please use /login password"));
-                        }
-                    }
-                    player.teleport(entity.x, entity.y, entity.z);
-                    player.setInvulnerable(true);
-                    player.changeGameMode(GameMode.SURVIVAL);
-                }
+
+                NucleoplasmEntity entity = nnl.findEntity(player);
+
+//                if (!entity.is_login) {
+//                    if (Objects.requireNonNull(player.getServer()).getTimeReference() % 100 == 0) {
+//                        if (entity..isEmpty()) {
+//                            player.sendMessage(Text.of("please use /register password verify-password"));
+//                        } else {
+//                            player.sendMessage(Text.of("please use /login password"));
+//                        }
+//                    }
+//                    player.teleport(entity.x, entity.y, entity.z);
+//                    player.setInvulnerable(true);
+//                    player.changeGameMode(GameMode.SURVIVAL);
+//                }
             }
         });
     }
