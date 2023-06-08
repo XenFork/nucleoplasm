@@ -27,6 +27,7 @@ public class LoginCommand implements Command<ServerCommandSource> {
             if (password.equals(entity.password)) {
                 entity.is_login = true;
                 player.setInvulnerable(false);
+                player.sendMessage(Text.literal("login success!"));
                 return SINGLE_SUCCESS;
             }
         } else {

@@ -7,6 +7,7 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.server.command.CommandManager;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -26,6 +27,12 @@ public class MixinCommandManager {
         if (player != null) {
             NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
             if (!(command.contains("register") || command.contains("login")) && !entity.is_login) {
+                if (entity.password == null || entity.password.isEmpty()) {
+                    player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
+                } else {
+                    player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
+                }
+
                 cir.setReturnValue(0);
             }
         }
