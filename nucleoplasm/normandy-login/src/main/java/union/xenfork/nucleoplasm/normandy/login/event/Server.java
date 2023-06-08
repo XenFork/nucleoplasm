@@ -99,6 +99,7 @@ public class Server {
             entity.x = player.getX();
             entity.y = player.getY();
             entity.z = player.getZ();
+            if (entity.password == null) entity.password = "";
         });
     }
 
