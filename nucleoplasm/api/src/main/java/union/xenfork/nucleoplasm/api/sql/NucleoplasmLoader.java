@@ -25,7 +25,7 @@ public class NucleoplasmLoader<T extends NucleoplasmEntity> {
     public NucleoplasmLoader(String dataName, Class<T> tClass) {
         data = path.resolve(dataName);
         this.tClass = tClass;
-        if (Files.exists(data)) try {
+        if (!Files.exists(data)) try {
             Files.createDirectories(data);
         } catch (IOException ignored) {}
         load();
