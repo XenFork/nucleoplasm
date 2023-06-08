@@ -3,6 +3,8 @@ package union.xenfork.nucleoplasm.normandy.login.common;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
+import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.getString;
@@ -19,7 +21,14 @@ public class LoginCommon {
 
     public static int login(ServerCommandSource source, String password) {
         PlayerEntity player = source.getPlayer();
-        NucleoplasmServer.nnlPlayerDB.login(player, password);
+        if (player != null) {
+            NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity((ServerPlayerEntity) player);
+            if (password.equals(entity.password)) {
+                entity.is_login = true;
+
+            }
+            player.setInvulnerable(false);
+        }
         return 1;
     }
 
