@@ -17,6 +17,9 @@
   "icon": "assets/nucleoplasm_api/icon.png",
   "environment": "*",
   "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.api.NucleoplasmServerTest"
+    ]
   },
   "mixins": [
     "nucleoplasm_api.mixins.json"
