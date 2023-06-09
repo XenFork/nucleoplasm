@@ -19,13 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.command.level.server.NucleoplasmCommandLevelServer"
-    ],
-    "client": [
-      "union.xenfork.nucleoplasm.command.level.client.NucleoplasmCommandLevelClient"
-    ],
-    "main": [
-      "union.xenfork.nucleoplasm.command.level.NucleoplasmCommandLevel"
+      "union.xenfork.nucleoplasm.command.level.NucleoplasmServer"
     ]
   },
   "mixins": [
@@ -36,5 +30,10 @@
     "fabric": "*",
     "minecraft": "${minecraft_version}",
     "nucleoplasm_api": "${nucleoplasm_api_version}-${minecraft_version}"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+      "union/xenfork/nucleoplasm/api/config/Config": ["union/xenfork/nucleoplasm/command/level/face/GetT"]
+    }
   }
 }

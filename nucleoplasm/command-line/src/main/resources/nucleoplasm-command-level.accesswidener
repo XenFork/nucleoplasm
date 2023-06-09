@@ -5,4 +5,5 @@ accessible field net/minecraft/server/command/AdvancementCommand$Selection after
 accessible field net/minecraft/server/command/AdvancementCommand$Selection before Z
 accessible method net/minecraft/server/command/AdvancementCommand$Operation getCommandPrefix ()Ljava/lang/String;
 accessible method net/minecraft/server/command/AdvancementCommand$Operation processEachCriterion (Lnet/minecraft/server/network/ServerPlayerEntity;Lnet/minecraft/advancement/Advancement;Ljava/lang/String;)Z
+accessible field union/xenfork/nucleoplasm/api/config/Config t Lunion/xenfork/nucleoplasm/api/config/ConfigSerializes;
 #accessible method net/minecraft/server/command/AdvancementCommand executeAdvancement (Lnet/minecraft/server/command/ServerCommandSource;Ljava/util/Collection;Lnet/minecraft/server/command/AdvancementCommand$Operation;Ljava/util/Collection;)I

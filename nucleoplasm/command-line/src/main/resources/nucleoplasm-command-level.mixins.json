@@ -3,9 +3,8 @@
   "minVersion": "0.8",
   "package": "union.xenfork.nucleoplasm.command.level.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
-  ],
-  "client": [
+  "server": [
+    "MixinConfig"
   ],
   "injectors": {
     "defaultRequire": 1
