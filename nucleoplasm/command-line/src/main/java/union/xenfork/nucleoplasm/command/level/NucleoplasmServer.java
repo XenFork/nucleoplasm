@@ -8,7 +8,7 @@ import union.xenfork.nucleoplasm.api.config.Config;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 public final class NucleoplasmServer implements DedicatedServerModInitializer {
-    public static final Config config = new Config("nucleoplasm/command/line/config.data");
+//    public static final Config config = new Config("nucleoplasm/command/line/config.data");
 
     @Override
     public void onInitializeServer() {
