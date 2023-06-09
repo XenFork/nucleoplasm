@@ -10,6 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
+import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class ChangeCommand implements Command<ServerCommandSource> {
     @Override
@@ -19,7 +20,7 @@ public class ChangeCommand implements Command<ServerCommandSource> {
         String new_password = context.getArgument("new_password", String.class);
         if (player != null) {
             NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
-            if (entity.password.equals(password)) {
+            if (entity.password.equals(LockUtil.rightmove(password))) {
                 entity.password = new_password;
                 player.sendMessage(Text.literal("You have changed the password, please enter the password to try"));
                 entity.is_login = false;

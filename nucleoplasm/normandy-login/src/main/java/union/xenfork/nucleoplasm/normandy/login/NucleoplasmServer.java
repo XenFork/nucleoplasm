@@ -10,6 +10,7 @@ import union.xenfork.nucleoplasm.normandy.login.command.ChangeCommand;
 import union.xenfork.nucleoplasm.normandy.login.command.LoginCommand;
 import union.xenfork.nucleoplasm.normandy.login.command.LogoutCommand;
 import union.xenfork.nucleoplasm.normandy.login.command.RegisterCommand;
+import union.xenfork.nucleoplasm.normandy.login.config.CfgImpl;
 import union.xenfork.nucleoplasm.normandy.login.event.Server;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
@@ -20,7 +21,7 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
     public static final String mod_id = "nucleoplasm_normandy_login";
     public static final Logger logger = LoggerFactory.getLogger(mod_id);
     public static final NucleoplasmLoader<NucleoplasmEntity> nnl = new NucleoplasmLoader<>("login", NucleoplasmEntity.class);
-
+    public static final CfgImpl cfg = new CfgImpl();
     @Override
     public void onInitializeServer() {
         Server.init(nnl);

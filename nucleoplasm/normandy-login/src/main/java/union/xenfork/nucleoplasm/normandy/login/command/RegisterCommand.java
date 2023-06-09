@@ -10,6 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
+import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class RegisterCommand implements Command<ServerCommandSource> {
     @Override
@@ -21,7 +22,7 @@ public class RegisterCommand implements Command<ServerCommandSource> {
                 String p = context.getArgument("password", String.class);
                 String vp = context.getArgument("confirm_password", String.class);
                 if (p.equals(vp)) {
-                    entity.password = p;
+                    entity.password = LockUtil.rightmove(p);
                     entity.is_login = true;
                     player.setInvulnerable(false);
                     player.sendMessage(Text.literal("register success!"));

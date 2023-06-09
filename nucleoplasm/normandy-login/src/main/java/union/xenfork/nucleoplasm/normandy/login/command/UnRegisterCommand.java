@@ -10,6 +10,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
+import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class UnRegisterCommand implements Command<ServerCommandSource> {
     @Override
@@ -18,7 +19,7 @@ public class UnRegisterCommand implements Command<ServerCommandSource> {
         String password = context.getArgument("password", String.class);
         if (player != null) {
             NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
-            if (entity.password.equals(password)) {
+            if (entity.password.equals(LockUtil.rightmove(password))) {
                 entity.password = "";
                 entity.is_login = false;
                 return SINGLE_SUCCESS;

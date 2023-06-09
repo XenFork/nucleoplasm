@@ -14,6 +14,7 @@ import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
+import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import java.util.List;
 import java.util.Objects;
@@ -170,6 +171,7 @@ public class Server {
             nnl.playerEntity.forEach((s, nucleoplasmEntity) -> {
                 nucleoplasmEntity.is_login = false;
             });
+            NucleoplasmServer.cfg.save();
             nnl.save();
         });
     }

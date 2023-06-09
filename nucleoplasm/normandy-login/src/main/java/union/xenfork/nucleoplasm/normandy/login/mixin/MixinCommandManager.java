@@ -18,7 +18,7 @@ import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 @Mixin(CommandManager.class)
 public class MixinCommandManager {
-    @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/CommandDispatcher;execute(Lcom/mojang/brigadier/ParseResults;)I"), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "execute", at = @At(value = "INVOKE", target = "Lcom/mojang/brigadier/CommandDispatcher;execute(Lcom/mojang/brigadier/ParseResults;)I", remap = false), cancellable = true, locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void execute(ParseResults<ServerCommandSource> parseResults,
                          String command,
                          CallbackInfoReturnable<Integer> cir,

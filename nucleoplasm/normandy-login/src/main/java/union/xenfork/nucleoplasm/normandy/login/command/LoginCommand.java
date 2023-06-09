@@ -11,6 +11,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
+import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class LoginCommand implements Command<ServerCommandSource> {
     @Override
@@ -25,7 +26,7 @@ public class LoginCommand implements Command<ServerCommandSource> {
             if (entity.password == null || entity.password.isEmpty()) {
                 throw new SimpleCommandExceptionType(new LiteralMessage("You're not registered yet!")).create();
             }
-            if (password.equals(entity.password)) {
+            if (LockUtil.rightmove(password).equals(entity.password)) {
                 entity.is_login = true;
                 player.setInvulnerable(false);
                 player.sendMessage(Text.literal("login success!"));
