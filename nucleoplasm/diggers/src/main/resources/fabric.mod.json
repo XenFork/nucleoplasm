@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "nucleoplasm_diggers",
+  "version": "${version}",
+  "name": "nucleoplasm_diggers",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/baka4n/nucleoplasm_normandy_login"
+  },
+  "license": "MIT",
+  "icon": "assets/nucleoplasm_diggers/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.diggers.NucleoplasmServer"
+    ]
+  },
+  "mixins": [
+    "nucleoplasm-diggers.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "fabric-api": "*",
+    "minecraft": "${minecraft_version}",
+    "nucleoplasm_api": "${nucleoplasm_api_version}-${minecraft_version}"
+  }
+}
