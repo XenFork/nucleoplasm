@@ -3,6 +3,7 @@ package union.xenfork.nucleoplasm.normandy.login.mixin;
 import com.github.artbits.quickio.api.Collection;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
@@ -162,15 +163,15 @@ public abstract class MixinSQL {
         } catch (IllegalAccessException | NoSuchFieldException ignored) {}
     }
 
-    @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
-    private void pickupItem(PlayerEntity entity,
-                            CallbackInfo ci,
+    @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void pickupItem(PlayerEntity player,
+                            ItemEntity entity,
+                            CallbackInfoReturnable<ActionResult> cir,
                             Collection<Entity> collection,
                             Entity one) {
         try {
             boolean is_login = (boolean) one.getClass().getDeclaredField("is_login").get(one);
-            if (!is_login) 
-        } catch (IllegalAccessException | NoSuchFieldException ignored) {
-        }
+            if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+        } catch (IllegalAccessException | NoSuchFieldException ignored) {}
     }
 }
