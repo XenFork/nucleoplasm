@@ -9,7 +9,6 @@
   "server": [
     "MixinCommandManager",
     "MixinEntity",
-    "MixinSQL",
-    "MixinNucleoplasmServer"s
+    "MixinSQL"
   ]
 }

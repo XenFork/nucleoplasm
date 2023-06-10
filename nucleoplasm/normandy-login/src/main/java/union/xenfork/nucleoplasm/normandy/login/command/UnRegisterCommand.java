@@ -10,6 +10,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
 import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class UnRegisterCommand implements Command<ServerCommandSource> {
@@ -18,20 +19,17 @@ public class UnRegisterCommand implements Command<ServerCommandSource> {
         ServerPlayerEntity player = context.getSource().getPlayer();
         String password = context.getArgument("password", String.class);
         if (player != null) {
-            Entity entity = NucleoplasmServer.impl.find(player);
-            try {
-                String p = (String) entity.getClass().getDeclaredField("password").get(entity);
-                if (p.equals(LockUtil.rightmove(password))) {
-                    entity.getClass().getDeclaredField("password").set(entity, "");
-                    entity.getClass().getDeclaredField("is_login").set(entity, false);
-                    return SINGLE_SUCCESS;
-                } else {
-                    throw new SimpleCommandExceptionType(new LiteralMessage("Wrong password!")).create();
-                }
-            } catch (IllegalAccessException | NoSuchFieldException ignored) {}
+            var entity = (EntityAccessor)NucleoplasmServer.impl.find(player);
+            String p = entity.getPassword();
+            if (p.equals(LockUtil.rightmove(password))) {
+                entity.setPassword("");
+                entity.setIsLogin(false);
+                return SINGLE_SUCCESS;
+            } else {
+                throw new SimpleCommandExceptionType(new LiteralMessage("Wrong password!")).create();
+            }
         } else {
             throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
         }
-        return 0;
     }
 }
