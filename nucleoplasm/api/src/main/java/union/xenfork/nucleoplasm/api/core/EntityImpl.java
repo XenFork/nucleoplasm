@@ -41,7 +41,6 @@ public class EntityImpl implements SQLInterface {
     public Entity find(PlayerEntity player) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return one;
     }
@@ -50,7 +49,6 @@ public class EntityImpl implements SQLInterface {
     public Entity find(ServerPlayerEntity player) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return one;
     }
@@ -76,7 +74,7 @@ public class EntityImpl implements SQLInterface {
         if (one == null) {
             create(entity);
             one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        } else if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        }
         collection.save(one);
     }
 
@@ -84,7 +82,6 @@ public class EntityImpl implements SQLInterface {
     public void logout(ServerPlayerEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
     }
 
@@ -92,7 +89,6 @@ public class EntityImpl implements SQLInterface {
     public void tick(ServerPlayerEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
     }
 
@@ -100,7 +96,6 @@ public class EntityImpl implements SQLInterface {
     public ActionResult attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return ActionResult.PASS;
     }
@@ -109,7 +104,6 @@ public class EntityImpl implements SQLInterface {
     public ActionResult attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return ActionResult.PASS;
     }
@@ -118,7 +112,6 @@ public class EntityImpl implements SQLInterface {
     public ActionResult interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return ActionResult.PASS;
     }
@@ -127,7 +120,6 @@ public class EntityImpl implements SQLInterface {
     public TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return TypedActionResult.pass(player.getStackInHand(hand));
     }
@@ -136,7 +128,6 @@ public class EntityImpl implements SQLInterface {
     public ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return ActionResult.PASS;
     }
@@ -145,7 +136,6 @@ public class EntityImpl implements SQLInterface {
     public boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
         return true;
     }
@@ -154,7 +144,6 @@ public class EntityImpl implements SQLInterface {
     public ActionResult pickupItem(PlayerEntity player, ItemEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
         return ActionResult.PASS;
     }
