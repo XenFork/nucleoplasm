@@ -12,6 +12,8 @@ import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
+
+
     @Inject(method = "dropItem", at = @At("HEAD"))
     private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir) {
         ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;

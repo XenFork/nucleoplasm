@@ -11,11 +11,14 @@ import union.xenfork.nucleoplasm.api.event.ItemEvents;
 
 @Mixin(ItemEntity.class)
 public class ItemEntityMixin {
-    @Inject(method = "onPlayerCollision", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "onPlayerCollision", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/ItemEntity;getStack()Lnet/minecraft/item/ItemStack;"), cancellable = true)
     private void pickupItem(PlayerEntity player, CallbackInfo ci) {
-        ActionResult result = ItemEvents.PICK_ITEM_EVENT.invoker().interact(player, (ItemEntity) (Object) this);
-        if (result == ActionResult.FAIL) {
-            ci.cancel();
+        if (player != null) {
+            ActionResult result = ItemEvents.PICK_ITEM_EVENT.invoker().interact(player, (ItemEntity) (Object) this);
+            if (result == ActionResult.FAIL) {
+                ci.cancel();
+            }
         }
+
     }
 }
