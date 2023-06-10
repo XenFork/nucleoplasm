@@ -22,10 +22,12 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         PlayerBlockBreakEvents.BEFORE.register(impl::blockBreak);
         ServerPlayerEvents.LOGIN_EVENT.register(impl::login);
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(impl::logout);
+        ServerPlayerEvents.DROP_ITEM_EVENT.register(impl::dropItem);
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
         });
+
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
     }
 }

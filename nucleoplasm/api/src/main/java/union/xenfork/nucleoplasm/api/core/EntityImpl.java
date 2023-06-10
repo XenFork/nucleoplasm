@@ -143,7 +143,15 @@ public class EntityImpl implements SQLInterface {
     @Override
     public ActionResult pickupItem(PlayerEntity player, ItemEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        collection.save(one);
+        return ActionResult.PASS;
+    }
+
+    @Override
+    public ActionResult dropItem(ServerPlayerEntity player, ItemStack stack) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
         collection.save(one);
         return ActionResult.PASS;
     }

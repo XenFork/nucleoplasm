@@ -39,4 +39,5 @@ public interface SQLInterface {
     ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult);
     boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity);
     ActionResult pickupItem(PlayerEntity player, ItemEntity entity);
+    ActionResult dropItem(ServerPlayerEntity player, ItemStack stack);
 }

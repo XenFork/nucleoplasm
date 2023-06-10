@@ -54,6 +54,6 @@ public final class ServerPlayerEvents {
     }
 
     public interface DropItem {
-        ActionResult interact(PlayerEntity player, ItemStack stack);
+        ActionResult interact(ServerPlayerEntity player, ItemStack stack);
     }
 }
