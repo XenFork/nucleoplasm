@@ -36,10 +36,22 @@ public class EntityImpl implements SQLInterface {
         db = QuickIO.usingDB(config);
     }
 
+    @Override
+    public Entity find(PlayerEntity player) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
+        collection.save(one);
+        return one;
+    }
 
     @Override
-    public void save() {
-
+    public Entity find(ServerPlayerEntity player) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
+        collection.save(one);
+        return one;
     }
 
     @Override
@@ -62,7 +74,6 @@ public class EntityImpl implements SQLInterface {
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
         if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
-
     }
 
     @Override

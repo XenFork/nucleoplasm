@@ -18,7 +18,8 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public interface SQLInterface {
-    void save();
+    union.xenfork.nucleoplasm.api.core.Entity find(PlayerEntity player);
+    union.xenfork.nucleoplasm.api.core.Entity find(ServerPlayerEntity player);
     void close(MinecraftServer server);
     void create(ServerPlayerEntity entity);
     //玩家登录
