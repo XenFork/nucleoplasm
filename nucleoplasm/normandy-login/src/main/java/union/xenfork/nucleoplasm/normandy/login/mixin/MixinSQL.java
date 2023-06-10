@@ -48,6 +48,12 @@ public abstract class MixinSQL implements EntityImplAccess {
         collection.save(entity);
     }
 
+    @Inject(method = "dropItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void dropItem(ServerPlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+        boolean is_login = ((EntityAccessor) one).getIsLogin();
+        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    }
+
     @Inject(method = "attackBlock", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
