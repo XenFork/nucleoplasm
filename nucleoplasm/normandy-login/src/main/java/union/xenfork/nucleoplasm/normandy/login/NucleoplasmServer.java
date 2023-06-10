@@ -2,8 +2,10 @@ package union.xenfork.nucleoplasm.normandy.login;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.loader.api.FabricLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
 import union.xenfork.nucleoplasm.normandy.login.command.ChangeCommand;
@@ -22,6 +24,7 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
     public static final Logger logger = LoggerFactory.getLogger(mod_id);
     public static final NucleoplasmLoader<NucleoplasmEntity> nnl = new NucleoplasmLoader<>("login", NucleoplasmEntity.class);
     public static final CfgImpl cfg = new CfgImpl();
+    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     @Override
     public void onInitializeServer() {
         Server.init(nnl);
