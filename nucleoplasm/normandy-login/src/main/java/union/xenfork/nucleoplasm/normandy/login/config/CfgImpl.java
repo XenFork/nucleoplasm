@@ -1,17 +1,11 @@
 package union.xenfork.nucleoplasm.normandy.login.config;
 
 import net.fabricmc.loader.api.FabricLoader;
-import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
-import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
-import java.util.function.Function;
 
 import static union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader.gson;
 

@@ -5,12 +5,9 @@ import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.context.CommandContext;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class LoginCommand implements Command<ServerCommandSource> {

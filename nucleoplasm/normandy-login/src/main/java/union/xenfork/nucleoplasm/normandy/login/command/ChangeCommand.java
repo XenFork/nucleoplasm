@@ -8,8 +8,8 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class ChangeCommand implements Command<ServerCommandSource> {
@@ -19,7 +19,7 @@ public class ChangeCommand implements Command<ServerCommandSource> {
         String password = context.getArgument("old_password", String.class);
         String new_password = context.getArgument("new_password", String.class);
         if (player != null) {
-            NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
+            NucleoplasmServer.impl.db
             if (entity.password.equals(LockUtil.rightmove(password))) {
                 entity.password = new_password;
                 player.sendMessage(Text.literal("You have changed the password, please enter the password to try"));

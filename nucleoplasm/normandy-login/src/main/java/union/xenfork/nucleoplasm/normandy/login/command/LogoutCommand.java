@@ -7,9 +7,7 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 public class LogoutCommand implements Command<ServerCommandSource> {
     @Override

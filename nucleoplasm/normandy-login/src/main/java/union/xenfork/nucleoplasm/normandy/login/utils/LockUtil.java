@@ -1,7 +1,5 @@
 package union.xenfork.nucleoplasm.normandy.login.utils;
 
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
-
 public class LockUtil {
     public static String reChange(String from) {
         char[] froms = from.toCharArray();

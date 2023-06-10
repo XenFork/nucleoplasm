@@ -1,7 +1,5 @@
 package union.xenfork.nucleoplasm.normandy.login.event;
 
-import com.mojang.brigadier.LiteralMessage;
-import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
@@ -14,7 +12,6 @@ import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmLoader;
-import union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer;
 
 import java.util.List;
 import java.util.Objects;

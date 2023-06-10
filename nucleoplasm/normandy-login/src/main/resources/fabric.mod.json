@@ -12,9 +12,6 @@
   "icon": "assets/nucleoplasm_normandy_login/icon.png",
   "environment": "*",
   "entrypoints": {
-    "server": [
-      "union.xenfork.nucleoplasm.normandy.login.NucleoplasmServer"
-    ]
   },
   "mixins": [
     "nucleoplasm-normandy-login.mixins.json"
@@ -25,5 +22,9 @@
     "fabric-api": "*",
     "minecraft": "${minecraft_version}",
     "nucleoplasm_api": "${nucleoplasm_api_version}-${minecraft_version}"
+  },
+  "custom": {
+    "loom:injected_interfaces": {
+    }
   }
 }
