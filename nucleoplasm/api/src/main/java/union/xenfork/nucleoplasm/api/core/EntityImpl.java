@@ -8,8 +8,8 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.server.network.ServerPlayerEntity;
 
 import java.nio.file.Path;
-import java.util.List;
 
+@SuppressWarnings("DuplicatedCode")
 public class EntityImpl implements SQLInterface {
     private final DB db;
 
@@ -49,10 +49,75 @@ public class EntityImpl implements SQLInterface {
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
         if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
+
     }
 
     @Override
     public void logout(ServerPlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void tick(ServerPlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void attackBlock(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void attackEntity(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void interactEntity(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void interactItem(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void interactBlock(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void blockBreak(PlayerEntity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        collection.save(one);
+    }
+
+    @Override
+    public void pickupItem(PlayerEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
         if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
