@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import union.xenfork.nucleoplasm.api.NucleoplasmServer;
+import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 
 @Mixin(CommandManager.class)
@@ -21,16 +23,19 @@ public class MixinCommandManager {
                          ServerCommandSource serverCommandSource) {
         ServerPlayerEntity player = parseResults.getContext().getSource().getPlayer();
         if (player != null) {
-            NucleoplasmEntity entity = NucleoplasmServer.nnl.findEntity(player);
-            if (!(command.contains("register") || command.contains("login")) && !entity.is_login) {
-                if (entity.password == null || entity.password.isEmpty()) {
-                    player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
-                } else {
-                    player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
+            Entity entity = NucleoplasmServer.impl.find(player);
+            try {
+                boolean is_login = (boolean) entity.getClass().getDeclaredField("is_login").get(entity);
+                if (!(command.contains("register") || command.contains("login")) && !is_login) {
+                    String password = (String) entity.getClass().getDeclaredField("password").get(entity);
+                    if (password == null || password.isEmpty()) {
+                        player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
+                    } else {
+                        player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
+                    }
+                    cir.setReturnValue(0);
                 }
-
-                cir.setReturnValue(0);
-            }
+            } catch (IllegalAccessException | NoSuchFieldException ignored) {}
         }
 
     }
