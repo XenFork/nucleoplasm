@@ -1,6 +1,7 @@
 package union.xenfork.nucleoplasm.normandy.login.mixin;
 
 import com.github.artbits.quickio.api.Collection;
+import com.github.artbits.quickio.api.DB;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -28,14 +30,23 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccess;
 
 import java.util.Objects;
 
 @Debug(export = true)
 @Mixin(value = EntityImpl.class, remap = false)
-public abstract class MixinSQL {
+public abstract class MixinSQL implements EntityImplAccess {
     @Shadow
     public abstract void create(ServerPlayerEntity entity);
+
+    @Shadow @Final private DB db;
+
+    @Override
+    public void save(Entity entity) {
+        Collection<Entity> collection = db.collection(Entity.class);
+        collection.save(entity);
+    }
 
     @Inject(method = "attackBlock", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
@@ -118,7 +129,7 @@ public abstract class MixinSQL {
                        CallbackInfo ci,
                        Collection<Entity> collection,
                        Entity one) {
-        var accessor = ((EntityAccessor) player);
+        var accessor = ((EntityAccessor) one);
         accessor.setIsLogin(false);
         accessor.setX(player.getX());
         accessor.setY(player.getY());
@@ -130,7 +141,7 @@ public abstract class MixinSQL {
                         CallbackInfo ci,
                         Collection<Entity> collection,
                         Entity one) {
-        var accessor = ((EntityAccessor) player);
+        var accessor = ((EntityAccessor) one);
         accessor.setIsLogin(false);
         accessor.setX(player.getX());
         accessor.setY(player.getY());

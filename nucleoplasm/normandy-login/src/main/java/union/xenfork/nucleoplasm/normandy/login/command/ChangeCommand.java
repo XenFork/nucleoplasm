@@ -13,6 +13,7 @@ import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccess;
 import union.xenfork.nucleoplasm.normandy.login.mixin.MixinEntity;
 import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
@@ -25,6 +26,7 @@ public class ChangeCommand implements Command<ServerCommandSource> {
         String password = context.getArgument("old_password", String.class);
         String new_password = context.getArgument("new_password", String.class);
         if (player != null) {
+            var impl = (EntityImplAccess) NucleoplasmServer.impl;
             var entity = (EntityAccessor)NucleoplasmServer.impl.find(player);
             String p = entity.getPassword();
             if (p.equals(password)) {
@@ -32,6 +34,7 @@ public class ChangeCommand implements Command<ServerCommandSource> {
 
                 player.sendMessage(Text.literal("You have changed the password, please enter the password to try"));
                 entity.setIsLogin(false);
+                impl.save((Entity) entity);
                 return SINGLE_SUCCESS;
             } else {
                 throw new SimpleCommandExceptionType(new LiteralMessage("Wrong password!")).create();
