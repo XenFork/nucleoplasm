@@ -6,5 +6,6 @@ import union.xenfork.nucleoplasm.api.core.Entity;
 @Mixin(Entity.class)
 public class MixinEntity {
     public boolean is_login;
+    public String password;
 
 }

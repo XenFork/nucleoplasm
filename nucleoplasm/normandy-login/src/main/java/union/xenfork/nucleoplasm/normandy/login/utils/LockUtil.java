@@ -13,8 +13,8 @@ public class LockUtil {
     }
 
     public static String leftMove(String from) {
-        String first = from.substring(0, NucleoplasmServer.cfg.entity.i);
-        String second = from.substring(NucleoplasmServer.cfg.entity.i);
+        String first = from.substring(0, 3);
+        String second = from.substring(3);
         first = reChange(first);
         second = reChange(second);
         from = first + second;
@@ -23,12 +23,12 @@ public class LockUtil {
     }
 
     public static String rightmove(String from) {
-       from = reChange(from);
-        String first = from.substring(0, NucleoplasmServer.cfg.entity.i);
-        String second = from.substring(NucleoplasmServer.cfg.entity.i);
+        from = reChange(from);
+        String first = from.substring(0, 3);
+        String second = from.substring(3);
         first = reChange(first);
         second = reChange(second);
-        first = first + second;
+        from = first + second;
         return from;
     }
 }
