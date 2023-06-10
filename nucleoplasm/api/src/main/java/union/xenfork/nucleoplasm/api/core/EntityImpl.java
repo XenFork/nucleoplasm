@@ -4,8 +4,21 @@ import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.Config;
 import com.github.artbits.quickio.core.QuickIO;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.hit.EntityHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
 
@@ -30,7 +43,7 @@ public class EntityImpl implements SQLInterface {
     }
 
     @Override
-    public void close() {
+    public void close(MinecraftServer server) {
         db.close();
     }
 
@@ -69,51 +82,57 @@ public class EntityImpl implements SQLInterface {
     }
 
     @Override
-    public void attackBlock(PlayerEntity entity) {
+    public ActionResult attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return ActionResult.PASS;
     }
 
     @Override
-    public void attackEntity(PlayerEntity entity) {
+    public ActionResult attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return ActionResult.PASS;
     }
 
     @Override
-    public void interactEntity(PlayerEntity entity) {
+    public ActionResult interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return ActionResult.PASS;
     }
 
     @Override
-    public void interactItem(PlayerEntity entity) {
+    public TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return TypedActionResult.pass(player.getStackInHand(hand));
     }
 
     @Override
-    public void interactBlock(PlayerEntity entity) {
+    public ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return ActionResult.PASS;
     }
 
     @Override
-    public void blockBreak(PlayerEntity entity) {
+    public boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+        if (one.uuid.compareTo(player.getUuid()) != 0) one.uuid = player.getUuid();
         collection.save(one);
+        return true;
     }
 
     @Override

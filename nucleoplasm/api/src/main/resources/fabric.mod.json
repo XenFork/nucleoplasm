@@ -18,7 +18,7 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.api.NucleoplasmServerTest"
+      "union.xenfork.nucleoplasm.api.NucleoplasmServer"
     ]
   },
   "mixins": [
