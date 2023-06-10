@@ -72,7 +72,10 @@ public class EntityImpl implements SQLInterface {
     public void login(ServerPlayerEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
+        if (one == null) {
+            create(entity);
+            one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+        } else if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
     }
 
