@@ -23,4 +23,12 @@ public class ServerPlayerEntityMixin {
             cir.setReturnValue(false);
         }
     }
+
+    @Inject(method = "dropItem", at = @At("HEAD"), cancellable = true)
+    private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir) {
+        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, stack);
+        if (result == ActionResult.FAIL) {
+            cir.setReturnValue(null);
+        }
+    }
 }
