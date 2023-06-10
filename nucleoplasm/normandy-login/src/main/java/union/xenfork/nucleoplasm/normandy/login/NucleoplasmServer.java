@@ -2,10 +2,8 @@ package union.xenfork.nucleoplasm.normandy.login;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import union.xenfork.nucleoplasm.normandy.login.command.ChangeCommand;
-import union.xenfork.nucleoplasm.normandy.login.command.LoginCommand;
-import union.xenfork.nucleoplasm.normandy.login.command.LogoutCommand;
-import union.xenfork.nucleoplasm.normandy.login.command.RegisterCommand;
+import net.minecraft.command.argument.EntityArgumentType;
+import union.xenfork.nucleoplasm.normandy.login.command.*;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -37,6 +35,12 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
             dispatcher.register(literal("logout")
                     .requires(source -> source.hasPermissionLevel(1))
                     .executes(new LogoutCommand())
+            );
+            dispatcher.register(literal("ip")
+                    .requires(resource -> resource.hasPermissionLevel(2))
+                    .then(argument("player", EntityArgumentType.player())
+                            .executes(new IpCommand())
+                    )
             );
         });
     }

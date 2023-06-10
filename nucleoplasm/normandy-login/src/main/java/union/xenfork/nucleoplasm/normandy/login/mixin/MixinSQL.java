@@ -58,6 +58,7 @@ public abstract class MixinSQL implements EntityImplAccess {
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+
     }
 
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
@@ -116,7 +117,7 @@ public abstract class MixinSQL implements EntityImplAccess {
         var accessor = ((EntityAccessor) one);
         boolean is_login = accessor.getIsLogin();
         if (!is_login) {
-            player.teleport(accessor.getX(), accessor.getY(), accessor.getZ());
+            player.teleport(player.getServerWorld() ,accessor.getX(), accessor.getY(), accessor.getZ(), accessor.getYaw(), accessor.getPitch());
             player.setInvulnerable(true);
             player.changeGameMode(GameMode.SURVIVAL);
             if (Objects.requireNonNull(player.getServer()).getTimeReference() % 996 == 0) {
@@ -140,6 +141,9 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setX(player.getX());
         accessor.setY(player.getY());
         accessor.setZ(player.getZ());
+        accessor.setYaw(player.getYaw());
+        accessor.setPitch(player.getPitch());
+        accessor.addIp(player.getIp());
     }
 
     @Inject(method = "logout", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
@@ -152,6 +156,8 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setX(player.getX());
         accessor.setY(player.getY());
         accessor.setZ(player.getZ());
+        accessor.setYaw(player.getYaw());
+        accessor.setPitch(player.getPitch());
     }
 
     @Inject(method = "lambda$create$3", at = @At("RETURN"))
@@ -162,6 +168,9 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setX(player.getX());
         accessor.setY(player.getY());
         accessor.setZ(player.getZ());
+        accessor.setYaw(player.getYaw());
+        accessor.setPitch(player.getPitch());
+        accessor.addIp(player.getIp());
     }
 
     @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
