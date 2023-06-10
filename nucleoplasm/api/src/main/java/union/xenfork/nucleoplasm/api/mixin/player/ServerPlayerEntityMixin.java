@@ -18,7 +18,7 @@ public class ServerPlayerEntityMixin {
     private final ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
     @Inject(method = "dropSelectedItem", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void dropSelectItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
-        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player);
+        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, player.getInventory().getMainHandStack());
         if (result == ActionResult.FAIL) {
             cir.setReturnValue(false);
         }
