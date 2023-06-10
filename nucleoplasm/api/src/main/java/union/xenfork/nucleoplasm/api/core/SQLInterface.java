@@ -3,6 +3,7 @@ package union.xenfork.nucleoplasm.api.core;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -37,5 +38,5 @@ public interface SQLInterface {
     TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand);
     ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult);
     boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity);
-    void pickupItem(PlayerEntity entity);
+    ActionResult pickupItem(PlayerEntity player, ItemEntity entity);
 }

@@ -6,6 +6,7 @@ import com.github.artbits.quickio.core.Config;
 import com.github.artbits.quickio.core.QuickIO;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
@@ -150,10 +151,11 @@ public class EntityImpl implements SQLInterface {
     }
 
     @Override
-    public void pickupItem(PlayerEntity entity) {
+    public ActionResult pickupItem(PlayerEntity player, ItemEntity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
         if (one.uuid.compareTo(entity.getUuid()) != 0) one.uuid = entity.getUuid();
         collection.save(one);
+        return ActionResult.PASS;
     }
 }

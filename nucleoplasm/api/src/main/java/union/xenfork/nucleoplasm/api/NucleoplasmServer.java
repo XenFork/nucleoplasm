@@ -6,9 +6,8 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.TypedActionResult;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
+import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 public class NucleoplasmServer implements DedicatedServerModInitializer {
@@ -27,5 +26,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
         });
+        ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
     }
 }
