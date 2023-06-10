@@ -16,19 +16,11 @@ import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 public class ServerPlayerEntityMixin {
 
     private final ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-    @Inject(method = "dropSelectedItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/screen/ScreenHandler;getSlotIndex(Lnet/minecraft/inventory/Inventory;I)Ljava/util/OptionalInt;"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void droupSelectItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir, PlayerInventory playerInventory, ItemStack itemStack) {
-        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, itemStack);
+    @Inject(method = "dropSelectedItem", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void dropSelectItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
+        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player);
         if (result == ActionResult.FAIL) {
             cir.setReturnValue(false);
-        }
-    }
-
-    @Inject(method = "dropItem", at = @At("HEAD"), cancellable = true)
-    private void dropItem(ItemStack stack, boolean throwRandomly, boolean retainOwnership, CallbackInfoReturnable<ItemEntity> cir) {
-        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, stack);
-        if (result == ActionResult.FAIL) {
-            cir.setReturnValue(null);
         }
     }
 }

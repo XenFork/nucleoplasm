@@ -33,9 +33,9 @@ public final class ServerPlayerEvents {
 
     public static final Event<DropItem> DROP_ITEM_EVENT =
             EventFactory.createArrayBacked(DropItem.class,
-                    callbacks -> (player, stack) -> {
+                    callbacks -> player -> {
                         for (DropItem dropItem : callbacks) {
-                            ActionResult result = dropItem.interact(player, stack);
+                            ActionResult result = dropItem.interact(player);
                             if (result != ActionResult.PASS) {
                                 return result;
                             }
@@ -54,6 +54,6 @@ public final class ServerPlayerEvents {
     }
 
     public interface DropItem {
-        ActionResult interact(ServerPlayerEntity player, ItemStack stack);
+        ActionResult interact(ServerPlayerEntity player);
     }
 }
