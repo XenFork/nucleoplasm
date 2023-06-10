@@ -20,6 +20,7 @@ public class ServerPlayerEntityMixin {
     private void dropSelectItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
         ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, player.getInventory().getMainHandStack());
         if (result == ActionResult.FAIL) {
+            player.giveItemStack(player.getInventory().getMainHandStack());
             cir.setReturnValue(false);
         }
     }
