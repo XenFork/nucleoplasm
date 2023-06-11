@@ -41,19 +41,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
                     .requires(source -> source.hasPermissionLevel(1))
                     .executes(new LogoutCommand())
             );
-            ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
-                EntityImplAccess impl = (EntityImplAccess) union.xenfork.nucleoplasm.api.NucleoplasmServer.impl;
-                for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-                    EntityAccessor accessor = (EntityAccessor) union.xenfork.nucleoplasm.api.NucleoplasmServer.impl.find(player);
-                    accessor.setIsLogin(false);
-                    accessor.setX(player.getX());
-                    accessor.setY(player.getY());
-                    accessor.setZ(player.getZ());
-                    accessor.setYaw(player.getYaw());
-                    accessor.setPitch(player.getPitch());
-                    impl.save((Entity) accessor);
-                }
-            });
         });
     }
 }
