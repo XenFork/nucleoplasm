@@ -58,6 +58,16 @@ public class EntityImpl {
         return list.get(0);
     }
 
+    public Entity find(PlayerEntity player) {
+        List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(player.getEntityName())).toList();
+        return list.get(0);
+    }
+
+    public Entity find(String entityName) {
+        List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(entityName)).toList();
+        return list.get(0);
+    }
+
     private void save() {
         Collection<Entity> collection = db.collection(Entity.class);
         collection.save(all);
