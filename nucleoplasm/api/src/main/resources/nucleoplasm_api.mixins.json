@@ -6,7 +6,6 @@
   "mixins": [
     "item.ItemEntityMixin",
     "item.ItemMixin",
-    "network.ServerPlayNetworkHandlerMixin",
     "player.PlayerManagerMixin",
     "player.ServerPlayerEntityMixin"
   ],
