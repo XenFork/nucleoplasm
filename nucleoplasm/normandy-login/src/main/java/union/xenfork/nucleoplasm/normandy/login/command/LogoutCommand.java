@@ -9,14 +9,13 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.core.Entity;
-import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccess;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
 public class LogoutCommand implements Command<ServerCommandSource> {
     @Override
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var impl = (EntityImplAccess) NucleoplasmServer.impl;
+        var impl = (EntityImplAccessor) NucleoplasmServer.impl;
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player != null) {
             var e = (EntityAccessor)NucleoplasmServer.impl.find(player);

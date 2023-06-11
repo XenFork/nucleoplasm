@@ -31,35 +31,26 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccess;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
+import java.util.Iterator;
 import java.util.Objects;
 
 @Debug(export = true)
 @Mixin(value = EntityImpl.class, remap = false)
-public abstract class MixinSQL implements EntityImplAccess {
+public abstract class MixinSQL implements EntityImplAccessor {
     @Shadow
     public abstract void create(ServerPlayerEntity entity);
 
     @Shadow @Final private DB db;
 
 
+    @Shadow public abstract void logout(ServerPlayerEntity entity);
+
     @Override
     public void save(Entity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         collection.save(entity);
-    }
-
-    @Inject(method = "playerMove", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void move(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
-    }
-
-    @Inject(method = "take", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void take(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
     }
 
     @Inject(method = "attackBlock", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
@@ -180,5 +171,10 @@ public abstract class MixinSQL implements EntityImplAccess {
                             Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    }
+
+    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void save(MinecraftServer server, CallbackInfo ci, Iterator<ServerPlayerEntity> var2, ServerPlayerEntity player, Collection<Entity> collection, Entity one) {
+        logout(player);
     }
 }
