@@ -48,8 +48,20 @@ public abstract class MixinSQL implements EntityImplAccess {
         collection.save(entity);
     }
 
+    @Inject(method = "take", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void  take(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+        boolean is_login = ((EntityAccessor) one).getIsLogin();
+        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    }
+
+    @Inject(method = "playerMove", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void playerMove(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+        boolean is_login = ((EntityAccessor) one).getIsLogin();
+        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    }
+
     @Inject(method = "dropItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void dropItem(ServerPlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+    private void dropItem(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
     }
@@ -58,7 +70,6 @@ public abstract class MixinSQL implements EntityImplAccess {
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
-
     }
 
     @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
@@ -117,7 +128,7 @@ public abstract class MixinSQL implements EntityImplAccess {
         var accessor = ((EntityAccessor) one);
         boolean is_login = accessor.getIsLogin();
         if (!is_login) {
-            player.teleport(player.getServerWorld() ,accessor.getX(), accessor.getY(), accessor.getZ(), accessor.getYaw(), accessor.getPitch());
+//            player.teleport(player.getServerWorld() ,accessor.getX(), accessor.getY(), accessor.getZ(), accessor.getYaw(), accessor.getPitch());
             player.setInvulnerable(true);
             player.changeGameMode(GameMode.SURVIVAL);
             if (Objects.requireNonNull(player.getServer()).getTimeReference() % 996 == 0) {
