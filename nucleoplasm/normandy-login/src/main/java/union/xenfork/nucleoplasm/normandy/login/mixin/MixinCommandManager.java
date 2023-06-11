@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.sql.NucleoplasmEntity;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
 @Mixin(CommandManager.class)
 public class MixinCommandManager {
@@ -23,19 +25,19 @@ public class MixinCommandManager {
                          ServerCommandSource serverCommandSource) {
         ServerPlayerEntity player = parseResults.getContext().getSource().getPlayer();
         if (player != null) {
-            Entity entity = NucleoplasmServer.impl.find(player);
-            try {
-                boolean is_login = (boolean) entity.getClass().getDeclaredField("is_login").get(entity);
-                if (!(command.contains("register") || command.contains("login")) && !is_login) {
-                    String password = (String) entity.getClass().getDeclaredField("password").get(entity);
-                    if (password == null || password.isEmpty()) {
-                        player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
-                    } else {
-                        player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
-                    }
-                    cir.setReturnValue(0);
+            EntityImplAccessor impl = (EntityImplAccessor) NucleoplasmServer.impl;
+            EntityAccessor accessor = (EntityAccessor) NucleoplasmServer.impl.find(player);
+
+            boolean is_login = accessor.getIsLogin();
+            if (!(command.contains("register") || command.contains("login")) && !is_login) {
+                String password = accessor.getPassword();
+                if (password == null || password.isEmpty()) {
+                    player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
+                } else {
+                    player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
                 }
-            } catch (IllegalAccessException | NoSuchFieldException ignored) {}
+                cir.setReturnValue(0);
+            }
         }
 
     }
