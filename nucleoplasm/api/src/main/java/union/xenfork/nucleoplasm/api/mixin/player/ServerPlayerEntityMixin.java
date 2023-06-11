@@ -14,14 +14,4 @@ import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 @Mixin(ServerPlayerEntity.class)
 public class ServerPlayerEntityMixin {
-
-    private final ServerPlayerEntity player = (ServerPlayerEntity) (Object) this;
-    @Inject(method = "dropSelectedItem", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void dropSelectItem(boolean entireStack, CallbackInfoReturnable<Boolean> cir) {
-        ActionResult result = ServerPlayerEvents.DROP_ITEM_EVENT.invoker().interact(player, player.getInventory().getMainHandStack());
-        if (result == ActionResult.FAIL) {
-            player.giveItemStack(player.getInventory().getMainHandStack());
-            cir.setReturnValue(false);
-        }
-    }
 }

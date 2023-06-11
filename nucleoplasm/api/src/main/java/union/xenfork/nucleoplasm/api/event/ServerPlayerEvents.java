@@ -2,7 +2,6 @@ package union.xenfork.nucleoplasm.api.event;
 
 import net.fabricmc.fabric.api.event.Event;
 import net.fabricmc.fabric.api.event.EventFactory;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
@@ -33,12 +32,44 @@ public final class ServerPlayerEvents {
 
     public static final Event<DropItem> DROP_ITEM_EVENT =
             EventFactory.createArrayBacked(DropItem.class,
-                    callbacks -> (player, stack) -> {
+                    callbacks -> (player) -> {
                         for (DropItem dropItem : callbacks) {
-                            ActionResult result = dropItem.interact(player, stack);
+                            ActionResult result = dropItem.interact(player);
                             if (result != ActionResult.PASS) {
                                 return result;
                             }
+                        }
+                        return ActionResult.PASS;
+                    });
+
+    public static final Event<Chat> CHAT_EVENT =
+            EventFactory.createArrayBacked(Chat.class,
+                    callbacks -> player -> {
+                        for (Chat chat : callbacks) {
+                            ActionResult result = chat.chat(player);
+                            if (result != ActionResult.PASS)
+                                return result;
+                        }
+                        return ActionResult.PASS;
+                    });
+
+    public static final Event<Take> TAKE_EVENT =
+            EventFactory.createArrayBacked(Take.class,
+                    callbacks -> player -> {
+                        for (Take manOffHandSwap : callbacks) {
+                            ActionResult result = manOffHandSwap.take(player);
+                            if (result != ActionResult.PASS)
+                                return result;
+                        }
+                        return ActionResult.PASS;
+                    });
+
+    public static final Event<Move> MOVE_EVENT =
+            EventFactory.createArrayBacked(Move.class,
+                    moves -> player -> {
+                        for (Move move : moves) {
+                            ActionResult result = move.move(player);
+                            if (result != ActionResult.PASS) return result;
                         }
                         return ActionResult.PASS;
                     });
@@ -54,6 +85,18 @@ public final class ServerPlayerEvents {
     }
 
     public interface DropItem {
-        ActionResult interact(ServerPlayerEntity player, ItemStack stack);
+        ActionResult interact(ServerPlayerEntity player);
+    }
+
+    public interface Chat {
+        ActionResult chat(ServerPlayerEntity player);
+    }
+
+    public interface Take {
+        ActionResult take(ServerPlayerEntity player);
+    }
+
+    public interface Move {
+        ActionResult move(ServerPlayerEntity player);
     }
 }

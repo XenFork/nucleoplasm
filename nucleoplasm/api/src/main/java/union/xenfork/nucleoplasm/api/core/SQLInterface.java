@@ -29,6 +29,8 @@ public interface SQLInterface {
     void logout(ServerPlayerEntity entity);
     //滴答
     void tick(ServerPlayerEntity entity);
+    ActionResult take(ServerPlayerEntity player);
+    ActionResult playerMove(ServerPlayerEntity player);
     //攻击方块
     ActionResult attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction);
     //攻击实体
@@ -39,5 +41,5 @@ public interface SQLInterface {
     ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult);
     boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity);
     ActionResult pickupItem(PlayerEntity player, ItemEntity entity);
-    ActionResult dropItem(ServerPlayerEntity player, ItemStack stack);
+    ActionResult dropItem(ServerPlayerEntity player);
 }
