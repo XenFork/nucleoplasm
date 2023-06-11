@@ -93,22 +93,6 @@ public class EntityImpl implements SQLInterface {
     }
 
     @Override
-    public ActionResult take(ServerPlayerEntity player) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return ActionResult.PASS;
-    }
-
-    @Override
-    public ActionResult playerMove(ServerPlayerEntity player) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return ActionResult.PASS;
-    }
-
-    @Override
     public ActionResult attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
@@ -165,7 +149,7 @@ public class EntityImpl implements SQLInterface {
     }
 
     @Override
-    public ActionResult dropItem(ServerPlayerEntity player) {
+    public ActionResult dropItem(ServerPlayerEntity player, ItemStack stack) {
         Collection<Entity> collection = db.collection(Entity.class);
         Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
         collection.save(one);

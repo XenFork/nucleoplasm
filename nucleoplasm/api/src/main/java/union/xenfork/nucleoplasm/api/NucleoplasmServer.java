@@ -23,12 +23,11 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerPlayerEvents.LOGIN_EVENT.register(impl::login);
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(impl::logout);
         ServerPlayerEvents.DROP_ITEM_EVENT.register(impl::dropItem);
-        ServerPlayerEvents.TAKE_EVENT.register(impl::take);
-        ServerPlayerEvents.MOVE_EVENT.register(impl::playerMove);
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
         });
+
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
     }
 }
