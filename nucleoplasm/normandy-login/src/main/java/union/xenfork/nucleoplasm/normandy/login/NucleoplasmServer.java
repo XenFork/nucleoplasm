@@ -2,8 +2,13 @@ package union.xenfork.nucleoplasm.normandy.login;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.server.network.ServerPlayerEntity;
+import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.command.*;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
+import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccess;
 
 import static com.mojang.brigadier.arguments.StringArgumentType.word;
 import static net.minecraft.server.command.CommandManager.argument;
@@ -36,6 +41,19 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
                     .requires(source -> source.hasPermissionLevel(1))
                     .executes(new LogoutCommand())
             );
+            ServerLifecycleEvents.SERVER_STOPPING.register(server -> {
+                EntityImplAccess impl = (EntityImplAccess) union.xenfork.nucleoplasm.api.NucleoplasmServer.impl;
+                for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+                    EntityAccessor accessor = (EntityAccessor) union.xenfork.nucleoplasm.api.NucleoplasmServer.impl.find(player);
+                    accessor.setIsLogin(false);
+                    accessor.setX(player.getX());
+                    accessor.setY(player.getY());
+                    accessor.setZ(player.getZ());
+                    accessor.setYaw(player.getYaw());
+                    accessor.setPitch(player.getPitch());
+                    impl.save((Entity) accessor);
+                }
+            });
         });
     }
 }

@@ -7,6 +7,7 @@ import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -42,14 +43,21 @@ public abstract class MixinSQL implements EntityImplAccess {
 
     @Shadow @Final private DB db;
 
+
     @Override
     public void save(Entity entity) {
         Collection<Entity> collection = db.collection(Entity.class);
         collection.save(entity);
     }
 
-    @Inject(method = "dropItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void dropItem(ServerPlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+    @Inject(method = "playerMove", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void move(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+        boolean is_login = ((EntityAccessor) one).getIsLogin();
+        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    }
+
+    @Inject(method = "take", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void take(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
     }
@@ -116,7 +124,7 @@ public abstract class MixinSQL implements EntityImplAccess {
         var accessor = ((EntityAccessor) one);
         boolean is_login = accessor.getIsLogin();
         if (!is_login) {
-            player.teleport(player.getServerWorld() ,accessor.getX(), accessor.getY(), accessor.getZ(), accessor.getYaw(), accessor.getPitch());
+            player.teleport(accessor.getX(), accessor.getY(), accessor.getZ());
             player.setInvulnerable(true);
             player.changeGameMode(GameMode.SURVIVAL);
             if (Objects.requireNonNull(player.getServer()).getTimeReference() % 996 == 0) {
@@ -137,11 +145,7 @@ public abstract class MixinSQL implements EntityImplAccess {
                        Entity one) {
         var accessor = ((EntityAccessor) one);
         accessor.setIsLogin(false);
-        accessor.setX(player.getX());
-        accessor.setY(player.getY());
-        accessor.setZ(player.getZ());
-        accessor.setYaw(player.getYaw());
-        accessor.setPitch(player.getPitch());
+
     }
 
     @Inject(method = "logout", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
@@ -158,7 +162,7 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setPitch(player.getPitch());
     }
 
-    @Inject(method = "lambda$create$3", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getUuid()Ljava/util/UUID;"))
+    @Inject(method = "lambda$create$3", at = @At(value = "RETURN"))
     private static void of(ServerPlayerEntity player, Entity e, CallbackInfo ci) {
         var accessor = ((EntityAccessor) e);
         accessor.setIsLogin(false);
@@ -166,8 +170,6 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setX(player.getX());
         accessor.setY(player.getY());
         accessor.setZ(player.getZ());
-        accessor.setYaw(player.getYaw());
-        accessor.setPitch(player.getPitch());
     }
 
     @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
