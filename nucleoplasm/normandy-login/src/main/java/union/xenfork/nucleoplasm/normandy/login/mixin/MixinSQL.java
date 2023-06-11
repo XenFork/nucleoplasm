@@ -39,11 +39,8 @@ import java.util.Objects;
 @Debug(export = true)
 @Mixin(value = EntityImpl.class, remap = false)
 public abstract class MixinSQL implements EntityImplAccessor {
-    @Shadow
-    public abstract void create(ServerPlayerEntity entity);
 
     @Shadow @Final private DB db;
-
 
     @Shadow public abstract void logout(ServerPlayerEntity entity);
 
@@ -53,9 +50,8 @@ public abstract class MixinSQL implements EntityImplAccessor {
         collection.save(entity);
     }
 
-    @Inject(method = "attackBlock", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
+    @Inject(method = "attackBlock", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction, CallbackInfoReturnable<ActionResult> cir) {
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
     }
 
