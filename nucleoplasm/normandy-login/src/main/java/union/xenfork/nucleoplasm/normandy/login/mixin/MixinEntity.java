@@ -2,6 +2,7 @@ package union.xenfork.nucleoplasm.normandy.login.mixin;
 
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
 
@@ -12,8 +13,8 @@ import java.util.ArrayList;
 public class MixinEntity implements EntityAccessor {
     public boolean is_login;
     public String password;
+
     public double x,y,z;
-    public ArrayList<String> ips;
     public float yaw,pitch;
 
     @Override
@@ -34,17 +35,6 @@ public class MixinEntity implements EntityAccessor {
     @Override
     public float getPitch() {
         return pitch;
-    }
-
-    @Override
-    public ArrayList<String> getIps() {
-        return ips;
-    }
-
-    @Override
-    public void addIp(String ip) {
-        if (ips == null) ips = new ArrayList<>();
-        if (!ips.contains(ip)) ips.add(ip);
     }
 
     @Override

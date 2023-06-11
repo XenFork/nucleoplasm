@@ -36,12 +36,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
                     .requires(source -> source.hasPermissionLevel(1))
                     .executes(new LogoutCommand())
             );
-            dispatcher.register(literal("ip")
-                    .requires(resource -> resource.hasPermissionLevel(2))
-                    .then(argument("player", EntityArgumentType.player())
-                            .executes(new IpCommand())
-                    )
-            );
         });
     }
 }

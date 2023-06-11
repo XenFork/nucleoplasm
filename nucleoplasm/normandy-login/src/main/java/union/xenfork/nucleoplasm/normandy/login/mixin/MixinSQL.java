@@ -49,7 +49,7 @@ public abstract class MixinSQL implements EntityImplAccess {
     }
 
     @Inject(method = "dropItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void dropItem(ServerPlayerEntity player, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
+    private void dropItem(ServerPlayerEntity player, ItemStack stack, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
         boolean is_login = ((EntityAccessor) one).getIsLogin();
         if (!is_login) cir.setReturnValue(ActionResult.FAIL);
     }
@@ -142,7 +142,6 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setZ(player.getZ());
         accessor.setYaw(player.getYaw());
         accessor.setPitch(player.getPitch());
-        accessor.addIp(player.getIp());
     }
 
     @Inject(method = "logout", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
@@ -159,7 +158,7 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setPitch(player.getPitch());
     }
 
-    @Inject(method = "lambda$create$3", at = @At("RETURN"))
+    @Inject(method = "lambda$create$3", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getUuid()Ljava/util/UUID;"))
     private static void of(ServerPlayerEntity player, Entity e, CallbackInfo ci) {
         var accessor = ((EntityAccessor) e);
         accessor.setIsLogin(false);
@@ -169,7 +168,6 @@ public abstract class MixinSQL implements EntityImplAccess {
         accessor.setZ(player.getZ());
         accessor.setYaw(player.getYaw());
         accessor.setPitch(player.getPitch());
-        accessor.addIp(player.getIp());
     }
 
     @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)

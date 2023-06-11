@@ -25,8 +25,6 @@ public interface EntityAccessor {
         throw new AssertionError();
     }
     default void setZ(double z) {}
-    default ArrayList<String> getIps() {throw new AssertionError();}
-    default void addIp(String ip) {}
     default float getYaw() {throw new AssertionError();}
     default float getPitch() {throw new AssertionError();}
     default void setYaw(float yaw){}
