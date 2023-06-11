@@ -42,7 +42,10 @@ public abstract class MixinSQL implements EntityImplAccessor {
 
     @Shadow @Final private DB db;
 
-    @Shadow public abstract void logout(ServerPlayerEntity entity);
+    @Shadow public abstract void logout(ServerPlayerEntity player);
+
+    private final Entity entity = (Entity) (Object) this;
+    private final EntityAccessor accessor = (EntityAccessor)entity;
 
     @Override
     public void save(Entity entity) {
@@ -52,65 +55,53 @@ public abstract class MixinSQL implements EntityImplAccessor {
 
     @Inject(method = "attackBlock", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction, CallbackInfoReturnable<ActionResult> cir) {
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+        if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "attackEntity", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    @Inject(method = "attackEntity", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+        if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "interactEntity", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir, Collection<Entity> collection, Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+    @Inject(method = "interactEntity", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private void interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+        if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "interactItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    @Inject(method = "interactItem", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void interactItem(PlayerEntity player,
                               World world,
                               Hand hand,
-                              CallbackInfoReturnable<TypedActionResult<ItemStack>> cir,
-                              Collection<Entity> collection,
-                              Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
+                              CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
+        var accessor = (EntityAccessor)entity;
+        if (!accessor.getIsLogin()) cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
     }
 
-    @Inject(method = "interactBlock", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    @Inject(method = "interactBlock", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void interactBlock(PlayerEntity player,
                                World world,
                                Hand hand,
                                BlockHitResult hitResult,
-                               CallbackInfoReturnable<ActionResult> cir,
-                               Collection<Entity> collection,
-                               Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+                               CallbackInfoReturnable<ActionResult> cir) {
+
+        if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "blockBreak", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    @Inject(method = "blockBreak", at = @At("RETURN"), cancellable = true)
     private void blockBreak(World world,
                             PlayerEntity player,
                             BlockPos pos,
                             BlockState state,
                             BlockEntity blockEntity,
-                            CallbackInfoReturnable<Boolean> cir,
-                            Collection<Entity> collection,
-                            Entity one) {
-        cir.setReturnValue(((EntityAccessor) one).getIsLogin());
+                            CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(accessor.getIsLogin());
     }
 
 
-    @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "tick(Lnet/minecraft/server/network/ServerPlayerEntity;)V", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void tick(ServerPlayerEntity player,
-                      CallbackInfo ci,
-                      Collection<Entity> collection,
-                      Entity one) {
-        var accessor = ((EntityAccessor) one);
-        boolean is_login = accessor.getIsLogin();
-        if (!is_login) {
+                      CallbackInfo ci) {
+        if (!accessor.getIsLogin()) {
             player.teleport(accessor.getX(), accessor.getY(), accessor.getZ());
             player.setInvulnerable(true);
             player.changeGameMode(GameMode.SURVIVAL);
@@ -125,22 +116,16 @@ public abstract class MixinSQL implements EntityImplAccessor {
         }
     }
 
-    @Inject(method = "login", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "login", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void login(ServerPlayerEntity player,
-                       CallbackInfo ci,
-                       Collection<Entity> collection,
-                       Entity one) {
-        var accessor = ((EntityAccessor) one);
+                       CallbackInfo ci) {
         accessor.setIsLogin(false);
 
     }
 
-    @Inject(method = "logout", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "logout", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void logout(ServerPlayerEntity player,
-                        CallbackInfo ci,
-                        Collection<Entity> collection,
-                        Entity one) {
-        var accessor = ((EntityAccessor) one);
+                        CallbackInfo ci) {
         accessor.setIsLogin(false);
         accessor.setX(player.getX());
         accessor.setY(player.getY());
@@ -149,7 +134,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         accessor.setPitch(player.getPitch());
     }
 
-    @Inject(method = "lambda$create$3", at = @At(value = "RETURN"))
+    @Inject(method = "lambda$create$1", at = @At(value = "RETURN"))
     private static void of(ServerPlayerEntity player, Entity e, CallbackInfo ci) {
         var accessor = ((EntityAccessor) e);
         accessor.setIsLogin(false);
@@ -157,20 +142,19 @@ public abstract class MixinSQL implements EntityImplAccessor {
         accessor.setX(player.getX());
         accessor.setY(player.getY());
         accessor.setZ(player.getZ());
+        accessor.setPitch(player.getPitch());
+        accessor.setYaw(player.getYaw());
     }
 
-    @Inject(method = "pickupItem", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    @Inject(method = "pickupItem", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void pickupItem(PlayerEntity player,
                             ItemEntity entity,
-                            CallbackInfoReturnable<ActionResult> cir,
-                            Collection<Entity> collection,
-                            Entity one) {
-        boolean is_login = ((EntityAccessor) one).getIsLogin();
-        if (!is_login) cir.setReturnValue(ActionResult.FAIL);
+                            CallbackInfoReturnable<ActionResult> cir) {
+        if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "save", at = @At(value = "INVOKE", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
-    private void save(MinecraftServer server, CallbackInfo ci, Iterator<ServerPlayerEntity> var2, ServerPlayerEntity player, Collection<Entity> collection, Entity one) {
-        logout(player);
+    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    private void save(MinecraftServer server, CallbackInfo ci) {
+        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) logout(player);
     }
 }
