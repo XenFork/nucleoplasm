@@ -11,9 +11,11 @@ import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 
 public class NucleoplasmServer implements DedicatedServerModInitializer {
+//    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     @Override
     public void onInitializeServer() {
+
         AttackBlockCallback.EVENT.register(impl::attackBlock);
         AttackEntityCallback.EVENT.register(impl::attackEntity);
         UseEntityCallback.EVENT.register(impl::interactEntity);
@@ -25,6 +27,7 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerPlayerEvents.DROP_ITEM_EVENT.register(impl::dropItem);
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
         ServerTickEvents.START_WORLD_TICK.register(world -> {
+            impl.tick(world);
             for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(impl::save);

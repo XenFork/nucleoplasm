@@ -11,6 +11,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -22,146 +23,106 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.nio.file.Path;
+import java.util.List;
 
-@SuppressWarnings("DuplicatedCode")
-public class EntityImpl implements SQLInterface {
+public class EntityImpl {
     private final DB db;
-
+    private List<Entity> all;
 
     public EntityImpl(Path path) {
         Config config = Config.of(c -> {
-            c.name("entity");
+            c.name("player");
             c.path(path.toFile().getAbsolutePath());
             c.cache(16L * 1024 * 1024);
         });
         db = QuickIO.usingDB(config);
-    }
-
-    @Override
-    public Entity find(PlayerEntity player) {
         Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return one;
+        all = collection.findAll();
     }
 
-    @Override
+    public Entity create(ServerPlayerEntity player) {
+        Entity of = Entity.of(entity -> {
+            entity.player_name = player.getEntityName();
+            entity.uuid = player.getUuid();
+        });
+        all.add(of);
+        return of;
+    }
+
+    public void update() {
+        all = db.collection(Entity.class).findAll();
+    }
+
     public Entity find(ServerPlayerEntity player) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return one;
+        List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(player.getEntityName())).toList();
+        return list.get(0);
     }
 
-    @Override
-    public void close(MinecraftServer server) {
+    private void save() {
+        Collection<Entity> collection = db.collection(Entity.class);
+        collection.save(all);
+    }
+
+    private void close() {
         db.close();
     }
 
-    @Override
-    public void create(ServerPlayerEntity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        collection.save(Entity.of(e -> {
-            e.player_name = entity.getEntityName();
-            e.uuid = entity.getUuid();
-        }));
+    public ActionResult attackBlock(PlayerEntity entity, World world, Hand hand, BlockPos blockPos, Direction direction) {
+        return ActionResult.PASS;
     }
 
-    @Override
-    public void login(ServerPlayerEntity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        if (one == null) {
-            create(entity);
-            one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
+    public void close(MinecraftServer server) {
+        close();
+    }
+
+    public void save(MinecraftServer server) {
+        save();
+    }
+
+    public ActionResult pickupItem(PlayerEntity entity, ItemEntity itemEntity) {
+        return ActionResult.PASS;
+    }
+
+    public void tick(ServerPlayerEntity player) {
+
+    }
+
+    public void tick(ServerWorld world) {
+        long timeReference = world.getServer().getTimeReference();
+        if (timeReference % 10000 == 0) {
+            save();
         }
-        collection.save(one);
     }
 
-    @Override
-    public void logout(ServerPlayerEntity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        collection.save(one);
-    }
-
-    @Override
-    public void tick(ServerPlayerEntity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(entity.getEntityName()));
-        collection.save(one);
-    }
-
-    @Override
-    public ActionResult attackBlock(PlayerEntity player, World world, Hand hand, BlockPos pos, Direction direction) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
+    public ActionResult dropItem(ServerPlayerEntity player, ItemStack stack) {
         return ActionResult.PASS;
     }
 
-    @Override
-    public ActionResult attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return ActionResult.PASS;
+    public void logout(ServerPlayerEntity player) {
+
     }
 
-    @Override
-    public ActionResult interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult hitResult) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return ActionResult.PASS;
+    public void login(ServerPlayerEntity player) {
+
     }
 
-    @Override
-    public TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return TypedActionResult.pass(player.getStackInHand(hand));
-    }
-
-    @Override
-    public ActionResult interactBlock(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
-        return ActionResult.PASS;
-    }
-
-    @Override
-    public boolean blockBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
+    public boolean blockBreak(World world, PlayerEntity entity, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity) {
         return true;
     }
 
-    @Override
-    public ActionResult pickupItem(PlayerEntity player, ItemEntity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
+    public ActionResult interactBlock(PlayerEntity entity, World world, Hand hand, BlockHitResult blockHitResult) {
         return ActionResult.PASS;
     }
 
-    @Override
-    public ActionResult dropItem(ServerPlayerEntity player, ItemStack stack) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-        collection.save(one);
+    public TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand) {
+        return TypedActionResult.pass(player.getStackInHand(hand));
+    }
+
+    public ActionResult interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult entityHitResult) {
         return ActionResult.PASS;
     }
 
-    @Override
-    public void save(MinecraftServer server) {
-        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
-            Collection<Entity> collection = db.collection(Entity.class);
-            Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
-            collection.save(one);
-        }
+    public ActionResult attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult entityHitResult) {
+        return ActionResult.PASS;
     }
 }
