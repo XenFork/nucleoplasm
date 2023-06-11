@@ -155,4 +155,13 @@ public class EntityImpl implements SQLInterface {
         collection.save(one);
         return ActionResult.PASS;
     }
+
+    @Override
+    public void save(MinecraftServer server) {
+        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) {
+            Collection<Entity> collection = db.collection(Entity.class);
+            Entity one = collection.findOne(e -> e.player_name.equals(player.getEntityName()));
+            collection.save(one);
+        }
+    }
 }

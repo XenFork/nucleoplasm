@@ -27,7 +27,7 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
         });
-
+        ServerLifecycleEvents.SERVER_STOPPING.register(impl::save);
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
     }
 }
