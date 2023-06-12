@@ -2,11 +2,8 @@ package union.xenfork.nucleoplasm.normandy.login.mixin;
 
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-
-import java.util.ArrayList;
 
 @Debug(export = true)
 @Mixin(Entity.class)

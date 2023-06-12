@@ -42,21 +42,22 @@ public abstract class MixinSQL implements EntityImplAccessor {
 
     @Shadow public abstract void logout(ServerPlayerEntity player);
 
-    private final Entity entity = (Entity) (Object) this;
-    private final EntityAccessor accessor = (EntityAccessor)entity;
 
     @Inject(method = "attackBlock", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction, CallbackInfoReturnable<ActionResult> cir) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
     @Inject(method = "attackEntity", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
     @Inject(method = "interactEntity", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
@@ -65,7 +66,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
                               World world,
                               Hand hand,
                               CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
-        var accessor = (EntityAccessor)entity;
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
     }
 
@@ -75,7 +76,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
                                Hand hand,
                                BlockHitResult hitResult,
                                CallbackInfoReturnable<ActionResult> cir) {
-
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
@@ -86,6 +87,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
                             BlockState state,
                             BlockEntity blockEntity,
                             CallbackInfoReturnable<Boolean> cir) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         cir.setReturnValue(accessor.getIsLogin());
     }
 
@@ -93,6 +95,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
     @Inject(method = "tick(Lnet/minecraft/server/network/ServerPlayerEntity;)V", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void tick(ServerPlayerEntity player,
                       CallbackInfo ci) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) {
             player.teleport(accessor.getX(), accessor.getY(), accessor.getZ());
             player.setInvulnerable(true);
@@ -111,12 +114,14 @@ public abstract class MixinSQL implements EntityImplAccessor {
     @Inject(method = "login", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
     private void login(ServerPlayerEntity player,
                        CallbackInfo ci) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         accessor.setIsLogin(false);
     }
 
     @Inject(method = "logout", at = @At(value = "HEAD"))
     private void logout(ServerPlayerEntity player,
                         CallbackInfo ci) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         accessor.setIsLogin(false);
         accessor.setX(player.getX());
         accessor.setY(player.getY());
@@ -141,6 +146,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
     private void pickupItem(PlayerEntity player,
                             ItemEntity entity,
                             CallbackInfoReturnable<ActionResult> cir) {
+        var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
