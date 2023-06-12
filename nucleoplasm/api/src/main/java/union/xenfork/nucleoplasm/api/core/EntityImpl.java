@@ -113,7 +113,11 @@ public class EntityImpl {
     }
 
     public void login(ServerPlayerEntity player) {
-
+        List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(player.getEntityName())).toList();
+        if (list.isEmpty()) {
+            Entity entity = create(player);
+            all.add(entity);
+        }
     }
 
     public boolean blockBreak(World world, PlayerEntity entity, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity) {
