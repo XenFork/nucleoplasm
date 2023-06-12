@@ -78,10 +78,17 @@ owner || admin:
         minecraft.command.message
         minecraft.command.help
     builder:
-        events.break //方块模块
-        events.put   //方块放置
-        events.use   //物品使用
-        events.use.id.name //指定物品的使用
-        events.no.use.id.name //禁止使用物品
-        event.inv.ban.id.name //背包里面禁止出现这个id的物品
+        minecraft.attack.*; -->已实现
+        minecraft.attack.block //攻击方块 -->已实现
+        minecraft.attack.entity //攻击方块 -->已实现
+        minecraft.pic.up//拾取物品 -->已实现
+        minecraft.break.block //方块破坏 -->已实现
+        minecraft.use.*   //使用 -->已实现
+        minecraft.use.item   //物品使用 -->已实现
+        minecraft.use.block   //方块使用 -->已实现
+        minecraft.use.entity   //实体使用 -->已实现
+        ban.use.id.name //禁止使用物品
+        use.item.id.name //指定物品的使用 -->已实现
+        use.block.id.name //指定方块的使用 -->已实现
+        ban.inv.id.name //背包里面禁止出现这个id的物品 -->已实现
         event.chunk.ban.id.name//加载区块内禁止出现这个id的物品

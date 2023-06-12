@@ -7,11 +7,11 @@ import java.util.Map;
 import java.util.function.Consumer;
 
 public class GroupEntity extends IOEntity {
-    public String id;
+    public String group;
+    public ArrayList<String> extends_group;
+    public ArrayList<String> permissions;
 
-    public ArrayList<String> group_names;
-    public Map<String, ArrayList<String>> extends_groups;
-    public Map<String, ArrayList<String>> group_permissions;
+
 
     public static GroupEntity of(Consumer<GroupEntity> consumer) {
         GroupEntity group = new GroupEntity();
