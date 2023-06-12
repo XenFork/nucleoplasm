@@ -1,6 +1,5 @@
 package union.xenfork.nucleoplasm.normandy.login.mixin;
 
-import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
@@ -33,7 +32,6 @@ import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
-import java.util.Iterator;
 import java.util.Objects;
 
 @Debug(export = true)
@@ -46,12 +44,6 @@ public abstract class MixinSQL implements EntityImplAccessor {
 
     private final Entity entity = (Entity) (Object) this;
     private final EntityAccessor accessor = (EntityAccessor)entity;
-
-    @Override
-    public void save(Entity entity) {
-        Collection<Entity> collection = db.collection(Entity.class);
-        collection.save(entity);
-    }
 
     @Inject(method = "attackBlock", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction, CallbackInfoReturnable<ActionResult> cir) {
@@ -87,7 +79,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "blockBreak", at = @At("RETURN"), cancellable = true)
+    @Inject(method = "blockBreak", at = @At("HEAD"), cancellable = true)
     private void blockBreak(World world,
                             PlayerEntity player,
                             BlockPos pos,
@@ -120,10 +112,9 @@ public abstract class MixinSQL implements EntityImplAccessor {
     private void login(ServerPlayerEntity player,
                        CallbackInfo ci) {
         accessor.setIsLogin(false);
-
     }
 
-    @Inject(method = "logout", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "logout", at = @At(value = "HEAD"))
     private void logout(ServerPlayerEntity player,
                         CallbackInfo ci) {
         accessor.setIsLogin(false);
@@ -146,14 +137,14 @@ public abstract class MixinSQL implements EntityImplAccessor {
         accessor.setYaw(player.getYaw());
     }
 
-    @Inject(method = "pickupItem", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    @Inject(method = "pickupItem", at = @At(value = "HEAD", target = "Lcom/github/artbits/quickio/api/Collection;save(Lcom/github/artbits/quickio/core/IOEntity;)V"), cancellable = true)
     private void pickupItem(PlayerEntity player,
                             ItemEntity entity,
                             CallbackInfoReturnable<ActionResult> cir) {
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "HEAD"), locals = LocalCapture.CAPTURE_FAILEXCEPTION)
+    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "HEAD"))
     private void save(MinecraftServer server, CallbackInfo ci) {
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) logout(player);
     }

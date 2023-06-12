@@ -9,9 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
-import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
 public class ChangeCommand implements Command<ServerCommandSource> {
     @Override
@@ -20,15 +18,11 @@ public class ChangeCommand implements Command<ServerCommandSource> {
         String password = context.getArgument("old_password", String.class);
         String new_password = context.getArgument("new_password", String.class);
         if (player != null) {
-            var impl = (EntityImplAccessor) NucleoplasmServer.impl;
             var entity = (EntityAccessor)NucleoplasmServer.impl.find(player);
-            String p = entity.getPassword();
-            if (p.equals(password)) {
+            if (entity.getPassword().equals(password)) {
                 entity.setPassword(new_password);
-
                 player.sendMessage(Text.literal("You have changed the password, please enter the password to try"));
                 entity.setIsLogin(false);
-                impl.save((Entity) entity);
                 return SINGLE_SUCCESS;
             } else {
                 throw new SimpleCommandExceptionType(new LiteralMessage("Wrong password!")).create();

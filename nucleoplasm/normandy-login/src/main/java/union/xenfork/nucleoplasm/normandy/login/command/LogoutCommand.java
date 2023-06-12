@@ -8,22 +8,22 @@ import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
-import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 
 public class LogoutCommand implements Command<ServerCommandSource> {
     @Override
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
-        var impl = (EntityImplAccessor) NucleoplasmServer.impl;
         ServerPlayerEntity player = context.getSource().getPlayer();
+        ServerPlayerEntity player1 = context.getArgument("player", ServerPlayerEntity.class);
         if (player != null) {
-            var e = (EntityAccessor)NucleoplasmServer.impl.find(player);
+            var e = player1 != null ?
+                    (EntityAccessor)NucleoplasmServer.impl.find(player1) :
+                    (EntityAccessor)NucleoplasmServer.impl.find(player);
             e.setIsLogin(false);
-            impl.save((Entity) e);
             return SINGLE_SUCCESS;
         } else {
             throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
         }
+
     }
 }

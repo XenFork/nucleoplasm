@@ -9,9 +9,7 @@ import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
-import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
-import union.xenfork.nucleoplasm.normandy.login.face.EntityImplAccessor;
 import union.xenfork.nucleoplasm.normandy.login.utils.LockUtil;
 
 public class RegisterCommand implements Command<ServerCommandSource> {
@@ -19,7 +17,6 @@ public class RegisterCommand implements Command<ServerCommandSource> {
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
         if (player != null) {
-            var impl = (EntityImplAccessor) NucleoplasmServer.impl;
             var entity = (EntityAccessor)NucleoplasmServer.impl.find(player);
             String p = entity.getPassword();
             if (p == null || p.isEmpty()) {
@@ -29,7 +26,6 @@ public class RegisterCommand implements Command<ServerCommandSource> {
                     entity.setPassword(LockUtil.rightmove(password));
                     entity.setIsLogin(true);
                     player.setInvulnerable(false);
-                    impl.save((Entity) entity);
                     player.sendMessage(Text.literal("Register successful!"));
                     return SINGLE_SUCCESS;
                 }
