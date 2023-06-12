@@ -36,7 +36,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Debug(export = true)
-@Mixin(value = EntityImpl.class, remap = false)
+@Mixin(value = EntityImpl.class, remap = false, priority = 2147483647)
 public abstract class MixinSQL implements EntityImplAccessor {
 
     @Shadow @Final private DB db;
@@ -48,25 +48,25 @@ public abstract class MixinSQL implements EntityImplAccessor {
 
     @Shadow public abstract Entity create(ServerPlayerEntity player);
 
-    @Inject(method = "attackBlock", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "attackBlock", at = @At(value = "RETURN"), cancellable = true)
     private void attackBlock(PlayerEntity player, World world, Hand hand, BlockPos blockPos, Direction direction, CallbackInfoReturnable<ActionResult> cir) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "attackEntity", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "attackEntity", at = @At(value = "RETURN"), cancellable = true)
     private void attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "interactEntity", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "interactEntity", at = @At(value = "RETURN"), cancellable = true)
     private void interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, EntityHitResult hitResult, CallbackInfoReturnable<ActionResult> cir) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "interactItem", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "interactItem", at = @At(value = "RETURN"), cancellable = true)
     private void interactItem(PlayerEntity player,
                               World world,
                               Hand hand,
@@ -75,7 +75,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         if (!accessor.getIsLogin()) cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
     }
 
-    @Inject(method = "interactBlock", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "interactBlock", at = @At(value = "RETURN"), cancellable = true)
     private void interactBlock(PlayerEntity player,
                                World world,
                                Hand hand,
@@ -85,7 +85,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "blockBreak", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "blockBreak", at = @At("RETURN"), cancellable = true)
     private void blockBreak(World world,
                             PlayerEntity player,
                             BlockPos pos,
@@ -97,7 +97,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
     }
 
 
-    @Inject(method = "tick(Lnet/minecraft/server/network/ServerPlayerEntity;)V", at = @At(value = "HEAD"))
+    @Inject(method = "tick(Lnet/minecraft/server/network/ServerPlayerEntity;)V", at = @At(value = "RETURN"))
     private void tick(ServerPlayerEntity player,
                       CallbackInfo ci) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
@@ -116,20 +116,15 @@ public abstract class MixinSQL implements EntityImplAccessor {
         }
     }
 
-    @Inject(method = "login", at = @At(value = "HEAD"))
+    @Inject(method = "login", at = @At(value = "RETURN"))
     private void login(ServerPlayerEntity player,
                        CallbackInfo ci) {
         List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(player.getEntityName())).toList();
-        EntityAccessor accessor;
-        if (list.isEmpty()) {
-            accessor = (EntityAccessor) create(player);
-        } else {
-            accessor = (EntityAccessor) all.get(0);
-        }
+        EntityAccessor accessor = (EntityAccessor) all.get(0);
         accessor.setIsLogin(false);
     }
 
-    @Inject(method = "logout", at = @At(value = "HEAD"))
+    @Inject(method = "logout", at = @At(value = "RETURN"))
     private void logout(ServerPlayerEntity player,
                         CallbackInfo ci) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
@@ -141,7 +136,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         accessor.setPitch(player.getPitch());
     }
 
-    @Inject(method = "lambda$create$1", at = @At(value = "HEAD"))
+    @Inject(method = "lambda$create$1", at = @At(value = "RETURN"))
     private static void of(ServerPlayerEntity player, Entity e, CallbackInfo ci) {
         var accessor = ((EntityAccessor) e);
         accessor.setIsLogin(false);
@@ -153,7 +148,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         accessor.setYaw(player.getYaw());
     }
 
-    @Inject(method = "pickupItem", at = @At(value = "HEAD"), cancellable = true)
+    @Inject(method = "pickupItem", at = @At(value = "RETURN"), cancellable = true)
     private void pickupItem(PlayerEntity player,
                             ItemEntity entity,
                             CallbackInfoReturnable<ActionResult> cir) {
@@ -161,7 +156,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
     }
 
-    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "HEAD"))
+    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "RETURN"))
     private void save(MinecraftServer server, CallbackInfo ci) {
         for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) logout(player);
     }

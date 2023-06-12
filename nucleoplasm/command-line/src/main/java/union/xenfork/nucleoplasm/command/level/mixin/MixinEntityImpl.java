@@ -20,11 +20,13 @@ import union.xenfork.nucleoplasm.command.level.face.EntityImplAccessor;
 
 import java.nio.file.Path;
 
-@Mixin(EntityImpl.class)
+@Mixin(value = EntityImpl.class, remap = false)
 public class MixinEntityImpl implements EntityImplAccessor {
+
+
     @Shadow @Final private DB db;
 
-    @Inject(method = "lambda$create$3", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getUuid()Ljava/util/UUID;"))
+    @Inject(method = "lambda$create$1", at = @At(value = "INVOKE", target = "Lnet/minecraft/server/network/ServerPlayerEntity;getUuid()Ljava/util/UUID;"))
     private static void of(ServerPlayerEntity player, Entity e, CallbackInfo ci) {
         EntityAccessor entity = (EntityAccessor) e;
         entity.addGroup("default");
