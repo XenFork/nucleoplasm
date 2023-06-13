@@ -9,10 +9,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
+import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
 
 public class NucleoplasmServer implements DedicatedServerModInitializer {
 //    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
+    public static final ConfigImpl cImpl = new ConfigImpl(FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/api"), "config");
     @Override
     public void onInitializeServer() {
 
