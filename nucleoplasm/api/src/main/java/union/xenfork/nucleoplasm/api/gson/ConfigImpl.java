@@ -2,6 +2,9 @@ package union.xenfork.nucleoplasm.api.gson;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -39,6 +42,22 @@ public class ConfigImpl {
         try {
             BufferedWriter bw = Files.newBufferedWriter(file);
             bw.write(gson.toJson(config));
+            bw.close();
         } catch (IOException ignored) {}
+    }
+
+    public void tick(ServerWorld world) {
+        long timeReference = world.getServer().getTimeReference();
+        if (timeReference % 10000 == 0) {
+            save();
+        }
+    }
+
+    public void tick(ServerPlayerEntity player) {
+
+    }
+
+    public void save(MinecraftServer server) {
+        save();
     }
 }

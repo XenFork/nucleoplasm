@@ -14,7 +14,7 @@ import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
 public class NucleoplasmServer implements DedicatedServerModInitializer {
 //    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
-    public static final ConfigImpl cImpl = new ConfigImpl(FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/api"), "config");
+    public static final ConfigImpl apiImpl = new ConfigImpl(FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/api"), "config");
     @Override
     public void onInitializeServer() {
 
@@ -28,9 +28,14 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerPlayerEvents.LOGIN_OUT_EVENT.register(impl::logout);
         ServerPlayerEvents.DROP_ITEM_EVENT.register(impl::dropItem);
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
+        ServerLifecycleEvents.SERVER_STOPPED.register(apiImpl::save);
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             impl.tick(world);
-            for (ServerPlayerEntity player : world.getPlayers()) impl.tick(player);
+            apiImpl.tick(world);
+            for (ServerPlayerEntity player : world.getPlayers()) {
+                impl.tick(player);
+                apiImpl.tick(player);
+            }
         });
         ServerLifecycleEvents.SERVER_STOPPING.register(impl::save);
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
