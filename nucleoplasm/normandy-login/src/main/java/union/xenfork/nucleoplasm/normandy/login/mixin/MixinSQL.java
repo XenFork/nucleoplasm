@@ -36,15 +36,13 @@ import java.util.List;
 import java.util.Objects;
 
 @Debug(export = true)
-@Mixin(value = EntityImpl.class, remap = false, priority = 2147483647)
+@Mixin(value = EntityImpl.class)
 public abstract class MixinSQL implements EntityImplAccessor {
 
-    @Shadow @Final private DB db;
-
-    @Shadow public abstract void logout(ServerPlayerEntity player);
+    @Shadow(remap = false) public abstract void logout(ServerPlayerEntity player);
 
 
-    @Shadow private List<Entity> all;
+    @Shadow(remap = false) private List<Entity> all;
 
     @Shadow public abstract Entity create(ServerPlayerEntity player);
 
@@ -154,10 +152,5 @@ public abstract class MixinSQL implements EntityImplAccessor {
                             CallbackInfoReturnable<ActionResult> cir) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) cir.setReturnValue(ActionResult.FAIL);
-    }
-
-    @Inject(method = "save(Lnet/minecraft/server/MinecraftServer;)V", at = @At(value = "RETURN"))
-    private void save(MinecraftServer server, CallbackInfo ci) {
-        for (ServerPlayerEntity player : server.getPlayerManager().getPlayerList()) logout(player);
     }
 }
