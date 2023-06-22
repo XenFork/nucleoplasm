@@ -37,7 +37,12 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
                 apiImpl.tick(player);
             }
         });
-        ServerLifecycleEvents.SERVER_STOPPING.register(impl::save);
+        ServerLifecycleEvents.SERVER_STOPPING.register(impl::save);//close save
+        ServerTickEvents.START_SERVER_TICK.register(server -> {
+            if (server.getTimeReference() % 1200 == 0) {
+                impl.save(server);
+            }//auto save
+        });
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
     }
 }
