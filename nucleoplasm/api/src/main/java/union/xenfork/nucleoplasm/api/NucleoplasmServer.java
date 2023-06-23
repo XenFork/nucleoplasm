@@ -7,6 +7,7 @@ import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
+import union.xenfork.nucleoplasm.api.event.CommandEvents;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
 import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
@@ -44,5 +45,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
             }//auto save
         });
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
+        CommandEvents.execute.register(impl::execute);
     }
 }

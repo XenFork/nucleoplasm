@@ -4,6 +4,7 @@
   "package": "union.xenfork.nucleoplasm.api.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CommandManagerMixin",
     "item.ItemEntityMixin",
     "item.ItemMixin",
     "player.PlayerInventoryMixin",
