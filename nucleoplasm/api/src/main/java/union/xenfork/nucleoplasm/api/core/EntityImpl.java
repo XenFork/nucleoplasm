@@ -143,7 +143,7 @@ public class EntityImpl {
         return ActionResult.PASS;
     }
 
-    public void execute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir) {
+    public void execute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir, ServerCommandSource serverCommandSource) {
 
     }
 }

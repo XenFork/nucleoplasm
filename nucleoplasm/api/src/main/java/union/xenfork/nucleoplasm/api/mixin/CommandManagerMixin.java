@@ -17,6 +17,6 @@ public class CommandManagerMixin {
                          String command,
                          CallbackInfoReturnable<Integer> cir,
                          ServerCommandSource serverCommandSource) {
-        CommandEvents.execute.invoker().execute(parseResults, command, cir);
+        CommandEvents.execute.invoker().execute(parseResults, command, cir, serverCommandSource);
     }
 }
