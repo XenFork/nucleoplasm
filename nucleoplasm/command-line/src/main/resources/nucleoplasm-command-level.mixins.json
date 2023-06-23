@@ -5,10 +5,12 @@
   "compatibilityLevel": "JAVA_17",
   "server": [
     "MixinEntity",
-    "MixinEntityImpl",
-    "MixinCommandManager"
+    "MixinSerializable"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+
+  ]
 }

@@ -33,7 +33,6 @@
   },
   "custom": {
     "loom:injected_interfaces": {
-      "union/xenfork/nucleoplasm/api/config/Config": ["union/xenfork/nucleoplasm/command/level/face/GetT"]
     }
   }
 }

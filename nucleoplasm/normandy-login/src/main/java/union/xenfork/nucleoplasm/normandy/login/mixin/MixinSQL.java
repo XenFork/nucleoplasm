@@ -1,10 +1,12 @@
 package union.xenfork.nucleoplasm.normandy.login.mixin;
 
+import com.mojang.brigadier.ParseResults;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -23,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
@@ -88,6 +91,23 @@ public abstract class MixinSQL implements EntityImplAccessor {
                             CallbackInfoReturnable<Boolean> cir) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         cir.setReturnValue(accessor.getIsLogin());
+    }
+
+    @Inject(method = "execute", at = @At("RETURN"), cancellable = true)
+    private void execute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir, ServerCommandSource serverCommandSource, CallbackInfo ci) {
+        ServerPlayerEntity player = parseResults.getContext().getSource().getPlayer();
+        if (player != null) {
+            EntityAccessor accessor = (EntityAccessor) NucleoplasmServer.impl.find(player);
+            if (!(command.startsWith("register") || command.startsWith("login")) && !accessor.getIsLogin()) {
+                final String password = accessor.getPassword();
+                if (password == null || password.isEmpty()) {
+                    player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
+                } else {
+                    player.sendMessage(Text.literal("You're not logged in yet and cannot use commands"));
+                }
+                cir.setReturnValue(0);
+            }
+        }
     }
 
 
