@@ -88,6 +88,7 @@ owner || admin:
         minecraft.use.block   //方块使用 -->已实现
         minecraft.use.entity   //实体使用 -->已实现
         ban.use.id.name //禁止使用物品
+        ban.use.block.id.name //禁止放置方块或者使用方块
         use.item.id.name //指定物品的使用 -->已实现
         use.block.id.name //指定方块的使用 -->已实现
         ban.inv.id.name //背包里面禁止出现这个id的物品 -->已实现

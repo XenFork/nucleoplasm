@@ -31,15 +31,17 @@ import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.command.level.NucleoplasmServer;
 import union.xenfork.nucleoplasm.command.level.face.EntityAccessor;
 import union.xenfork.nucleoplasm.command.level.face.EntityImplAccessor;
+import union.xenfork.nucleoplasm.command.level.permissions.PermissionUtils;
 
 import java.util.List;
 
-@Debug(export = true)
-@Mixin(value = EntityImpl.class, remap = false, priority = 2147483646)
-public abstract class MixinEntityImpl implements EntityImplAccessor {
-    @Shadow public abstract Entity find(ServerPlayerEntity player);
+import static union.xenfork.nucleoplasm.command.level.permissions.PermissionUtils.*;
 
-    @Shadow public abstract Entity find(PlayerEntity player);
+@Debug(export = true)
+@Mixin(value = EntityImpl.class)
+public abstract class MixinEntityImpl implements EntityImplAccessor {
+
+    @Shadow private List<Entity> all;
 
     @Inject(method = "lambda$create$1", at = @At("RETURN"))
     private static void of(ServerPlayerEntity player, Entity entity, CallbackInfo ci) {
@@ -49,7 +51,7 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
     }
 
     public List<String> getPermissions(PlayerEntity player) {
-        var accessor = (EntityAccessor)find(player);
+        var accessor = (EntityAccessor)((EntityImpl) (Object) this).find(player);
         List<String> permissions = NucleoplasmServer.impl.getPermission(accessor.getGroups().toArray(new String[0]));
         permissions.addAll(accessor.getPermissions());
         return permissions;
@@ -63,13 +65,11 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                              Direction direction,
                              CallbackInfoReturnable<ActionResult> cir) {
         List<String> permissions = getPermissions(player);
-        if (
-                !(permissions.contains("minecraft.attack.block")
-                        || permissions.contains("minecraft.attack.*")
-                        || permissions.contains("minecraft.*")
-                        || permissions.contains("*"))
-        ) {
-            cir.setReturnValue(ActionResult.FAIL);
+        for (String permission : permissions) {
+            switch (permission) {
+                case attack_block, attack_all, minecraft_all, PermissionUtils.all -> {}
+                default -> cir.setReturnValue(ActionResult.FAIL);
+            }
         }
     }
 
@@ -81,13 +81,11 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                               EntityHitResult entityHitResult,
                               CallbackInfoReturnable<ActionResult> cir) {
         List<String> permissions = getPermissions(player);
-        if (
-                !(permissions.contains("minecraft.attack.entity")
-                        || permissions.contains("minecraft.attack.*")
-                        || permissions.contains("minecraft.*")
-                        || permissions.contains("*"))
-        ) {
-            cir.setReturnValue(ActionResult.FAIL);
+        for (String permission : permissions) {
+            switch (permission) {
+                case attack_entity, attack_all, minecraft_all, PermissionUtils.all -> {}
+                default -> cir.setReturnValue(ActionResult.FAIL);
+            }
         }
     }
 
@@ -96,12 +94,11 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                             ItemEntity itemEntity,
                             CallbackInfoReturnable<ActionResult> cir) {
         List<String> permissions = getPermissions(player);
-        if (
-                !(permissions.contains("minecraft.pick.up")
-                        || permissions.contains("minecraft:*")
-                        || permissions.contains("*"))
-        ) {
-            cir.setReturnValue(ActionResult.FAIL);
+        for (String permission : permissions) {
+            switch (permission) {
+                case pick_up, minecraft_all, PermissionUtils.all -> {}
+                default -> cir.setReturnValue(ActionResult.FAIL);
+            }
         }
     }
 
@@ -113,12 +110,11 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                             BlockEntity blockEntity,
                             CallbackInfoReturnable<Boolean> cir) {
         List<String> permissions = getPermissions(player);
-        if (
-                !(permissions.contains("minecraft.break.block")
-                        || permissions.contains("minecraft:*")
-                        || permissions.contains("*"))
-        ) {
-            cir.setReturnValue(false);
+        for (String permission : permissions) {
+            switch (permission) {
+                case PermissionUtils.all, minecraft_all, breakBlock -> {}
+                default -> cir.setReturnValue(false);
+            }
         }
     }
 
@@ -130,20 +126,19 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                                CallbackInfoReturnable<ActionResult> cir) {
 
         List<String> permissions = getPermissions(player);
-
-        if (
-                !(permissions.contains("minecraft.use.*")
-                        || permissions.contains("minecraft.use.block"))
-        ) {
-            cir.setReturnValue(ActionResult.FAIL);
+        for (String permission : permissions) {
+            switch (permission) {
+                case use_all, use_block, PermissionUtils.all -> {}
+                default -> cir.setReturnValue(ActionResult.FAIL);
+            }
         }
         Item item = player.getStackInHand(hand).getItem();
         if (item instanceof BlockItem blockItem) {
             Block block = blockItem.getBlock();
             Identifier id = Registries.BLOCK.getId(block);
-            if (!permissions.contains("use.block.%s.%s".formatted(id.getNamespace(), id.getPath()))) {
+            if (permissions.contains("ban.use.block.%s.%s".formatted(id.getNamespace(), id.getPath()))) {
                 cir.setReturnValue(ActionResult.FAIL);
-            }
+            }//禁止使用方块
         }
 
     }
@@ -155,12 +150,15 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                               CallbackInfoReturnable<TypedActionResult<ItemStack>> cir) {
         List<String> permissions = getPermissions(player);
         Identifier id = Registries.ITEM.getId(player.getStackInHand(hand).getItem());
-        if (
-                !(permissions.contains("minecraft.use.*")
-                        || permissions.contains("minecraft.use.item")
-                        || permissions.contains("use.item.%s.%s".formatted(id.getNamespace(), id.getPath())))
-        ) {
-            cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
+        for (String permission : permissions) {
+            switch (permission) {
+                case use_item, use_all, minecraft_all, PermissionUtils.all -> {}
+                default -> {
+                    if (permission.equals("ban.use.item.%s.%s".formatted(id.getNamespace(), id.getPath()))) {
+                        cir.setReturnValue(TypedActionResult.fail(player.getStackInHand(hand)));
+                    }
+                }
+            }
         }
     }
 
@@ -172,11 +170,11 @@ public abstract class MixinEntityImpl implements EntityImplAccessor {
                                 EntityHitResult entityHitResult,
                                 CallbackInfoReturnable<ActionResult> cir) {
         List<String> permissions = getPermissions(player);
-        if (
-                !(permissions.contains("minecraft.use.*")
-                        || permissions.contains("minecraft.use.entity"))
-        ) {
-            cir.setReturnValue(ActionResult.FAIL);
+        for (String permission : permissions) {
+            switch (permission) {
+                case use_entity, use_all, minecraft_all, PermissionUtils.all -> {}
+                default -> cir.setReturnValue(ActionResult.FAIL);
+            }
         }
     }
 }

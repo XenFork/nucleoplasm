@@ -1,12 +1,10 @@
 package union.xenfork.nucleoplasm.normandy.login.mixin;
 
-import com.github.artbits.quickio.api.DB;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
 import net.minecraft.util.ActionResult;
@@ -19,14 +17,12 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.GameMode;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
-import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
@@ -117,8 +113,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
     @Inject(method = "login", at = @At(value = "RETURN"))
     private void login(ServerPlayerEntity player,
                        CallbackInfo ci) {
-        List<Entity> list = all.stream().filter(entity -> entity.player_name.equals(player.getEntityName())).toList();
-        EntityAccessor accessor = (EntityAccessor) all.get(0);
+        EntityAccessor accessor = (EntityAccessor) ((EntityImpl) (Object) this).find(player);
         accessor.setIsLogin(false);
     }
 

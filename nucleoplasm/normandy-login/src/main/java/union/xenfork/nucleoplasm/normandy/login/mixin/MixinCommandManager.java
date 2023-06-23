@@ -23,7 +23,7 @@ public class MixinCommandManager {
         ServerPlayerEntity player = parseResults.getContext().getSource().getPlayer();
         if (player != null) {
             EntityAccessor accessor = (EntityAccessor) NucleoplasmServer.impl.find(player);
-            if (!(command.contains("register") || command.contains("login")) && !accessor.getIsLogin()) {
+            if (!(command.startsWith("register") || command.startsWith("login")) && !accessor.getIsLogin()) {
                 final String password = accessor.getPassword();
                 if (password == null || password.isEmpty()) {
                     player.sendMessage(Text.literal("You're not registered in yet and cannot use commands"));
@@ -33,6 +33,5 @@ public class MixinCommandManager {
                 cir.setReturnValue(0);
             }
         }
-
     }
 }
