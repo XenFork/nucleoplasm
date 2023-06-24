@@ -4,8 +4,7 @@
   "package": "union.xenfork.nucleoplasm.command.level.mixin",
   "compatibilityLevel": "JAVA_17",
   "server": [
-    "MixinEntity",
-    "MixinSerializable"
+    "MixinEntity"
   ],
   "injectors": {
     "defaultRequire": 1

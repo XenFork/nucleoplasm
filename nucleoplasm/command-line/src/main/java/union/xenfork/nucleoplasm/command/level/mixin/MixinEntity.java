@@ -3,54 +3,53 @@ package union.xenfork.nucleoplasm.command.level.mixin;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.command.level.face.EntityAccess;
+import union.xenfork.nucleoplasm.command.level.utils.IIdentifier;
+import union.xenfork.nucleoplasm.command.level.utils.IVec2f;
+import union.xenfork.nucleoplasm.command.level.utils.IVec3d;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 @Mixin(Entity.class)
 public class MixinEntity implements EntityAccess {
-    public Map<String, Double> homeX ,homeY, homeZ;
-    public Map<String, Float> homeYaw,homePitch;
-    public Map<String, String> serverWorldMap;
+    public HashMap<String, IVec3d> homeXYZ;
+    public HashMap<String, IVec2f> homeYP;
+    public HashMap<String, IIdentifier> homeWorldId;
+
 
     @Override
     public void setHome(String homeIndex, ServerPlayerEntity player) {
-        if (homeX == null) homeX = new HashMap<>();
-        if (homeY == null) homeY = new HashMap<>();
-        if (homeZ == null) homeZ = new HashMap<>();
-        if (homeYaw == null) homeYaw = new HashMap<>();
-        if (homePitch == null) homePitch = new HashMap<>();
-        if (serverWorldMap == null) serverWorldMap = new HashMap<>();
-        homeX.put(homeIndex, player.getX());
-        homeY.put(homeIndex, player.getY());
-        homeZ.put(homeIndex, player.getZ());
-        homeYaw.put(homeIndex, player.getYaw());
-        homePitch.put(homeIndex, player.getPitch());
-        serverWorldMap.put(homeIndex, player.getServerWorld().asString());
-
+        if (homeXYZ == null) homeXYZ = new HashMap<>();
+        if (homeYP == null) homeYP = new HashMap<>();
+        if (homeWorldId == null) homeWorldId = new HashMap<>();
+        homeXYZ.put(homeIndex, new IVec3d(player.getPos()));
+        homeYP.put(homeIndex, new IVec2f(player.getYaw(), player.getPitch()));
+        homeWorldId.put(homeIndex, new IIdentifier(player.getServerWorld().getRegistryKey().getValue()));
     }
 
     @Override
     public void delHome(String homeIndex) {
-        homeX.remove(homeIndex);
-        homeY.remove(homeIndex);
-        homeZ.remove(homeIndex);
-        homeYaw.remove(homeIndex);
-        homePitch.remove(homeIndex);
-        serverWorldMap.remove(homeIndex);
+        homeXYZ.remove(homeIndex);
+        homeYP.remove(homeIndex);
+        homeWorldId.remove(homeIndex);
     }
 
     @Override
     public void gotoHome(String homeIndex, ServerPlayerEntity player) {
-        if (homeX.containsKey(homeIndex)) {
+
+        if (homeXYZ.containsKey(homeIndex)) {
             for (ServerWorld world : player.server.getWorlds()) {
-                if (world.asString().equals(serverWorldMap.get(homeIndex))) {
-                    player.teleport(world, homeX.get(homeIndex), homeY.get(homeIndex), homeZ.get(homeIndex), homeYaw.get(homeIndex), homePitch.get(homeIndex));
+                Identifier value = world.getRegistryKey().getValue();
+                IIdentifier iIdentifier = homeWorldId.get(homeIndex);
+                if (value.getNamespace().equals(iIdentifier.getNamespace()) && value.getPath().equals(iIdentifier.getPath())) {
+                    IVec3d vec3d = homeXYZ.get(homeIndex);
+                    IVec2f iVec2f = homeYP.get(homeIndex);
+                    player.teleport(world, vec3d.x, vec3d.y, vec3d.z, iVec2f.x, iVec2f.y);
                 }
             }
         } else {
@@ -59,7 +58,7 @@ public class MixinEntity implements EntityAccess {
     }
     @Override
     public Set<String> getHomes() {
-        if (homeX != null) return homeX.keySet();
+        if (homeXYZ != null) return homeXYZ.keySet();
         return new HashSet<>();
     }
 }

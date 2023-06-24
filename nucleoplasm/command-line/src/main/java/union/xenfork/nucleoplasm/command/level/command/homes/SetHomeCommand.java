@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.command.level.command;
+package union.xenfork.nucleoplasm.command.level.command.homes;
 
 import com.mojang.brigadier.Command;
 import com.mojang.brigadier.LiteralMessage;

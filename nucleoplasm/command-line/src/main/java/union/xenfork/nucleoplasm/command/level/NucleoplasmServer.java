@@ -11,9 +11,9 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
-import union.xenfork.nucleoplasm.command.level.command.DelHomeCommand;
-import union.xenfork.nucleoplasm.command.level.command.HomeCommand;
-import union.xenfork.nucleoplasm.command.level.command.SetHomeCommand;
+import union.xenfork.nucleoplasm.command.level.command.homes.DelHomeCommand;
+import union.xenfork.nucleoplasm.command.level.command.homes.HomeCommand;
+import union.xenfork.nucleoplasm.command.level.command.homes.SetHomeCommand;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
