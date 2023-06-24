@@ -16,7 +16,7 @@ import java.util.Set;
 public class MixinEntity implements EntityAccess {
     public Map<String, Double> homeX ,homeY, homeZ;
     public Map<String, Float> homeYaw,homePitch;
-    public Map<String, ServerWorld> serverWorldMap;
+    public Map<String, String> serverWorldMap;
 
     @Override
     public void setHome(String homeIndex, ServerPlayerEntity player) {
@@ -26,14 +26,12 @@ public class MixinEntity implements EntityAccess {
         if (homeYaw == null) homeYaw = new HashMap<>();
         if (homePitch == null) homePitch = new HashMap<>();
         if (serverWorldMap == null) serverWorldMap = new HashMap<>();
-
-
         homeX.put(homeIndex, player.getX());
         homeY.put(homeIndex, player.getY());
         homeZ.put(homeIndex, player.getZ());
         homeYaw.put(homeIndex, player.getYaw());
         homePitch.put(homeIndex, player.getPitch());
-        serverWorldMap.put(homeIndex, player.getServerWorld());
+        serverWorldMap.put(homeIndex, player.getServerWorld().asString());
 
     }
 
@@ -44,21 +42,24 @@ public class MixinEntity implements EntityAccess {
         homeZ.remove(homeIndex);
         homeYaw.remove(homeIndex);
         homePitch.remove(homeIndex);
+        serverWorldMap.remove(homeIndex);
     }
 
     @Override
     public void gotoHome(String homeIndex, ServerPlayerEntity player) {
         if (homeX.containsKey(homeIndex)) {
-            player.teleport(serverWorldMap.get(homeIndex), homeX.get(homeIndex), homeY.get(homeIndex), homeZ.get(homeIndex), homeYaw.get(homeIndex), homePitch.get(homeIndex));
+            for (ServerWorld world : player.server.getWorlds()) {
+                if (world.asString().equals(serverWorldMap.get(homeIndex))) {
+                    player.teleport(world, homeX.get(homeIndex), homeY.get(homeIndex), homeZ.get(homeIndex), homeYaw.get(homeIndex), homePitch.get(homeIndex));
+                }
+            }
         } else {
             player.sendMessage(Text.literal("don,t goto home%s".formatted(homeIndex)));
         }
     }
     @Override
     public Set<String> getHomes() {
-        if (homeX != null) {
-            return homeX.keySet();
-        }
+        if (homeX != null) return homeX.keySet();
         return new HashSet<>();
     }
 }

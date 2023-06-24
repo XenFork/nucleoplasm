@@ -1,8 +1,17 @@
 package union.xenfork.nucleoplasm.command.level;
 
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.LiteralMessage;
 import com.mojang.brigadier.arguments.StringArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import com.mojang.brigadier.builder.RequiredArgumentBuilder;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.minecraft.server.command.ServerCommandSource;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
+import union.xenfork.nucleoplasm.command.level.command.DelHomeCommand;
 import union.xenfork.nucleoplasm.command.level.command.HomeCommand;
 import union.xenfork.nucleoplasm.command.level.command.SetHomeCommand;
 
@@ -15,28 +24,56 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> {
 
+            LiteralArgumentBuilder<ServerCommandSource> gohome = literal("gohome");
+            LiteralArgumentBuilder<ServerCommandSource> sethome = literal("sethome");
+            LiteralArgumentBuilder<ServerCommandSource> delhome = literal("delhome");
+            RequiredArgumentBuilder<ServerCommandSource, String> homeName = argument("home_name", StringArgumentType.word());
             dispatcher.register(
-                    literal("home")
+                    gohome
                             .requires(source -> source.hasPermissionLevel(0))
-                            .executes(new HomeCommand())
                             .then(
-                                    argument("home_name", StringArgumentType.word())
+                                    homeName
                                             .executes(new HomeCommand())
-                            )
-                            .then(
-                                    literal("set")
-                                            .then(
-                                                    argument("home_name", StringArgumentType.word())
-                                                            .executes(new SetHomeCommand())
-                                            )
                             )
             );
             dispatcher.register(
-                    literal("sethome")
+                    literal("listhome")
+                            .requires(source -> source.hasPermissionLevel(0))
+                            .executes(new HomeCommand())
+            );
+            dispatcher.register(
+                    literal("home")
+                            .requires(source -> source.hasPermissionLevel(0))
+                            .executes(context -> {
+                                ServerPlayerEntity player = context.getSource().getPlayer();
+                                if (player != null) {
+                                    player.sendMessage(Text.literal("home help:"));
+                                    player.sendMessage(Text.literal("\tgohome <home_name>"));
+                                    player.sendMessage(Text.literal("\tlisthome"));
+                                    player.sendMessage(Text.literal("\tdelhome <home_name>"));
+                                    player.sendMessage(Text.literal("\tsethome <home_name>"));
+                                    return Command.SINGLE_SUCCESS;
+                                } else {
+                                    throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
+                                }
+                            })
+            );
+
+            dispatcher.register(
+                    sethome
                             .requires(source -> source.hasPermissionLevel(0))
                             .then(
-                                    argument("home_name", StringArgumentType.word())
+                                    homeName
                                             .executes(new SetHomeCommand())
+                            )
+            );
+
+            dispatcher.register(
+                    delhome
+                            .requires(source -> source.hasPermissionLevel(0))
+                            .then(
+                                    homeName
+                                            .executes(new DelHomeCommand())
                             )
             );
         });

@@ -11,25 +11,25 @@ import net.minecraft.text.Text;
 import union.xenfork.nucleoplasm.api.NucleoplasmServer;
 import union.xenfork.nucleoplasm.command.level.face.EntityAccess;
 
-public class HomeCommand implements Command<ServerCommandSource> {
-
+public class DelHomeCommand implements Command<ServerCommandSource> {
     @Override
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         ServerPlayerEntity player = context.getSource().getPlayer();
-        String home_name = context.getArgument("home_name", String.class);
+        String homeName = context.getArgument("home_name", String.class);
         if (player != null) {
-            if (home_name == null) {
+            if (homeName != null) {
                 EntityAccess access = (EntityAccess) NucleoplasmServer.impl.find(player);
-                for (String home : access.getHomes()) {
-                    player.sendMessage(Text.literal(home));
+                if (access.getHomes().contains(homeName)) {
+                    access.delHome(homeName);
+                    player.sendMessage(Text.literal("del home%ssuccess!".formatted(homeName)));
+                    return SINGLE_SUCCESS;
+                } else {
+                    throw new SimpleCommandExceptionType(new LiteralMessage("don't del home")).create();
                 }
-            } else {
-                EntityAccess access = (EntityAccess) NucleoplasmServer.impl.find(player);
-                access.gotoHome(home_name, player);
             }
-            return SINGLE_SUCCESS;
         } else {
             throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
         }
+        return 0;
     }
 }

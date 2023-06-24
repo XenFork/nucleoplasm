@@ -15,14 +15,18 @@ public class SetHomeCommand implements Command<ServerCommandSource> {
     public int run(CommandContext<ServerCommandSource> context) throws CommandSyntaxException {
         String home_name = context.getArgument("home_name", String.class);
         ServerPlayerEntity player = context.getSource().getPlayer();
-        EntityAccess access = (EntityAccess) NucleoplasmServer.impl.find(player);
-        if (home_name != null) {
-            if (!access.getHomes().contains(home_name)) {
-                access.setHome(home_name, player);
-                return SINGLE_SUCCESS;
-            } else {
-                throw new SimpleCommandExceptionType(new LiteralMessage("don't have %s".formatted(home_name))).create();
+        if (player != null) {
+            EntityAccess access = (EntityAccess) NucleoplasmServer.impl.find(player);
+            if (home_name != null) {
+                if (!access.getHomes().contains(home_name)) {
+                    access.setHome(home_name, player);
+                    return SINGLE_SUCCESS;
+                } else {
+                    throw new SimpleCommandExceptionType(new LiteralMessage("don't have %s".formatted(home_name))).create();
+                }
             }
+        } else {
+            throw new SimpleCommandExceptionType(new LiteralMessage("Go away, you're not a human being")).create();
         }
         return 0;
     }
