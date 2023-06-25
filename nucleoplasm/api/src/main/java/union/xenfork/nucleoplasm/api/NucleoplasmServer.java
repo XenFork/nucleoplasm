@@ -6,7 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
-import union.xenfork.nucleoplasm.api.core.EntityImpl;
+import union.xenfork.nucleoplasm.api.core.*;
 import union.xenfork.nucleoplasm.api.event.CommandEvents;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
@@ -15,6 +15,8 @@ import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
 public class NucleoplasmServer implements DedicatedServerModInitializer {
 //    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
+    public static final TEntityImpl<ServerEntity> serverImpl = new TEntityImpl<>("server", FabricLoader.getInstance().getGameDir(), ServerEntity.class);
+    public static final TEntityImpl<GlobalEntity> globalImpl = new TEntityImpl<>("global", System.getProperty("user.home"), GlobalEntity.class);
     public static final ConfigImpl apiImpl = new ConfigImpl(FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/api"), "config");
     @Override
     public void onInitializeServer() {

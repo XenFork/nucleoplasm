@@ -12,10 +12,11 @@ import java.util.function.Consumer;
 public class GlobalEntityImpl {
     private final Config config;
 
-    public GlobalEntityImpl(Path path) {
+    public GlobalEntityImpl() {
+        System.out.println(System.getProperty("user.home"));
         config = Config.of(c -> {
-            c.name("player");
-            c.path(path.toFile().getAbsolutePath());
+            c.name("global");
+            c.path(System.getProperty("user.home"));
             c.cache(16L * 1024 * 1024);
         });
         try(DB db = QuickIO.usingDB(config)) {
