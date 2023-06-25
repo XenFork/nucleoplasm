@@ -27,11 +27,11 @@ public class ServerPlayerEntityMixin {
 
     @Inject(method = "readCustomDataFromNbt", at = @At("RETURN"))
     private void read(NbtCompound nbt, CallbackInfo ci) {
-        NbtRWEvents.readServerPlayerNbtEvent.invoker().read(nbt);
+        NbtRWEvents.readServerPlayerNbtEvent.invoker().read(nbt, player);
     }
 
     @Inject(method = "writeCustomDataToNbt", at = @At("RETURN"))
     private void write(NbtCompound nbt, CallbackInfo ci) {
-        NbtRWEvents.writeServerPlayerNbtEvent.invoker().write(nbt);
+        NbtRWEvents.writeServerPlayerNbtEvent.invoker().write(nbt, player);
     }
 }

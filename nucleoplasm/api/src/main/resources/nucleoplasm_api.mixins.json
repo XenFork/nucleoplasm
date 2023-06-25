@@ -9,7 +9,8 @@
     "item.ItemMixin",
     "player.PlayerInventoryMixin",
     "player.PlayerManagerMixin",
-    "player.ServerPlayerEntityMixin"
+    "player.ServerPlayerEntityMixin",
+    "server.PersistentStateManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

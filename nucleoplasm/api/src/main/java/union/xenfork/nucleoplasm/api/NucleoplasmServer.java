@@ -46,5 +46,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         });
         ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
         CommandEvents.execute.register(impl::execute);
+
     }
 }
