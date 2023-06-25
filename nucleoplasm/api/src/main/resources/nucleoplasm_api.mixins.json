@@ -12,6 +12,7 @@
     "player.ServerPlayerEntityMixin",
     "serializable.nbt.NbtByteArrayMixin",
     "serializable.nbt.NbtByteMixin",
+    "serializable.nbt.NbtCompoundMixin",
     "serializable.nbt.NbtDoubleMixin",
     "serializable.nbt.NbtFloatMixin",
     "serializable.nbt.NbtIntArrayMixin",
