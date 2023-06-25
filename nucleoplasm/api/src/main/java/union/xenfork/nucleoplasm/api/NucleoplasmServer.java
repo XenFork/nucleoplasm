@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.util.math.Vec3d;
 import union.xenfork.nucleoplasm.api.core.*;
 import union.xenfork.nucleoplasm.api.event.CommandEvents;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;

@@ -9,7 +9,20 @@
     "item.ItemMixin",
     "player.PlayerInventoryMixin",
     "player.PlayerManagerMixin",
-    "player.ServerPlayerEntityMixin"
+    "player.ServerPlayerEntityMixin",
+    "serializable.nbt.NbtByteArrayMixin",
+    "serializable.nbt.NbtByteMixin",
+    "serializable.nbt.NbtDoubleMixin",
+    "serializable.nbt.NbtFloatMixin",
+    "serializable.nbt.NbtIntArrayMixin",
+    "serializable.nbt.NbtIntMixin",
+    "serializable.nbt.NbtLongArrayMixin",
+    "serializable.nbt.NbtLongMixin",
+    "serializable.nbt.NbtShortMixin",
+    "serializable.nbt.NbtStringMixin",
+    "serializable.util.math.Vec2fMixin",
+    "serializable.util.math.Vec3dMixin",
+    "serializable.util.math.Vec3iMixin"
   ],
   "injectors": {
     "defaultRequire": 1
