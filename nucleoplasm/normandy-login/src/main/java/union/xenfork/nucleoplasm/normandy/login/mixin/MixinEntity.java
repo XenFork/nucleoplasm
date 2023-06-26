@@ -1,5 +1,9 @@
 package union.xenfork.nucleoplasm.normandy.login.mixin;
 
+import net.minecraft.util.math.Vec2f;
+import net.minecraft.util.math.Vec3d;
+import net.serials.minecraft.util.math.IVec2f;
+import net.serials.minecraft.util.math.IVec3d;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import union.xenfork.nucleoplasm.api.core.Entity;
@@ -10,28 +14,60 @@ import union.xenfork.nucleoplasm.normandy.login.face.EntityAccessor;
 public class MixinEntity implements EntityAccessor {
     public boolean is_login;
     public String password;
+    public IVec3d xyz;
+    public IVec2f py;
+    public long kickTime;
 
-    public double x,y,z;
-    public float yaw,pitch;
+    @Override
+    public void clearKickTime(long kickTime) {
+        this.kickTime = 0L;
+    }
+    @Override
+    public void addKickTime() {
+        this.kickTime++;
+    }
+
+    @Override
+    public long getKickTime() {
+        return kickTime;
+    }
+
+    @Override
+    public Vec2f getYp() {
+        return py.get();
+    }
+    @Override
+    public void setYp(float p, float y) {
+        this.py = new IVec2f(p, y);
+    }
+
+    @Override
+    public Vec3d getXyz() {
+        return xyz.get();
+    }
+    @Override
+    public void setXyz(Vec3d xyz) {
+        this.xyz = new IVec3d(xyz);
+    }
 
     @Override
     public void setPitch(float pitch) {
-        this.pitch = pitch;
+        py.x = pitch;
     }
 
     @Override
     public void setYaw(float yaw) {
-        this.yaw = yaw;
+        py.y = yaw;
     }
 
     @Override
     public float getYaw() {
-        return yaw;
+        return py.y;
     }
 
     @Override
     public float getPitch() {
-        return pitch;
+        return py.x;
     }
 
     @Override
@@ -46,32 +82,32 @@ public class MixinEntity implements EntityAccessor {
 
     @Override
     public double getX() {
-        return x;
+        return xyz.x;
     }
 
     @Override
     public void setX(double x) {
-        this.x = x;
+        xyz.x = x;
     }
 
     @Override
     public double getY() {
-        return y;
+        return xyz.y;
     }
 
     @Override
     public void setY(double y) {
-        this.y = y;
+        xyz.y = y;
     }
 
     @Override
     public double getZ() {
-        return z;
+        return xyz.z;
     }
 
     @Override
     public void setZ(double z) {
-        this.z = z;
+        xyz.z = z;
     }
 
     @Override

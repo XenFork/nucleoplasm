@@ -116,10 +116,16 @@ public abstract class MixinSQL implements EntityImplAccessor {
                       CallbackInfo ci) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         if (!accessor.getIsLogin()) {
-            player.teleport(accessor.getX(), accessor.getY(), accessor.getZ());
+            player.teleport(accessor.getXyz().x, accessor.getXyz().y, accessor.getXyz().z);
             player.setInvulnerable(true);
             player.changeGameMode(GameMode.SURVIVAL);
-            if (Objects.requireNonNull(player.getServer()).getTimeReference() % 996 == 0) {
+            if (accessor.getKickTime() == 514L) {
+                Objects.requireNonNull(player.getServer()).getPlayerManager().remove(player);
+            }
+            if (Objects.requireNonNull(player.getServer()).getTimeReference() % 5 == 0) {
+                accessor.addKickTime();
+            }
+            if (Objects.requireNonNull(player.getServer()).getTimeReference() % 114 == 0) {
                 String password = accessor.getPassword();
                 if (password == null || password.isEmpty()) {
                     player.sendMessage(Text.literal("Please use /register <password> <confirm password> to register"));
@@ -134,6 +140,7 @@ public abstract class MixinSQL implements EntityImplAccessor {
     private void login(ServerPlayerEntity player,
                        CallbackInfo ci) {
         EntityAccessor accessor = (EntityAccessor) ((EntityImpl) (Object) this).find(player);
+        if (accessor.getXyz() == null) accessor.setXyz(player.getPos());
         accessor.setIsLogin(false);
     }
 
@@ -142,11 +149,20 @@ public abstract class MixinSQL implements EntityImplAccessor {
                         CallbackInfo ci) {
         var accessor = (EntityAccessor)((EntityImpl)(Object)this).find(player);
         accessor.setIsLogin(false);
-        accessor.setX(player.getX());
-        accessor.setY(player.getY());
-        accessor.setZ(player.getZ());
-        accessor.setYaw(player.getYaw());
-        accessor.setPitch(player.getPitch());
+        if (accessor.getYp() == null) {
+            accessor.setYp(player.getPitch(), player.getYaw());
+        } else {
+            accessor.setPitch(player.getPitch());
+            accessor.setYaw(player.getYaw());
+        }
+        if (accessor.getXyz() == null) {
+            accessor.setXyz(player.getPos());
+        } else {
+            accessor.setX(player.getX());
+            accessor.setY(player.getY());
+            accessor.setZ(player.getZ());
+        }
+
     }
 
     @Inject(method = "lambda$create$1", at = @At(value = "RETURN"))
@@ -154,11 +170,8 @@ public abstract class MixinSQL implements EntityImplAccessor {
         var accessor = ((EntityAccessor) e);
         accessor.setIsLogin(false);
         accessor.setPassword("");
-        accessor.setX(player.getX());
-        accessor.setY(player.getY());
-        accessor.setZ(player.getZ());
-        accessor.setPitch(player.getPitch());
-        accessor.setYaw(player.getYaw());
+        accessor.setXyz(player.getPos());
+        accessor.setYp(player.getPitch(), player.getYaw());
     }
 
     @Inject(method = "pickupItem", at = @At(value = "RETURN"), cancellable = true)
