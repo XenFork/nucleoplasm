@@ -22,6 +22,7 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
+import net.serials.minecraft.util.math.IVec3d;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -47,6 +48,7 @@ public class EntityImpl {
         Entity of = Entity.of(entity -> {
             entity.player_name = player.getEntityName();
             entity.uuid = player.getUuid();
+            entity.pos = new IVec3d(player.getPos());
         });
         all.add(of);
         return of;
@@ -97,7 +99,6 @@ public class EntityImpl {
     }
 
     public void tick(ServerPlayerEntity player) {
-
     }
 
     public void tick(ServerWorld world) {
@@ -121,6 +122,7 @@ public class EntityImpl {
             Entity entity = create(player);
             all.add(entity);
         }
+
     }
 
     public boolean blockBreak(World world, PlayerEntity entity, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity) {
