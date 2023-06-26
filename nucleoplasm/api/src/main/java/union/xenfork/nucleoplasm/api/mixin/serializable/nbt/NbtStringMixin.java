@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Debug(export = true)
 @Mixin(NbtString.class)
-public class NbtStringMixin implements Serializable {
+public abstract class NbtStringMixin implements Serializable {
 
     @Serial
     private static final long serialVersionUID = -4692153822315647693L;//序列化Vec3d的测试

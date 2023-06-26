@@ -6,6 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 
 import java.io.Serial;
 import java.io.Serializable;
+
 @Debug(export = true)
 @Mixin(NbtCompound.class)
 public class NbtCompoundMixin implements Serializable {

@@ -1,6 +1,5 @@
 package union.xenfork.nucleoplasm.api.mixin.serializable.nbt;
 
-import net.minecraft.nbt.NbtByte;
 import net.minecraft.nbt.NbtDouble;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;

@@ -33,6 +33,9 @@
   "custom": {
     "modmenu": {
       "badges": ["library"]
+    },
+    "loom:injected_interfaces": {
+      "net/minecraft/nbt/NbtElement": ["java/io/Serializable"]
     }
   }
 }

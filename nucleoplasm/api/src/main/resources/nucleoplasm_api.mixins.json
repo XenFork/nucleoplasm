@@ -14,6 +14,7 @@
     "serializable.nbt.NbtByteMixin",
     "serializable.nbt.NbtCompoundMixin",
     "serializable.nbt.NbtDoubleMixin",
+    "serializable.nbt.NbtElementMixin",
     "serializable.nbt.NbtFloatMixin",
     "serializable.nbt.NbtIntArrayMixin",
     "serializable.nbt.NbtIntMixin",
