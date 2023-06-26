@@ -24,6 +24,7 @@ public class ConfigImpl {
                c.authors = new ArrayList<>();
                c.authors.add("baka4n");
                c.authors.add("squid233");
+               c.no_global = false;
             });
             save();
         } else {
@@ -59,5 +60,9 @@ public class ConfigImpl {
 
     public void save(MinecraftServer server) {
         save();
+    }
+
+    public Config getConfig() {
+        return config;
     }
 }

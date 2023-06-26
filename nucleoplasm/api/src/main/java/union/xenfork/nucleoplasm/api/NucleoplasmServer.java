@@ -36,8 +36,9 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
         ServerLifecycleEvents.SERVER_STOPPED.register(apiImpl::save);
         ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            globalImpl = new TEntityImpl<>("global", System.getProperty("user.home"), GlobalEntity.class);
-            System.getProperty("user.home")
+            if (!apiImpl.getConfig().no_global) {
+                globalImpl = new TEntityImpl<>("global", System.getProperty("user.home"), GlobalEntity.class);
+            }
         });
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             impl.tick(world);
