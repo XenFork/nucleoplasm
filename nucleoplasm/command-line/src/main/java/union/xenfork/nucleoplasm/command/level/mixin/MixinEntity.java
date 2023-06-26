@@ -4,12 +4,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.serials.minecraft.util.math.IVec2f;
+import net.serials.minecraft.util.math.IVec3d;
 import org.spongepowered.asm.mixin.Mixin;
 import union.xenfork.nucleoplasm.api.core.Entity;
 import union.xenfork.nucleoplasm.command.level.face.EntityAccess;
 import union.xenfork.nucleoplasm.command.level.utils.IIdentifier;
-import union.xenfork.nucleoplasm.command.level.utils.IVec2f;
-import union.xenfork.nucleoplasm.command.level.utils.IVec3d;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,6 +50,7 @@ public class MixinEntity implements EntityAccess {
                     IVec3d vec3d = homeXYZ.get(homeIndex);
                     IVec2f iVec2f = homeYP.get(homeIndex);
                     player.teleport(world, vec3d.x, vec3d.y, vec3d.z, iVec2f.x, iVec2f.y);
+                    break;
                 }
             }
         } else {
