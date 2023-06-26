@@ -6,10 +6,7 @@ import net.fabricmc.fabric.api.event.lifecycle.v1.ServerTickEvents;
 import net.fabricmc.fabric.api.event.player.*;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
-import union.xenfork.nucleoplasm.api.core.EntityImpl;
-import union.xenfork.nucleoplasm.api.core.GlobalEntity;
-import union.xenfork.nucleoplasm.api.core.ServerEntity;
-import union.xenfork.nucleoplasm.api.core.TEntityImpl;
+import union.xenfork.nucleoplasm.api.core.*;
 import union.xenfork.nucleoplasm.api.event.CommandEvents;
 import union.xenfork.nucleoplasm.api.event.ItemEvents;
 import union.xenfork.nucleoplasm.api.event.ServerPlayerEvents;
@@ -18,12 +15,15 @@ import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
 public class NucleoplasmServer implements DedicatedServerModInitializer {
 //    public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
     public static final EntityImpl impl = new EntityImpl(FabricLoader.getInstance().getGameDir().resolve("nucleoplasm/data"));
-    public static final TEntityImpl<ServerEntity> serverImpl = new TEntityImpl<>("server", FabricLoader.getInstance().getGameDir(), ServerEntity.class);
-    public static TEntityImpl<GlobalEntity> globalImpl;
+    public static final ServerEntityImpl serverImpl = new ServerEntityImpl();
     public static final ConfigImpl apiImpl = new ConfigImpl(FabricLoader.getInstance().getConfigDir().resolve("nucleoplasm/api"), "config");
+//    public static TEntityImpl<GlobalEntity> globalImpl;
+
     @Override
     public void onInitializeServer() {
-
+//        if (!apiImpl.getConfig().no_global) {
+//            globalImpl = new TEntityImpl<>("global", System.getProperty("user.home"), GlobalEntity.class);
+//        }
         AttackBlockCallback.EVENT.register(impl::attackBlock);
         AttackEntityCallback.EVENT.register(impl::attackEntity);
         UseEntityCallback.EVENT.register(impl::interactEntity);
@@ -35,11 +35,6 @@ public class NucleoplasmServer implements DedicatedServerModInitializer {
         ServerPlayerEvents.DROP_ITEM_EVENT.register(impl::dropItem);
         ServerLifecycleEvents.SERVER_STOPPED.register(impl::close);
         ServerLifecycleEvents.SERVER_STOPPED.register(apiImpl::save);
-        ServerLifecycleEvents.SERVER_STARTING.register(server -> {
-            if (!apiImpl.getConfig().no_global) {
-                globalImpl = new TEntityImpl<>("global", System.getProperty("user.home"), GlobalEntity.class);
-            }
-        });
         ServerTickEvents.START_WORLD_TICK.register(world -> {
             impl.tick(world);
             apiImpl.tick(world);
