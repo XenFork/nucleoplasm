@@ -12,8 +12,8 @@ import union.xenfork.nucleoplasm.registry.registry.ModItems;
 import java.util.Arrays;
 import java.util.function.Function;
 
-import static union.xenfork.nucleoplasm.registry.Record.modBlockAndItem;
-import static union.xenfork.nucleoplasm.registry.Record.modItem;
+import static union.xenfork.nucleoplasm.registry.impl.ModBlockAndItem.modBlockAndItem;
+import static union.xenfork.nucleoplasm.registry.impl.ModItem.modItem;
 
 @Debug(export = true)
 @Mixin(value = ModItems.class)

@@ -11,7 +11,9 @@ import union.xenfork.nucleoplasm.registry.registry.ModBlocks;
 import union.xenfork.nucleoplasm.registry.registry.ModGroups;
 import union.xenfork.nucleoplasm.registry.registry.ModItems;
 
-import static union.xenfork.nucleoplasm.registry.Record.*;
+import static union.xenfork.nucleoplasm.registry.impl.ModBlock.modBlock;
+import static union.xenfork.nucleoplasm.registry.impl.ModBlockAndItem.modBlockAndItem;
+import static union.xenfork.nucleoplasm.registry.impl.ModItem.modItem;
 
 public class Nucleoplasm implements ModInitializer {
     @Override

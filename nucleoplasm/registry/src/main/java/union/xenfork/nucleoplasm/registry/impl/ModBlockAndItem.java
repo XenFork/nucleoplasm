@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ModBlockAndItem extends ModBlock {
+    public static final ModBlockAndItem modBlockAndItem = new ModBlockAndItem();
     public final Map<String, Item.Settings> settingsMap = new HashMap<>();
 
     public void add(String name, Function<AbstractBlock.Settings, Block> function, Item.Settings settings) {
