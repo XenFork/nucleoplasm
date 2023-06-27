@@ -6,15 +6,14 @@ import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Mutable;
 import org.spongepowered.asm.mixin.Shadow;
-import union.xenfork.nucleoplasm.registry.event.RegistryEvent;
 import union.xenfork.nucleoplasm.registry.registry.ModBlocks;
 import union.xenfork.nucleoplasm.registry.registry.ModItems;
 
 import java.util.Arrays;
 import java.util.function.Function;
 
-import static union.xenfork.nucleoplasm.registry.event.Record.modBlockAndItem;
-import static union.xenfork.nucleoplasm.registry.event.Record.modItem;
+import static union.xenfork.nucleoplasm.registry.Record.modBlockAndItem;
+import static union.xenfork.nucleoplasm.registry.Record.modItem;
 
 @Debug(export = true)
 @Mixin(value = ModItems.class)
@@ -30,7 +29,6 @@ public class ModItemMixin {
 
 
     static {
-        RegistryEvent.REGISTRY_ITEM_EVENT.invoker().registry(modItem);
         modItem.map.forEach(ModItemMixin::add);
         modBlockAndItem.settingsMap.forEach(ModItemMixin::add);
     }
