@@ -4,6 +4,7 @@
   "package": "union.xenfork.nucleoplasm.registry.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "ModBlockMixin",
     "ModItemMixin"
   ],
   "injectors": {
