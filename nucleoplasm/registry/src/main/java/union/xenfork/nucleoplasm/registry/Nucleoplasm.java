@@ -19,12 +19,16 @@ public class Nucleoplasm implements ModInitializer {
     @Override
     public void onInitialize() {
         FabricLoader instance = FabricLoader.getInstance();
-        var registryItem = instance.getEntrypointContainers("registryItem", RegistryItemEntrypoints.class);
-        var registryBlock = instance.getEntrypointContainers("registryBlock", RegistryBlockEntrypoints.class);
-        var registryBlockAndItem = instance.getEntrypointContainers("registryBlockAndItem", RegistryBlockAndItemEntrypoints.class);
-        var registry1 = instance.getEntrypointContainers("registry", RegistryAllEntrypoints.class);
-        for (var registry : registry1)
-            registry.getEntrypoint().registry(modBlockAndItem, modBlock, modItem);
+        var registryItem = instance.getEntrypointContainers("nucleoplasm_registry:registry", RegistryItemEntrypoints.class);
+        var registryBlock = instance.getEntrypointContainers("nucleoplasm_registry:registry", RegistryBlockEntrypoints.class);
+        var registryBlockAndItem = instance.getEntrypointContainers("nucleoplasm_registry:registry", RegistryBlockAndItemEntrypoints.class);
+        var registry1 = instance.getEntrypointContainers("nucleoplasm_registry:registry", RegistryAllEntrypoints.class);
+        for (var registry : registry1) {
+            RegistryAllEntrypoints entrypoint = registry.getEntrypoint();
+            entrypoint.registry(modBlockAndItem);
+            entrypoint.registry(modBlock);
+            entrypoint.registry(modItem);
+        }
         for (EntrypointContainer<RegistryItemEntrypoints> registry : registryItem)
             registry.getEntrypoint().registry(modItem);
         for (var registry : registryBlock)
