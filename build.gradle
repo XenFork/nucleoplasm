@@ -18,7 +18,7 @@ setVersion(nucleoplasm_version)
 
 ext {
     def pre_url = "https://xenfork.github.io/all-project-version-selector/$base_name/"
-    def strings = "$base_name,fabric".split(",")
+    def strings = "$base_name,fabric,include".split(",")
     Gson gson = new Gson()
 
     for (final def s in strings ) {
