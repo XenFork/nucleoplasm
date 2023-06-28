@@ -1,5 +1,6 @@
 package union.xenfork.nucleoplasm.registry.registry;
 
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.registry.Registries;
@@ -15,7 +16,8 @@ public enum ModBlocks {
     public final Identifier id;
     ModBlocks(Function<AbstractBlock.Settings, Block> blocks) {
         id = new Identifier("nucleoplasm_registry", name().toLowerCase(Locale.ROOT));
-        block = blocks.apply(AbstractBlock.Settings.create());
+        block = blocks.apply(FabricBlockSettings.create());
+
     }
 
     public static void registry() {
