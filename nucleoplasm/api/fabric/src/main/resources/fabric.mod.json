@@ -13,7 +13,14 @@
   "icon": "assets/${modid}/icon.png",
 
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "server": [
+      "union.xenfork.nucleoplasm.api.fabric.NucleoplasmApiFabricServer"
+    ],
+    "main": [
+      "union.xenfork.nucleoplasm.api.fabric.NucleoplasmApiFabric"
+    ]
+  },
   "mixins": [
     "${modid}.mixins.json",
     "${modid}-common.mixins.json"

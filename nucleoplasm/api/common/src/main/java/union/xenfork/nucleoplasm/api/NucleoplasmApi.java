@@ -5,4 +5,8 @@ public class NucleoplasmApi {
     public static void all() {
 
     }
+
+    public static void server() {
+
+    }
 }
