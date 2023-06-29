@@ -1,4 +1,4 @@
-package union.xenfork.nucleoplasm.lib.event.lifecycle;
+package union.xenfork.nucleoplasm.lib.event;
 
 import net.minecraft.server.MinecraftServer;
 import union.xenfork.nucleoplasm.lib.event.impl.Event;

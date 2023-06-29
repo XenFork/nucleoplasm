@@ -8,10 +8,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import union.xenfork.nucleoplasm.lib.event.lifecycle.LoadServerWorldEvents;
-import union.xenfork.nucleoplasm.lib.event.lifecycle.ServerStartEvents;
-import union.xenfork.nucleoplasm.lib.event.lifecycle.ServerStopEvents;
-import union.xenfork.nucleoplasm.lib.event.lifecycle.ServerTickEvents;
+import union.xenfork.nucleoplasm.lib.event.LoadServerWorldEvents;
+import union.xenfork.nucleoplasm.lib.event.ServerStartEvents;
+import union.xenfork.nucleoplasm.lib.event.ServerStopEvents;
+import union.xenfork.nucleoplasm.lib.event.ServerTickEvents;
 
 import java.util.Iterator;
 import java.util.Map;
