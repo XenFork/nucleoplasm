@@ -24,11 +24,11 @@ public class ServerStartEvents {
                     serverStarted.onServerStarted(server);
             }
     );
-    
+    @FunctionalInterface
     public interface ServerStarting {
         void onServerStarting(MinecraftServer server);
     }
-
+    @FunctionalInterface
     public interface ServerStarted {
         void onServerStarted(MinecraftServer server);
     }

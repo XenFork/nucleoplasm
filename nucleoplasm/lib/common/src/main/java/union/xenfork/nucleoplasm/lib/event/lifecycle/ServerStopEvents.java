@@ -21,10 +21,11 @@ public class ServerStopEvents {
                     serverStopped.onServerStopped(server);
             }
     );
-
+    @FunctionalInterface
     public interface ServerStopping {
         void onServerStopping(MinecraftServer server);
     }
+    @FunctionalInterface
     public interface ServerStopped {
         void onServerStopped(MinecraftServer server);
     }

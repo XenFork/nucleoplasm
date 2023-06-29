@@ -20,10 +20,11 @@ public class ServerTickEvents {
                     endServerTick.onEndServerTick(server);
             }
     );
-
+    @FunctionalInterface
     public interface ServerTick {
         void onServerTick(MinecraftServer server);
     }
+    @FunctionalInterface
     public interface EndServerTick {
         void onEndServerTick(MinecraftServer server);
     }
