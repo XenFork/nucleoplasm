@@ -1,0 +1,12 @@
+dependencies {
+    modImplementation("io.github.xenfork:nucleoplasm-lib-common:${nucleoplasm_lib_dependencies_version}-${minecraft_version}")
+    modImplementation(include("com.github.artbits:quickio:$quickio_version"))
+    modImplementation(include("org.iq80.leveldb:leveldb:$leveldb_version"))
+    modImplementation(include("org.iq80.leveldb:leveldb-api:$leveldb_version"))
+    modImplementation(include("io.protostuff:protostuff-core:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-api:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-runtime:$protostuff_version"))
+    modImplementation(include("io.protostuff:protostuff-collectionschema:$protostuff_version"))
+    modImplementation(include("com.moandjiezana.toml:toml4j:$toml4j_version"))
+    modImplementation(include("org.yaml:snakeyaml:$snakeyaml_version"))
+}

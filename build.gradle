@@ -63,9 +63,9 @@ allprojects {
     apply plugin: "maven-publish"
 
     repositories {
-        mavenCentral()
         mavenLocal()
-        maven { url 'https://www.jitpack.io' }
+        mavenCentral()
+
         maven { url 'https://chinawaremc.github.io/maven-repo/' }
         maven { url 'https://raw.githubusercontent.com/baka4n/mvn-repo/master/' }
         maven { url = "https://cursemaven.com" }
@@ -75,6 +75,7 @@ allprojects {
         maven { url "https://maven.fabricmc.net/" }
         maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.minecraftforge.net/" }
+        maven { url 'https://www.jitpack.io' }
         gradlePluginPortal()
     }
 

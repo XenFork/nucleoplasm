@@ -1,11 +1,14 @@
 package union.xenfork.nucleoplasm.lib.mixin;
 
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import union.xenfork.nucleoplasm.lib.event.ActionEvents;
@@ -23,4 +26,13 @@ public class ServerPlayerEntityMixin {
             cir.setReturnValue(false);
         }
     }
+
+    @Inject(method = "attack", at = @At("HEAD"), cancellable = true)
+    public void onPlayerInteractEntity(Entity target, CallbackInfo info) {
+        ActionResult result = ActionEvents.ATTACK_ENTITY_EVENT.invoker().interact(player, player.getEntityWorld(), Hand.MAIN_HAND, target, null);
+        if (result != ActionResult.PASS) {
+            info.cancel();
+        }
+    }
+
 }

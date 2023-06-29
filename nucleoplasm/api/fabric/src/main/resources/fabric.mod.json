@@ -15,10 +15,10 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "union.xenfork.nucleoplasm.api.fabric.NucleoplasmApiFabricServer"
+      "union.xenfork.nucleoplasm.api.fabric.NucleoplasmServer"
     ],
     "main": [
-      "union.xenfork.nucleoplasm.api.fabric.NucleoplasmApiFabric"
+      "union.xenfork.nucleoplasm.api.fabric.Nucleoplasm"
     ]
   },
   "mixins": [

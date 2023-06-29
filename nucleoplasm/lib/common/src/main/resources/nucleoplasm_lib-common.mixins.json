@@ -7,9 +7,13 @@
     "ItemEntityMixin",
     "MinecraftServerMixin",
     "PlayerManagerMixin",
-    "ServerPlayerEntityMixin"
+    "ServerPlayerEntityMixin",
+    "ServerplayerInteractionManagerMixin",
+    "ServerPlayNetworkHandlerMixin",
+    "ServerWorldMixin"
   ],
   "client": [
+    "ClientPlayerInteractionManagerMixin"
   ],
   "server": [
   ],
