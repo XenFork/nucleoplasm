@@ -117,10 +117,9 @@ for (final def p in nucleoplasm_projects.split(",")) {
                     from components.java
                 }
             }
-
             // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
             repositories {
-                maven { url "${file("../../../maven-repo")}" }
+                maven { url "${file("../../../../maven-repo")}" }
                 mavenLocal()
             }
         }
@@ -209,7 +208,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
 
             // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
             repositories {
-                maven { url "${file("../../../maven-repo")}" }
+                maven { url "${file("../../../../maven-repo")}" }
                 mavenLocal()
             }
         }
@@ -296,7 +295,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
             }
 
             repositories {
-                maven { url "${file("../../../maven-repo")}" }
+                maven { url "${file("../../../../maven-repo")}" }
                 mavenLocal()
             }
         }
