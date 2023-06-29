@@ -24,11 +24,7 @@ public class ServerStartEvents {
                     serverStarted.onServerStarted(server);
             }
     );
-
-
-
-
-
+    
     public interface ServerStarting {
         void onServerStarting(MinecraftServer server);
     }
