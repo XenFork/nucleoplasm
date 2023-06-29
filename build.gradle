@@ -125,10 +125,24 @@ for (final def p in nucleoplasm_projects.split(",")) {
 
         processResources {
             inputs.property "version", project.version
+            final string = archivesBaseName
+            inputs.property "modid", string.substring(0, string.lastIndexOf("-")).replace("-", "_")
+            inputs.property "name", string.substring(0, string.lastIndexOf("-")).replace("-", " ")
+            inputs.property "authors", authors
+            inputs.property "license", license
+            inputs.property "loader_version", loader_version
+            inputs.property "minecraft_version", minecraft_version
 
             filesMatching("fabric.mod.json") {
-                expand "version": project.version
+                expand "version": project.version,
+                        "modid": string.substring(0, string.lastIndexOf("-")).replace("-", "_"),
+                        "name": string.substring(0, string.lastIndexOf("-")).replace("-", " "),
+                        "authors": authors,
+                        "license": license,
+                        "loader_version": loader_version,
+                        "minecraft_version" : minecraft_version
             }
+
         }
 
         shadowJar {
@@ -199,8 +213,12 @@ for (final def p in nucleoplasm_projects.split(",")) {
         processResources {
             inputs.property "version", project.version
 
+            final string = archivesBaseName
+            inputs.property "modid", string.substring(0, string.lastIndexOf("-")).replace("-", "_")
+
             filesMatching("META-INF/mods.toml") {
-                expand "version": project.version
+                expand "version": project.version,
+                       "modid": string.substring(0, string.lastIndexOf("-")).replace("-", "_")
             }
         }
 
