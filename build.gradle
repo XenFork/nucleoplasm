@@ -1,4 +1,5 @@
 import com.google.gson.Gson
+import net.fabricmc.loom.util.ModPlatform
 
 buildscript {
     repositories {
@@ -129,8 +130,121 @@ for (final def p in nucleoplasm_projects.split(",")) {
                 expand "version": project.version
             }
         }
+
+        shadowJar {
+            configurations = [project.configurations.shadowCommon]
+            archiveClassifier.set("all")
+        }
+
+        remapJar {
+            inputFile.set shadowJar.archiveFile
+            dependsOn shadowJar
+            archiveClassifier.set(null)
+        }
+
+        jar {
+            archiveClassifier.set("dev")
+        }
+
+        sourcesJar {
+            def commonSources = project(":$base_name-$p-common").sourcesJar
+            dependsOn commonSources
+            from commonSources.archiveFile.map { zipTree(it) }
+        }
+
+        components.java {
+            withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+                skip()
+            }
+        }
+
+        publishing {
+            publications {
+                mavenFabric(MavenPublication) {
+                    artifactId = archivesBaseName
+                    from components.java
+                }
+            }
+
+            // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+            repositories {
+                // Add repositories to publish to here.
+            }
+        }
+
     }
     project("$base_name-$p-forge") {
+        apply plugin: "com.github.johnrengelman.shadow"
+
+        architectury {
+            platformSetupLoomIde()
+            forge()
+        }
+
+        configurations {
+            common
+            shadowCommon
+            compileClasspath.extendsFrom common
+            runtimeClasspath.extendsFrom common
+            developmentFabric.extendsFrom common
+        }
+
+        dependencies {
+            forge "net.minecraftforge:forge:$forge_version"
+
+            common(project(path: ":$base_name-$p-common", configuration: "namedElements")) { transitive false }
+            shadowCommon(project(path: ":$base_name-$p-common", configuration: "transformProductionFabric")) { transitive false }
+        }
+
+        processResources {
+            inputs.property "version", project.version
+
+            filesMatching("META-INF/mods.toml") {
+                expand "version": project.version
+            }
+        }
+
+        shadowJar {
+            exclude "fabric.mod.json"
+
+            configurations = [project.configurations.shadowCommon]
+            archiveClassifier.set("all")
+        }
+
+        remapJar {
+            inputFile.set shadowJar.archiveFile
+            dependsOn shadowJar
+            archiveClassifier.set(null)
+        }
+
+        jar {
+            archiveClassifier.set("dev")
+        }
+
+        sourcesJar {
+            def commonSources = project(":$base_name-$p-common").sourcesJar
+            dependsOn commonSources
+            from commonSources.archiveFile.map { zipTree(it) }
+        }
+
+        components.java {
+            withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+                skip()
+            }
+        }
+
+        publishing {
+            publications {
+                mavenForge(MavenPublication) {
+                    artifactId = archivesBaseName
+                    from components.java
+                }
+            }
+
+            repositories {
+
+            }
+        }
 
     }
 }
