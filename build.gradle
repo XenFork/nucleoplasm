@@ -216,9 +216,14 @@ for (final def p in nucleoplasm_projects.split(",")) {
             final string = archivesBaseName
             inputs.property "modid", string.substring(0, string.lastIndexOf("-")).replace("-", "_")
 
+            inputs.property "name", string.substring(0, string.lastIndexOf("-")).replace("-", " ")
+            inputs.property "authors", authors.replace("\",\"", ",")
+
             filesMatching("META-INF/mods.toml") {
                 expand "version": project.version,
-                       "modid": string.substring(0, string.lastIndexOf("-")).replace("-", "_")
+                       "modid": string.substring(0, string.lastIndexOf("-")).replace("-", "_"),
+                        "name": string.substring(0, string.lastIndexOf("-")).replace("-", " "),
+                        "authors": authors.replace("\",\"", ",")
             }
         }
 
