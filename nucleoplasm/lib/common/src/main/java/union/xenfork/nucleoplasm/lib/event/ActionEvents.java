@@ -101,7 +101,7 @@ public class ActionEvents {
                 }
                 return ActionResult.PASS;
             }
-    )
+    );
 
     @FunctionalInterface
     public interface DropItem {
