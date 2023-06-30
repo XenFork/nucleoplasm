@@ -8,12 +8,13 @@
     "MinecraftServerMixin",
     "PlayerManagerMixin",
     "ServerPlayerEntityMixin",
-    "ServerplayerInteractionManagerMixin",
+    "ServerPlayerInteractionManagerMixin",
     "ServerPlayNetworkHandlerMixin",
     "ServerWorldMixin"
   ],
   "client": [
-    "ClientPlayerInteractionManagerMixin"
+    "client.ClientPlayerInteractionManagerMixin",
+    "client.MinecraftClientMixin"
   ],
   "server": [
   ],

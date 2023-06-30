@@ -7,6 +7,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -74,6 +76,31 @@ public class ActionEvents {
                 }
                 return ActionResult.PASS;
             }
+    );
+
+    public static final Event<UseItem> USE_ITEM_EVENT = EventFactory.createArrayBacked(
+            UseItem.class,
+            useItems -> (player, world, hand) -> {
+                for (UseItem useItem : useItems) {
+                    TypedActionResult<ItemStack> result = useItem.interact(player, world, hand);
+                    if (result.getResult() != ActionResult.PASS) {
+                        return result;
+                    }
+                }
+                return TypedActionResult.pass(ItemStack.EMPTY);
+            }
+    );
+
+    public static final Event<UseBlock> USE_BLOCK_EVENT = EventFactory.createArrayBacked(
+            UseBlock.class,
+            useBlocks -> (player, world, hand, hitResult) -> {
+                for (UseBlock useBlock : useBlocks) {
+                    ActionResult result = useBlock.interact(player, world, hand, hitResult);
+                    if (result != ActionResult.PASS)
+                        return result;
+                }
+                return ActionResult.PASS;
+            }
     )
 
     @FunctionalInterface
@@ -96,5 +123,15 @@ public class ActionEvents {
     @FunctionalInterface
     public interface UseEntity {
         ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult);
+    }
+
+    @FunctionalInterface
+    public interface UseItem {
+        TypedActionResult<ItemStack> interact(PlayerEntity player, World world, Hand hand);
+    }
+
+    @FunctionalInterface
+    public interface UseBlock {
+        ActionResult interact(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult);
     }
 }
