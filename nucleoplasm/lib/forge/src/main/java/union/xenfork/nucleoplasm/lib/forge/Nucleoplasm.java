@@ -1,6 +1,8 @@
 package union.xenfork.nucleoplasm.lib.forge;
 
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import union.xenfork.nucleoplasm.lib.NucleoplasmServer;
 
@@ -13,6 +15,11 @@ public class Nucleoplasm {
     public static class Server {
         public Server() {
             NucleoplasmServer.serverInit();
+        }
+
+        @SubscribeEvent
+        public void playerEvent(TickEvent.PlayerTickEvent event) {
+            event.
         }
     }
 }

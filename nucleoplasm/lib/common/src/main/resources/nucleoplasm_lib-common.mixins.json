@@ -4,19 +4,10 @@
   "package": "union.xenfork.nucleoplasm.lib.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "CommandManagerMixin",
-    "ItemEntityMixin",
-    "MinecraftServerMixin",
-    "PlayerEntityMixin",
-    "PlayerManagerMixin",
-    "ServerPlayerEntityMixin",
-    "ServerPlayerInteractionManagerMixin",
-    "ServerPlayNetworkHandlerMixin",
-    "ServerWorldMixin"
+    
   ],
   "client": [
-    "client.ClientPlayerInteractionManagerMixin",
-    "client.MinecraftClientMixin"
+
   ],
   "server": [
   ],
