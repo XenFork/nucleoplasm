@@ -92,7 +92,6 @@ public abstract class ClientPlayerInteractionManagerMixin {
                 // send interaction packet to the server with a new sequentially assigned id
                 sendSequencedPacket((ClientWorld) player.getWorld(), id -> new PlayerInteractItemC2SPacket(hand, id));
             }
-
             info.setReturnValue(result.getResult());
         }
     }
@@ -106,7 +105,6 @@ public abstract class ClientPlayerInteractionManagerMixin {
             if (result == ActionResult.SUCCESS) {
                 sendSequencedPacket(player.clientWorld, id -> new PlayerInteractBlockC2SPacket(hand, blockHitResult, id));
             }
-
             info.setReturnValue(result);
         }
     }

@@ -18,7 +18,7 @@ public class NucleoplasmServer {
     }
 
     public static void server() {
-        ActionEvents.ATTACK_BLOCK_EVENT.register(impl::attackBlock);
+        BlockEvents.ATTACK_BLOCK_EVENT.register(impl::attackBlock);
 //        AttackEntityCallback.EVENT.register(impl::attackEntity);
 //        UseEntityCallback.EVENT.register(impl::interactEntity);
 //        UseItemCallback.EVENT.register(impl::interactItem);
@@ -26,7 +26,7 @@ public class NucleoplasmServer {
 //        PlayerBlockBreakEvents.BEFORE.register(impl::blockBreak);
         PlayerLoginsEvents.SERVER_PLAYER_LOGIN_EVENT.register(impl::login);
         PlayerLoginsEvents.SERVER_PLAYER_LOGIN_OUT_EVENT.register(impl::logout);
-        ActionEvents.DROP_ITEM_EVENT.register(impl::dropItem);
+        ItemEvents.DROP_ITEM_EVENT.register(impl::dropItem);
         ServerStopEvents.SERVER_STOPPED_EVENT.register(impl::close);
         ServerStopEvents.SERVER_STOPPED_EVENT.register(apiImpl::save);
         ServerTickEvents.SERVER_TICK_EVENT.register(server -> {
@@ -34,7 +34,7 @@ public class NucleoplasmServer {
                 impl.save(server);
             }//auto save
         });
-        ActionEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
+        ItemEvents.PICK_ITEM_EVENT.register(impl::pickupItem);
         ServerWorldTickEvents.WORLD_TICK_EVENT.register(world -> {
             impl.tick(world);
             apiImpl.tick(world);
@@ -45,6 +45,6 @@ public class NucleoplasmServer {
         });
 
 
-//        CommandEvents.execute.register(impl::execute);
+        CommandEvents.execute.register(impl::execute);
     }
 }

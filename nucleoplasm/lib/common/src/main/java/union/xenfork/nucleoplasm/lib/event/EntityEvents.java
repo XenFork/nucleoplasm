@@ -35,7 +35,7 @@ public class EntityEvents {
                 return ActionResult.PASS;
             }
     );
-    
+
     @FunctionalInterface
     public interface AttackEntity {
         ActionResult interact(PlayerEntity player, World world, Hand hand, Entity entity, @Nullable EntityHitResult hitResult);

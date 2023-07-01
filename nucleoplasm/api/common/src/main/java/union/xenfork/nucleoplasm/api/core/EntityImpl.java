@@ -108,7 +108,7 @@ public class EntityImpl {
         }
     }
 
-    public ActionResult dropItem(ServerPlayerEntity player, ItemStack stack) {
+    public ActionResult dropItem(PlayerEntity player, ItemStack stack) {
         return ActionResult.PASS;
     }
 
