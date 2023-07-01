@@ -3,6 +3,7 @@ package union.xenfork.nucleoplasm.lib.mixin.client;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.option.KeyBinding;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.packet.c2s.play.PlayerInteractEntityC2SPacket;
@@ -15,9 +16,11 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import union.xenfork.nucleoplasm.lib.event.ActionEvents;
+import union.xenfork.nucleoplasm.lib.event.EntityEvents;
+import union.xenfork.nucleoplasm.lib.event.ItemEvents;
 
 @Mixin(MinecraftClient.class)
 public abstract class MinecraftClientMixin {
@@ -36,7 +39,7 @@ public abstract class MinecraftClientMixin {
             locals = LocalCapture.CAPTURE_FAILHARD
     )
     private void injectUseEntityCallback(CallbackInfo ci, Hand[] hands, int i1, int i2, Hand hand, ItemStack stack, EntityHitResult hitResult, Entity entity) {
-        ActionResult result = ActionEvents.USE_ENTITY_EVENT.invoker().interact(player, player.getEntityWorld(), hand, entity, hitResult);
+        ActionResult result = EntityEvents.USE_ENTITY_EVENT.invoker().interact(player, player.getEntityWorld(), hand, entity, hitResult);
 
         if (result != ActionResult.PASS) {
             if (result.isAccepted()) {
@@ -49,5 +52,16 @@ public abstract class MinecraftClientMixin {
             }
             ci.cancel();
         }
+    }
+
+    @Redirect(method = "handleInputEvents", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/option/KeyBinding;wasPressed()Z", ordinal = 7))
+    private boolean dropItem(KeyBinding instance) {
+        if (player != null) {
+            ActionResult result = ItemEvents.DROP_ITEM_EVENT.invoker().interact(player, player.getMainHandStack());
+            if (result != ActionResult.PASS) {
+                return false;
+            }
+        }
+        return instance.wasPressed();
     }
 }

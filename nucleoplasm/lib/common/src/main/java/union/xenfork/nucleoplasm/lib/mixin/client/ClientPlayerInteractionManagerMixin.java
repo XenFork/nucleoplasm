@@ -25,7 +25,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import union.xenfork.nucleoplasm.lib.event.ActionEvents;
+import union.xenfork.nucleoplasm.lib.event.EntityEvents;
+import union.xenfork.nucleoplasm.lib.event.BlockEvents;
+import union.xenfork.nucleoplasm.lib.event.ItemEvents;
 
 @Mixin(ClientPlayerInteractionManager.class)
 public abstract class ClientPlayerInteractionManagerMixin {
@@ -51,7 +53,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
 
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayNetworkHandler;sendPacket(Lnet/minecraft/network/packet/Packet;)V", ordinal = 0), method = "attackEntity", cancellable = true)
     public void attackEntity(PlayerEntity player, Entity entity, CallbackInfo info) {
-        ActionResult result = ActionEvents.ATTACK_ENTITY_EVENT.invoker().interact(player, player.getEntityWorld(), Hand.MAIN_HAND /* TODO */, entity, null);
+        ActionResult result = EntityEvents.ATTACK_ENTITY_EVENT.invoker().interact(player, player.getEntityWorld(), Hand.MAIN_HAND /* TODO */, entity, null);
 
         if (result != ActionResult.PASS) {
             if (result == ActionResult.SUCCESS) {
@@ -64,7 +66,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
 
     @Unique
     private void callback(BlockPos pos, Direction direction, CallbackInfoReturnable<Boolean> info) {
-        ActionResult result = ActionEvents.ATTACK_BLOCK_EVENT.invoker().interact(client.player, client.world, Hand.MAIN_HAND, pos, direction);
+        ActionResult result = BlockEvents.ATTACK_BLOCK_EVENT.invoker().interact(client.player, client.world, Hand.MAIN_HAND, pos, direction);
 
         if (result != ActionResult.PASS) {
             // Returning true will spawn particles and trigger the animation of the hand -> only for SUCCESS.
@@ -81,7 +83,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
     public void interactItem(PlayerEntity player, Hand hand, CallbackInfoReturnable<ActionResult> info) {
         // hook interactBlock between the spectator check and sending the first packet to invoke the use item event first
         // this needs to be in interactBlock to avoid sending a packet in line with the event javadoc
-        TypedActionResult<ItemStack> result = ActionEvents.USE_ITEM_EVENT.invoker().interact(player, player.getWorld(), hand);
+        TypedActionResult<ItemStack> result = ItemEvents.USE_ITEM_EVENT.invoker().interact(player, player.getWorld(), hand);
 
         if (result.getResult() != ActionResult.PASS) {
             if (result.getResult() == ActionResult.SUCCESS) {
@@ -98,7 +100,7 @@ public abstract class ClientPlayerInteractionManagerMixin {
     @Inject(at = @At(value = "INVOKE", target = "Lnet/minecraft/client/network/ClientPlayerInteractionManager;sendSequencedPacket(Lnet/minecraft/client/world/ClientWorld;Lnet/minecraft/client/network/SequencedPacketCreator;)V"), method = "interactBlock", cancellable = true)
     public void interactBlock(ClientPlayerEntity player, Hand hand, BlockHitResult blockHitResult, CallbackInfoReturnable<ActionResult> info) {
 
-        ActionResult result = ActionEvents.USE_BLOCK_EVENT.invoker().interact(player, player.getWorld(), hand, blockHitResult);
+        ActionResult result = BlockEvents.USE_BLOCK_EVENT.invoker().interact(player, player.getWorld(), hand, blockHitResult);
 
         if (result != ActionResult.PASS) {
             if (result == ActionResult.SUCCESS) {

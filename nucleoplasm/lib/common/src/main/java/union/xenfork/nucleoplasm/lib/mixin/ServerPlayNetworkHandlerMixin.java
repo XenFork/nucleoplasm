@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import union.xenfork.nucleoplasm.lib.event.ActionEvents;
+import union.xenfork.nucleoplasm.lib.event.EntityEvents;
 
 @Mixin(targets = "net/minecraft/server/network/ServerPlayNetworkHandler$1")
 public abstract class ServerPlayNetworkHandlerMixin implements PlayerInteractEntityC2SPacket.Handler {
@@ -28,7 +28,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements PlayerInteractEnt
         PlayerEntity player = field_28963.player;
         World world = player.getEntityWorld();
         EntityHitResult hitResult = new EntityHitResult(field_28962, hitPosition.add(field_28962.getX(), field_28962.getY(), field_28962.getZ()));
-        ActionResult result = ActionEvents.USE_ENTITY_EVENT.invoker().interact(player, world, hand, field_28962, hitResult);
+        ActionResult result = EntityEvents.USE_ENTITY_EVENT.invoker().interact(player, world, hand, field_28962, hitResult);
         if (result != ActionResult.PASS) info.cancel();
     }
 
@@ -37,7 +37,7 @@ public abstract class ServerPlayNetworkHandlerMixin implements PlayerInteractEnt
         PlayerEntity player = field_28963.player;
         World world = player.getEntityWorld();
 
-        ActionResult result = ActionEvents.USE_ENTITY_EVENT.invoker().interact(player, world, hand, field_28962, null);
+        ActionResult result = EntityEvents.USE_ENTITY_EVENT.invoker().interact(player, world, hand, field_28962, null);
 
         if (result != ActionResult.PASS) info.cancel();
     }

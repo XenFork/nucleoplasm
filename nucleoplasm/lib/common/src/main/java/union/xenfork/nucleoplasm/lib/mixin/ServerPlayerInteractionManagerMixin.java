@@ -23,7 +23,8 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import union.xenfork.nucleoplasm.lib.event.ActionEvents;
+import union.xenfork.nucleoplasm.lib.event.BlockEvents;
+import union.xenfork.nucleoplasm.lib.event.ItemEvents;
 
 @Mixin(ServerPlayerInteractionManager.class)
 public class ServerPlayerInteractionManagerMixin {
@@ -34,7 +35,7 @@ public class ServerPlayerInteractionManagerMixin {
     @Inject(at = @At("HEAD"), method = "processBlockBreakingAction", cancellable = true)
     public void startBlockBreak(BlockPos pos, PlayerActionC2SPacket.Action playerAction, Direction direction, int worldHeight, int i, CallbackInfo info) {
         if (playerAction != PlayerActionC2SPacket.Action.START_DESTROY_BLOCK) return;
-        ActionResult result = ActionEvents.ATTACK_BLOCK_EVENT.invoker().interact(player, world, Hand.MAIN_HAND, pos, direction);
+        ActionResult result = BlockEvents.ATTACK_BLOCK_EVENT.invoker().interact(player, world, Hand.MAIN_HAND, pos, direction);
 
         if (result != ActionResult.PASS) {
             // The client might have broken the block on its side, so make sure to let it know.
@@ -58,7 +59,7 @@ public class ServerPlayerInteractionManagerMixin {
 
     @Inject(at = @At("HEAD"), method = "interactItem", cancellable = true)
     public void interactItem(ServerPlayerEntity player, World world, ItemStack stack, Hand hand, CallbackInfoReturnable<ActionResult> info) {
-        TypedActionResult<ItemStack> result = ActionEvents.USE_ITEM_EVENT.invoker().interact(player, world, hand);
+        TypedActionResult<ItemStack> result = ItemEvents.USE_ITEM_EVENT.invoker().interact(player, world, hand);
 
         if (result.getResult() != ActionResult.PASS) {
             info.setReturnValue(result.getResult());
@@ -68,7 +69,7 @@ public class ServerPlayerInteractionManagerMixin {
 
     @Inject(at = @At("HEAD"), method = "interactBlock", cancellable = true)
     public void interactBlock(ServerPlayerEntity player, World world, ItemStack stack, Hand hand, BlockHitResult blockHitResult, CallbackInfoReturnable<ActionResult> info) {
-        ActionResult result = ActionEvents.USE_BLOCK_EVENT.invoker().interact(player, world, hand, blockHitResult);
+        ActionResult result = BlockEvents.USE_BLOCK_EVENT.invoker().interact(player, world, hand, blockHitResult);
 
         if (result != ActionResult.PASS) {
             info.setReturnValue(result);
