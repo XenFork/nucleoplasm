@@ -16,9 +16,9 @@ public class NucleoplasmServer {
     public static final ConfigImpl apiImpl;
 
     static {
-        impl = new EntityImpl(ApiExpectPlatform.getGameDir().resolve("nucleoplasm/data"));
+        impl = new EntityImpl(Platform.getGameFolder().resolve("nucleoplasm/data"));
         serverImpl = new ServerEntityImpl();
-        apiImpl = new ConfigImpl(ApiExpectPlatform.getConfigDir().resolve("nucleoplasm/api"), "config");
+        apiImpl = new ConfigImpl(Platform.getConfigFolder().resolve("nucleoplasm/api"), "config");
     }
 
     public static void server() {

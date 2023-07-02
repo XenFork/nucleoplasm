@@ -4,7 +4,7 @@ import com.github.artbits.quickio.api.Collection;
 import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.Config;
 import com.github.artbits.quickio.core.QuickIO;
-import union.xenfork.nucleoplasm.api.ApiExpectPlatform;
+import dev.architectury.platform.Platform;
 
 import java.util.function.Consumer;
 
@@ -14,7 +14,7 @@ public class ServerEntityImpl {
     public ServerEntityImpl() {
         config = Config.of(c -> {
             c.name("server");
-            c.path(ApiExpectPlatform.getGameDir().toString());
+            c.path(Platform.getGameFolder().toString());
             c.cache(16L * 1024 * 1024);
         });
         try(DB db = QuickIO.usingDB(config)) {
