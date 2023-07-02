@@ -237,9 +237,7 @@ for (final def p in nucleoplasm_projects.split(",")) {
             forge "net.minecraftforge:forge:$forge_version"
 
             common(project(path: ":$base_name-$p-common", configuration: "namedElements")) { transitive false }
-            common(rootProject.project) { transitive false }
             shadowCommon(project(path: ":$base_name-$p-common", configuration: "transformProductionFabric")) { transitive false }
-            shadowCommon(rootProject.project) { transitive false }
         }
 
         processResources {

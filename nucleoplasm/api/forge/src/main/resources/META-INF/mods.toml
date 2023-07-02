@@ -3,15 +3,15 @@ loaderVersion="[47,)"
 license="MIT"
 issueTrackerURL="https://github.com/XenFork/nucleoplasm/issues"
 [[mods]] #mandatory
-modId="${modid}" #mandatory
+modId="nucleoplasm_api" #mandatory
 version="${version}" #mandatory
 displayName="${name}" #mandatory
-logoFile="assets/${modid}/icon.png" #optional
+logoFile="assets/nucleoplasm_api/icon.png" #optional
 authors = "${authors}"
 description='''
 
 '''
-[[dependencies.${modid}]] #optional
+[[dependencies.nucleoplasm_api]] #optional
    # the modid of the dependency
    modId="forge" #mandatory
    # Does this dependency have to exist - if not, ordering below must be specified
@@ -23,7 +23,7 @@ description='''
    # Side this dependency is applied on - BOTH, CLIENT or SERVER
    side="BOTH"
 # Here's another dependency
-[[dependencies.${modid}]]
+[[dependencies.nucleoplasm_api]]
    modId="minecraft"
    mandatory=true
    # This version range declares a minimum of the current minecraft version up to but not including the next major version
