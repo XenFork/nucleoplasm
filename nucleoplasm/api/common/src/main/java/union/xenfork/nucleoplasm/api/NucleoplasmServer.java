@@ -5,6 +5,7 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import union.xenfork.nucleoplasm.api.core.EntityImpl;
 import union.xenfork.nucleoplasm.api.core.ServerEntityImpl;
 import union.xenfork.nucleoplasm.api.event.CommandEvent;
+import union.xenfork.nucleoplasm.api.event.InventoryEvent;
 import union.xenfork.nucleoplasm.api.gson.ConfigImpl;
 
 public class NucleoplasmServer {
@@ -39,18 +40,15 @@ public class NucleoplasmServer {
         TickEvent.SERVER_LEVEL_PRE.register(world -> {
             impl.tick(world);
             apiImpl.tick(world);
-            for (ServerPlayerEntity player : world.getPlayers()) {
-                impl.tick(player);
-                apiImpl.tick(player);
-            }
         });
         BlockEvent.PLACE.register(impl::placeBlock);
         CommandEvent.COMMAND_EVENT.register(impl::execute);
-
-////        UseEntityCallback.EVENT.register(impl::interactEntity);
-
-////        PlayerBlockBreakEvents.BEFORE.register(impl::blockBreak);
-
-//        CommandEvents.execute.register(impl::execute);
+        TickEvent.PLAYER_PRE.register(player -> {
+            if (player instanceof ServerPlayerEntity) {
+                impl.tick((ServerPlayerEntity) player);
+                apiImpl.tick((ServerPlayerEntity) player);
+            }
+        });
+        InventoryEvent.ITEM_INVENTORY_EVENT.register(impl::inventory);
     }
 }

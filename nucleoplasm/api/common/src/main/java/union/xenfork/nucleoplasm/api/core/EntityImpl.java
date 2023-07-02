@@ -152,4 +152,8 @@ public class EntityImpl {
     public EventResult execute(ParseResults<ServerCommandSource> serverCommandSourceParseResults, String s, ServerCommandSource source) {
         return EventResult.pass();
     }
+
+    public void inventory(ItemStack stack, World world, net.minecraft.entity.Entity entity, int i, boolean b) {
+
+    }
 }
