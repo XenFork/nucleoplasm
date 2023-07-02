@@ -4,11 +4,11 @@
   "package": "union.xenfork.nucleoplasm.api.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "CommandManagerMixin"
   ],
   "client": [
   ],
   "server": [
-
   ],
   "injectors": {
     "defaultRequire": 1

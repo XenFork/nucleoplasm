@@ -1,5 +1,6 @@
 dependencies {
-    modImplementation("io.github.xenfork:nucleoplasm-lib-common:${nucleoplasm_lib_dependencies_version}-${minecraft_version}")
+    modApi("dev.architectury:architectury:$architectury_version")
+//    modImplementation("io.github.xenfork:nucleoplasm-lib-common:${nucleoplasm_lib_dependencies_version}-${minecraft_version}")
     modImplementation("com.github.artbits:quickio:$quickio_version")
     modImplementation("org.iq80.leveldb:leveldb:$leveldb_version")
     modImplementation("org.iq80.leveldb:leveldb-api:$leveldb_version")

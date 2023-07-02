@@ -5,8 +5,10 @@ import com.github.artbits.quickio.api.DB;
 import com.github.artbits.quickio.core.Config;
 import com.github.artbits.quickio.core.QuickIO;
 import com.mojang.brigadier.ParseResults;
+import dev.architectury.event.CompoundEventResult;
+import dev.architectury.event.EventResult;
+import dev.architectury.utils.value.IntValue;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,15 +18,12 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import net.serials.minecraft.util.math.IVec3d;
 import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -82,9 +81,6 @@ public class EntityImpl {
         db.close();
     }
 
-    public ActionResult attackBlock(PlayerEntity entity, World world, Hand hand, BlockPos blockPos, Direction direction) {
-        return ActionResult.PASS;
-    }
 
     public void close(MinecraftServer server) {
         close();
@@ -92,10 +88,6 @@ public class EntityImpl {
 
     public void save(MinecraftServer server) {
         save();
-    }
-
-    public ActionResult pickupItem(PlayerEntity entity, ItemEntity itemEntity) {
-        return ActionResult.PASS;
     }
 
     public void tick(ServerPlayerEntity player) {
@@ -108,10 +100,6 @@ public class EntityImpl {
         }
     }
 
-    public ActionResult dropItem(PlayerEntity player, ItemStack stack) {
-        return ActionResult.PASS;
-    }
-
     public void logout(ServerPlayerEntity player) {
 
     }
@@ -122,30 +110,46 @@ public class EntityImpl {
             Entity entity = create(player);
             all.add(entity);
         }
-
-    }
-
-    public boolean blockBreak(World world, PlayerEntity entity, BlockPos blockPos, BlockState blockState, @Nullable BlockEntity blockEntity) {
-        return true;
-    }
-
-    public ActionResult interactBlock(PlayerEntity entity, World world, Hand hand, BlockHitResult blockHitResult) {
-        return ActionResult.PASS;
-    }
-
-    public TypedActionResult<ItemStack> interactItem(PlayerEntity player, World world, Hand hand) {
-        return TypedActionResult.pass(player.getStackInHand(hand));
     }
 
     public ActionResult interactEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult entityHitResult) {
         return ActionResult.PASS;
     }
 
-    public ActionResult attackEntity(PlayerEntity player, World world, Hand hand, net.minecraft.entity.Entity entity, @Nullable EntityHitResult entityHitResult) {
-        return ActionResult.PASS;
+
+    public EventResult blockBreak(World world, BlockPos blockPos, BlockState blockState, ServerPlayerEntity player, @Nullable IntValue intValue) {
+        return EventResult.pass();
     }
 
-    public void execute(ParseResults<ServerCommandSource> parseResults, String command, CallbackInfoReturnable<Integer> cir, ServerCommandSource serverCommandSource) {
+    public EventResult attackEntity(PlayerEntity player, World world, net.minecraft.entity.Entity entity, Hand hand, @Nullable EntityHitResult entityHitResult) {
+        return EventResult.pass();
+    }
 
+    public EventResult attackBlock(PlayerEntity player, Hand hand, BlockPos blockPos, Direction direction) {
+        return EventResult.pass();
+    }
+
+    public EventResult interactBlock(PlayerEntity player, Hand hand, BlockPos blockPos, Direction direction) {
+        return EventResult.pass();
+    }
+
+    public CompoundEventResult<ItemStack> interactItem(PlayerEntity player, Hand hand) {
+        return CompoundEventResult.pass();
+    }
+
+    public EventResult dropItem(PlayerEntity player, ItemEntity itemEntity) {
+        return EventResult.pass();
+    }
+
+    public EventResult pickupItem(PlayerEntity player, ItemEntity itemEntity, ItemStack stack) {
+        return EventResult.pass();
+    }
+
+    public EventResult placeBlock(World world, BlockPos blockPos, BlockState blockState, @Nullable net.minecraft.entity.Entity entity) {
+        return EventResult.pass();
+    }
+
+    public EventResult execute(ParseResults<ServerCommandSource> serverCommandSourceParseResults, String s, ServerCommandSource source) {
+        return EventResult.pass();
     }
 }
