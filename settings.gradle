@@ -3,32 +3,10 @@ pluginManagement {
         maven { url "https://maven.fabricmc.net/" }
         maven { url "https://maven.architectury.dev/" }
         maven { url "https://maven.minecraftforge.net/" }
-        mavenCentral()
-        mavenLocal()
         gradlePluginPortal()
-        maven { url 'https://maven.aliyun.com/repository/public' }
-        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
     }
 }
 
-rootProject.name = "$base_name"
-
-for (final def p in nucleoplasm_projects.split(",") ) {
-    def string = "$base_name/$p"
-    def common = "$string/common"
-    include(common)
-    def fabric = "$string/fabric"
-    include(fabric)
-    def forge = "$string/forge"
-    include(forge)
-    project(":$common").name = common.replace("/", '-')
-    project(":$fabric").name = fabric.replace("/", '-')
-    project(":$forge").name = forge.replace("/", '-')
-}
-
-//for (final def p in no_fabric_projects.split(",")) {
-//    include("draw_png")
-//}
-
-
-
+include("common")
+include("fabric")
+include("forge")

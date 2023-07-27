@@ -1,4 +1,0 @@
-accessWidener       v2          named
-extendable          class       net/minecraft/item/ItemStack
-accessible method net/minecraft/block/entity/LootableContainerBlockEntity deserializeLootTable (Lnet/minecraft/nbt/NbtCompound;)Z
-accessible method net/minecraft/block/entity/LootableContainerBlockEntity serializeLootTable (Lnet/minecraft/nbt/NbtCompound;)Z

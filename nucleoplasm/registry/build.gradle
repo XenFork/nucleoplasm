@@ -1,7 +1,0 @@
-loom {
-    accessWidenerPath = file("src/main/resources/nucleoplasm_registry.accesswidener")
-}
-
-dependencies {
-
-}
