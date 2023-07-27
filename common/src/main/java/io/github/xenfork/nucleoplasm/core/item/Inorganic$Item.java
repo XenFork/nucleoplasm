@@ -3,11 +3,10 @@ package io.github.xenfork.nucleoplasm.core.item;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 
-public class Inorganic$Matter$Item extends Item {
-    public Inorganic$Matter$Item(Settings settings) {
+public class Inorganic$Item extends Item {
+    public Inorganic$Item(Settings settings) {
         super(settings.maxCount(32));
     }
 
