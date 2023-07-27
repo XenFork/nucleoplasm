@@ -1,6 +1,8 @@
 package io.github.xenfork.nucleoplasm.registry;
 
 import dev.architectury.registry.registries.DeferredRegister;
+import io.github.xenfork.nucleoplasm.core.item.Inorganic$Matter$Item;
+import io.github.xenfork.nucleoplasm.core.item.Organic$Matter$Item;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 
@@ -11,8 +13,8 @@ import java.util.function.Supplier;
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
 
 public enum Items implements Supplier<Item> {
-    Inorganic$Matter(settings -> new Item(settings.maxCount(32))),
-    Organic$Matter(settings -> new Item(settings.maxCount(32))),
+    Inorganic$Matter(Inorganic$Matter$Item::new),
+    Organic$Matter(Organic$Matter$Item::new),
     ;
     public static final DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM);
     private final String name;
