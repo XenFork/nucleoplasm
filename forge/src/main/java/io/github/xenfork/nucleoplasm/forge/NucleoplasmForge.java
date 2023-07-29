@@ -10,6 +10,6 @@ public class NucleoplasmForge {
     public NucleoplasmForge() {
 		// Submit our event bus to let architectury register our content on the right time
         EventBuses.registerModEventBus(Nucleoplasm.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
-            Nucleoplasm.init();
+        Nucleoplasm.init();
     }
 }

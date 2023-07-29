@@ -11,9 +11,9 @@
 
 <h4>Welcome to the Nucleoplasm mod! We are committed to super science fiction.</h4>
 
-## sub projects
+## process
 
-- [x] nucleoplasm-api -----  0%
+- [x] nucleoplasm -----  0%
 
 ## globals
 

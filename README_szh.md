@@ -10,9 +10,9 @@
 
 <h4>欢迎使用核质模组！我们将致力于科幻的极致。</h4>
 
-## sub projects
+## 进度
 
-- [x] nucleoplasm-api ------ 0%
+- [x] nucleoplasm ------ 0%
 
 ## 全局
 

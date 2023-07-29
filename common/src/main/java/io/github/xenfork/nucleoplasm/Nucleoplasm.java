@@ -1,12 +1,7 @@
 package io.github.xenfork.nucleoplasm;
 
-import dev.architectury.registry.registries.DeferredRegister;
+import io.github.xenfork.nucleoplasm.registry.Groups;
 import io.github.xenfork.nucleoplasm.registry.Items;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-
-import java.util.List;
 
 public class Nucleoplasm
 {
@@ -14,5 +9,8 @@ public class Nucleoplasm
 
 	public static void init() {
 		Items.init();
+		Groups.init();
+
+
 	}
 }

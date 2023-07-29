@@ -1,5 +1,7 @@
 package io.github.xenfork.nucleoplasm.core;
 
+import java.util.ArrayList;
+
 public class Utils {
     public static final String[] elements = new String[] {
             "",
@@ -15,9 +17,10 @@ public class Utils {
                 "Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr",
             "Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"
     };
-    public static final String[] others = new String[] {
-      "OH"
-    };
+    public static final ArrayList<String> others = new ArrayList<>();
+    static {
+        others.add("OH");
+    }
     public static final String[] nums = new String[] {
             "₀", "₁", "₂", "₃", "₄", "₅", "₆", "₇", "₈", "₉"
     };

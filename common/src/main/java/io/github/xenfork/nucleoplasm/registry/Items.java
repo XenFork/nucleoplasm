@@ -1,5 +1,6 @@
 package io.github.xenfork.nucleoplasm.registry;
 
+import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import io.github.xenfork.nucleoplasm.core.item.Inorganic$Item;
 import io.github.xenfork.nucleoplasm.core.item.Organic$Matter$Item;
@@ -28,6 +29,7 @@ public enum Items implements Supplier<Item> {
         for (Items value : values()) {
             items.register(value.name, value.item);
         }
+
         items.register();
     }
 
