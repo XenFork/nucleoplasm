@@ -1,6 +1,7 @@
 # Nucleoplasm
 
 [![Gradle Package](https://github.com/XenFork/nucleoplasm/actions/workflows/gradle-publish.yml/badge.svg?branch=forge-fabric-1.20.1-main&event=milestone)](https://github.com/XenFork/nucleoplasm/actions/workflows/gradle-publish.yml)
+[![Lastest Commit](https://img.shields.io/github/last-commit/XenFork/nucleoplasm)](https://github.com/XenFork/nucleoplasm/commits/forge-fabric-1.20.1-main)
 
 - [select language](Language.md)
 - [no one sees the license](LICENSE)
