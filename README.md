@@ -6,7 +6,8 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/XenFork/nucleoplasm)
 [![GitHub](https://img.shields.io/github/license/XenFork/nucleoplasm)](LICENSE)
 
-- [select language](Language.md)
+[![Static Badge](https://img.shields.io/badge/%E8%AF%AD%E8%A8%80-%E7%AE%80%E4%BD%93%E4%B8%AD%E6%96%87-red)](README_szh.md)
+
 
 <h4>Welcome to the Nucleoplasm mod! We are committed to super science fiction.</h4>
 
