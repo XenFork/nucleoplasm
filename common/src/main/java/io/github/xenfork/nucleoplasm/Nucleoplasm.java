@@ -48,7 +48,12 @@ public class Nucleoplasm
 	public static ItemStack elemental(Item item, String... cfs) {
 		ItemStack itemStack = new ItemStack(item);
 		NbtCompound nbt = new NbtCompound();
-		nbt.putString("cf", Arrays.toString(cfs));
+		StringBuilder sb = new StringBuilder();
+		for (String cf : cfs) {
+			sb.append(cf);
+		}
+		nbt.putString("cf", sb.toString());
+		nbt.putString("record", Arrays.toString(cfs));//用于存储记录分段
 		itemStack.setNbt(nbt);
 		return itemStack;
 	}
