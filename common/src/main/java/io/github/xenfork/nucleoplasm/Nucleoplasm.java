@@ -127,6 +127,11 @@ public class Nucleoplasm
 			output.add(elemental(item, "Gd"));
 			output.add(elemental(item, "Tb"));
 			output.add(elemental(item, "Dy"));
+			output.add(elemental(item, "Ho"));
+			output.add(elemental(item, "Er"));
+			output.add(elemental(item, "Tm"));
+			output.add(elemental(item, "Yb"));
+			output.add(elemental(item, "Lu"));
 		});
 	}
 
