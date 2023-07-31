@@ -2,6 +2,7 @@ package io.github.xenfork.nucleoplasm.registry;
 
 import dev.architectury.registry.CreativeTabRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
+import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.xenfork.nucleoplasm.core.item.Inorganic$Item;
 import io.github.xenfork.nucleoplasm.core.item.Organic$Matter$Item;
 import net.minecraft.item.Item;
@@ -20,6 +21,7 @@ public enum Items implements Supplier<Item> {
     public static final DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM);
     private final String name;
     private final Supplier<Item> item;
+    public RegistrySupplier<Item> registry;
     Items(Function<Item.Settings, Item> item) {
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
         this.item = () -> item.apply(new Item.Settings());
@@ -27,9 +29,8 @@ public enum Items implements Supplier<Item> {
 
     public static void init() {
         for (Items value : values()) {
-            items.register(value.name, value.item);
+            value.registry = items.register(value.name, value.item);
         }
-
         items.register();
     }
 

@@ -68,7 +68,7 @@ public class Nucleoplasm
 			output.add(elemental(item, elements[16], nums[4]));//四聚硫
 			output.add(elemental(item, elements[16], nums[5]));//环五硫
 			output.add(elemental(item, elements[16], nums[6]));//环六硫
-			output.add(elemental(item, elements[16], nums[6], "S", nums[10]));//环六环十硫加合物
+			output.add(elemental(item, elements[16], nums[6], "S", nums[1], nums[0]));//环六环十硫加合物
 			output.add(elemental(item, elements[16], nums[7]));//环七硫
 			output.add(elemental(item, elements[16], nums[8]));//环八硫
 			output.add(elemental(item, elements[17], nums[2]));
@@ -94,7 +94,7 @@ public class Nucleoplasm
 			output.add(elemental(item, elements[34]));
 			output.add(elemental(item, elements[34], nums[2]));
 			output.add(elemental(item, elements[34], nums[8]));
-			output.add(elemental(item, elements[34], nums[1000]));
+			output.add(elemental(item, elements[34], nums[1], nums[0], nums[0], nums[0]));
 			output.add(elemental(item, elements[35], nums[2]));
 			output.add(elemental(item, elements[36]));
 			output.add(elemental(item, elements[37]));
