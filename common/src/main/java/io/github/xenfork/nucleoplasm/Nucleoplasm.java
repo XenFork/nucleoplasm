@@ -28,6 +28,7 @@ public class Nucleoplasm
 		Groups.init();
 		CreativeTabRegistry.modify(CreativeTabRegistry.defer(Groups.elements.getRegistryKey()), (flags, output, canUseGameMasterBlocks) -> {
 			Item item = Registries.ITEM.get(new Identifier(MOD_ID, "inorganic"));
+			output.add(elemental(item, elements[1]));//金属氢
 			output.add(elemental(item, elements[1], nums[2]));
 			output.add(elemental(item,elements[1], nums[3]));
 			output.add(elemental(item,elements[2], nums[2]));
@@ -103,9 +104,29 @@ public class Nucleoplasm
 			output.add(elemental(item, elements[41]));
 			output.add(elemental(item, elements[42]));
 			output.add(elemental(item, elements[43]));
-			output.add(elemental(item, "Ru"));
-			output.add(elemental(item, "Rh"));
-			output.add(elemental(item, "Pd"));
+			output.add(elemental(item, elements[44]));
+			output.add(elemental(item, elements[45]));
+			output.add(elemental(item, elements[46]));
+			output.add(elemental(item, elements[47]));
+			output.add(elemental(item, elements[48]));
+			output.add(elemental(item, elements[49]));
+			output.add(elemental(item, elements[50]));
+			output.add(elemental(item, elements[51]));
+			output.add(elemental(item, elements[52]));;
+			output.add(elemental(item, elements[53], nums[2]));
+			output.add(elemental(item, "Xe"));
+			output.add(elemental(item, "Cs"));
+			output.add(elemental(item, "Ba"));
+			output.add(elemental(item, "La"));
+			output.add(elemental(item, "Ce"));
+			output.add(elemental(item, "Pr"));
+			output.add(elemental(item, "Nd"));
+			output.add(elemental(item, "Pm"));
+			output.add(elemental(item, "Sm"));
+			output.add(elemental(item, "Eu"));
+			output.add(elemental(item, "Gd"));
+			output.add(elemental(item, "Tb"));
+			output.add(elemental(item, "Dy"));
 		});
 	}
 
