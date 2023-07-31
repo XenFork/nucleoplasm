@@ -6,8 +6,8 @@
 ![GitHub language count](https://img.shields.io/github/languages/count/XenFork/nucleoplasm)
 [![GitHub](https://img.shields.io/github/license/XenFork/nucleoplasm)](LICENSE)
 
-[![Static Badge](https://img.shields.io/badge/language-en_us-red)](README.md)
-[![Static Badge](https://img.shields.io/badge/%E8%A8%80%E8%AA%9E-%E6%97%A5%E6%9C%AC%E8%AA%9E-grey)](README_sja_jp.md)
+[![English (United States)](https://img.shields.io/badge/language-en_us-red)](README.md)
+[![日本語](https://img.shields.io/badge/%E8%A8%80%E8%AA%9E-%E6%97%A5%E6%9C%AC%E8%AA%9E-grey)](README_sja_jp.md)
 
 <h4>欢迎使用核质模组！我们将致力于科幻的极致。</h4>
 

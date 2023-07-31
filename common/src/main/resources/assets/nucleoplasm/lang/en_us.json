@@ -1,7 +1,8 @@
 {
   "nucleoplasm.group.elements": "Elements",
   "nucleoplasm.chemical.formula": "Chemical formula:",
-  "nucleoplasm.name": "name:",
+  "nucleoplasm.name": "Name:",
   "nucleoplasm.H": "Metallic hydrogen",
-  "nucleoplasm.H₂": "Hydrogen"
+  "nucleoplasm.H₂": "Hydrogen",
+  "nucleoplasm.H₃": "3 Hydrogen"
 }
