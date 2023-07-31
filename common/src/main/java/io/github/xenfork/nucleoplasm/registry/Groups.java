@@ -48,14 +48,19 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[1]));//金属氢
         output.add(elemental(item, ELEMENT_NAMES[1], nums[2]));
         output.add(elemental(item, ELEMENT_NAMES[1], nums[3]));
+
         output.add(elemental(item, ELEMENT_NAMES[2], nums[2]));
         output.add(elemental(item, ELEMENT_NAMES[2], nums[3]));
+
         output.add(elemental(item, ELEMENT_NAMES[3]));
+
         output.add(elemental(item, ELEMENT_NAMES[4]));
+
         output.add(elemental(item, ELEMENT_NAMES[5], nums[2]));
         output.add(elemental(item, ELEMENT_NAMES[5], nums[1], nums[0]));
         output.add(elemental(item, ELEMENT_NAMES[5], nums[1], nums[2]));
         output.add(elemental(item, ELEMENT_NAMES[5], nums[4], nums[0]));
+
         output.add(elemental(item, ELEMENT_NAMES[6], nums[1]));
         output.add(elemental(item, ELEMENT_NAMES[6], nums[6], nums[0]));
         output.add(elemental(item, ELEMENT_NAMES[6], nums[3], nums[6]));
@@ -63,6 +68,7 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[6], nums[8], nums[4]));
         output.add(elemental(item, ELEMENT_NAMES[6], nums[2], nums[4], nums[0]));
         output.add(elemental(item, ELEMENT_NAMES[6], nums[5], nums[4], nums[0]));
+
         output.add(elemental(item, ELEMENT_NAMES[7], nums[2]));//氮气
         output.add(elemental(item, ELEMENT_NAMES[7], nums[3]));//三氮
         output.add(elemental(item, ELEMENT_NAMES[7], nums[4]));//四环氮

@@ -4,5 +4,9 @@
   "nucleoplasm.name": "Name:",
   "nucleoplasm.H": "Metallic hydrogen",
   "nucleoplasm.H₂": "Hydrogen",
-  "nucleoplasm.H₃": "3 Hydrogen"
+  "nucleoplasm.H₃": "3 Hydrogen",
+  "nucleoplasm.He₂": "Helium",
+  "nucleoplasm.He₃": "Helium trimer",
+  "nucleoplasm.Li": "Lithium",
+  "nucleoplasm.Be": "Beryllium"
 }

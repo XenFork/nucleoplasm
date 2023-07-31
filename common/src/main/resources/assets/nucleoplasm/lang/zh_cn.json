@@ -4,5 +4,9 @@
   "nucleoplasm.name": "名称: ",
   "nucleoplasm.H": "金属氢",
   "nucleoplasm.H₂": "氢气",
-  "nucleoplasm.H₃": "三原子氢"
+  "nucleoplasm.H₃": "三原子氢",
+  "nucleoplasm.He₂": "氦气",
+  "nucleoplasm.He₃": "氦三聚体",
+  "nucleoplasm.Li": "锂",
+  "nucleoplasm.Be": "铍"
 }
