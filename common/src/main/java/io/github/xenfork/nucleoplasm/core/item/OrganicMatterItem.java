@@ -5,12 +5,12 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
-public class Organic$Matter$Item extends Item {
+public class OrganicMatterItem extends Item {
     /**
      * @apiNote 有机物
      * @param settings settings
      */
-    public Organic$Matter$Item(Settings settings) {
+    public OrganicMatterItem(Settings settings) {
         super(settings.maxCount(32));
     }
 

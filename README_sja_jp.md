@@ -1,7 +1,7 @@
 # かくしつ
 
 [![Gradle Package](https://github.com/XenFork/nucleoplasm/actions/workflows/gradle-publish.yml/badge.svg?branch=forge-fabric-1.20.1-main&event=milestone)](https://github.com/XenFork/nucleoplasm/actions/workflows/gradle-publish.yml)
-[![Lastest Commit](https://img.shields.io/github/last-commit/XenFork/nucleoplasm)](https://github.com/XenFork/nucleoplasm/commits/forge-fabric-1.20.1-main)
+[![Latest Commit](https://img.shields.io/github/last-commit/XenFork/nucleoplasm)](https://github.com/XenFork/nucleoplasm/commits/forge-fabric-1.20.1-main)
 ![GitHub top language](https://img.shields.io/github/languages/top/XenFork/nucleoplasm)
 ![GitHub language count](https://img.shields.io/github/languages/count/XenFork/nucleoplasm)
 [![GitHub](https://img.shields.io/github/license/XenFork/nucleoplasm)](LICENSE)

@@ -1,8 +1,5 @@
 package io.github.xenfork.nucleoplasm.core.item;
 
-import com.google.gson.JsonElement;
-import io.github.xenfork.nucleoplasm.core.SerializerImpl;
-import io.github.xenfork.nucleoplasm.core.Utils;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.Item;
@@ -11,18 +8,16 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
 import java.util.List;
 
-public class Inorganic$Item extends Item {
+public class InorganicItem extends Item {
     /**
      * @apiNote 无机物
      * @param settings settings
      */
-    public Inorganic$Item(Settings settings) {
+    public InorganicItem(Settings settings) {
         super(settings.maxCount(32));
     }
 
@@ -41,7 +36,10 @@ public class Inorganic$Item extends Item {
         if (nbt.contains("cf")) {
             String string = nbt.getString("cf");
             MutableText translatable = Text.translatable("nucleoplasm.chemical.formula");
-            tooltip.add(translatable.append(string));
+            MutableText translatable1 = Text.translatable("nucleoplasm.name");
+            tooltip.add(translatable.append(Text.of(string)));
+            tooltip.add(translatable1.append(Text.translatable("nucleoplasm." + string)));
+            ;
         }
 
 

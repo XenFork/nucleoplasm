@@ -3,7 +3,7 @@ package io.github.xenfork.nucleoplasm.core;
 import java.util.ArrayList;
 
 public class Utils {
-    public static final String[] elements = new String[] {
+    public static final String[] ELEMENT_NAMES = new String[] {
             "",
             "H","He",
             "Li","Be","B","C","N","O","F","Ne",
