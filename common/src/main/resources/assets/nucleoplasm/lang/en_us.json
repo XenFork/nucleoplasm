@@ -8,5 +8,9 @@
   "nucleoplasm.He₂": "Helium",
   "nucleoplasm.He₃": "Helium trimer",
   "nucleoplasm.Li": "Lithium",
-  "nucleoplasm.Be": "Beryllium"
+  "nucleoplasm.Be": "Beryllium",
+  "nucleoplasm.B₂": "Boron",
+  "nucleoplasm.B₁₀": "10 Boron",
+  "nucleoplasm.B₄₀": "40 Boron",
+  "nucleoplasm.B₁₂": "Crystal boron"
 }
