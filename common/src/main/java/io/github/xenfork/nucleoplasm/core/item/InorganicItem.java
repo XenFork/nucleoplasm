@@ -12,6 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+import static io.github.xenfork.nucleoplasm.core.Utils.nums;
+
 public class InorganicItem extends Item {
     /**
      * @apiNote 无机物
@@ -36,14 +38,17 @@ public class InorganicItem extends Item {
         if (nbt.contains("cf")) {
             String string = nbt.getString("cf");
             MutableText translatable = Text.translatable("nucleoplasm.chemical.formula");
-            MutableText translatable1 = Text.translatable("nucleoplasm.name");
-            tooltip.add(translatable.append(Text.of(string)));
-            tooltip.add(translatable1.append(Text.translatable("nucleoplasm." + string)));
-            ;
+            tooltip.add(translatable.append(Text.of(string.replace("0", nums[0]).replace("1", nums[1]).replace("2", nums[2]).replace("3", nums[3]).replace("4", nums[4]).replace("5", nums[5]).replace("6", nums[6]).replace("7", nums[7]).replace("8", nums[8]).replace("9", nums[9]))));
+
         }
-
-
-
     }
 
+    @Override
+    public Text getName(ItemStack stack) {
+        NbtCompound nbt = stack.getNbt();
+        if (nbt == null || !nbt.contains("cf")) {
+            return super.getName(stack);
+        }
+        return Text.translatable("nucleoplasm." + nbt.getString("cf"));
+    }
 }
