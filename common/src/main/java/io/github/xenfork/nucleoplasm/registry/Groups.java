@@ -71,7 +71,7 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[6] + 84));
         output.add(elemental(item, ELEMENT_NAMES[6] + 240));
         output.add(elemental(item, ELEMENT_NAMES[6] + 540));
-        output.add(elemental(item, ELEMENT_NAMES[6] + 4000 + "+"));//碳纳米泡沫
+        output.add(elemental(item, ELEMENT_NAMES[6] + 4000));//碳纳米泡沫
 
         output.add(elemental(item, ELEMENT_NAMES[7] + 2));//氮气
         output.add(elemental(item, ELEMENT_NAMES[7] + 3));//三氮
@@ -86,6 +86,7 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[8] + 8));//红氧
 
         output.add(elemental(item, ELEMENT_NAMES[9] + 2));
+
         output.add(elemental(item, ELEMENT_NAMES[10]));
         output.add(elemental(item, ELEMENT_NAMES[11]));
         output.add(elemental(item, ELEMENT_NAMES[12]));

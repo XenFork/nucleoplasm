@@ -49,6 +49,21 @@ public class InorganicItem extends Item {
         if (nbt == null || !nbt.contains("cf")) {
             return super.getName(stack);
         }
-        return Text.translatable("nucleoplasm." + nbt.getString("cf"));
+        String string = nbt.getString("cf");
+        if (string.startsWith("C")) {
+            String c = string.replace("C", "");
+            if (!c.matches("[a-zA-Z]+") && !c.isEmpty()) {
+                try {
+                    int i = Integer.parseInt(c);
+                    if (i >= 4000) {
+                        return Text.empty().append("[").append(String.valueOf(i)).append("]").append(Text.translatable("nucleoplasm.carbon.nano.foam"));
+                    } else if (i >= 60) {
+                        return Text.empty().append("[").append(String.valueOf(i)).append("]").append(Text.translatable("nucleoplasm.fullerene"));
+                    }
+                } catch (NumberFormatException ignored) {}
+
+            }
+        }
+        return Text.translatable("nucleoplasm." + string);
     }
 }

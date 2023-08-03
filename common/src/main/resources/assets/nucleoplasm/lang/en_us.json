@@ -22,10 +22,8 @@
   "nucleoplasm.C18": "Cyclo(18)carbon",
   "nucleoplasm.C20": "Eicosane",
   "nucleoplasm.C36": "Hexadecane",
-  "nucleoplasm.C60": "Fullerene",
-  "nucleoplasm.C70": "Fullerene",
-  "nucleoplasm.C84": "Fullerene",
-  "nucleoplasm.C4000+": "Carbon nano-foam",
+  "nucleoplasm.fullerene": "Fullerene",
+  "nucleoplasm.carbon.nano.foam": "Carbon nano-foam",
   "nucleoplasm.N2": "Nitrogen",
   "nucleoplasm.N3": "3 Nitrogen",
   "nucleoplasm.N4": "Tetra-cyclic nitrogen",
@@ -35,5 +33,10 @@
   "nucleoplasm.O2": "Oxygen",
   "nucleoplasm.O3": "Ozone",
   "nucleoplasm.O4": "Tetra-mer",
-  "nucleoplasm.O8": "Red oxygen"
+  "nucleoplasm.O8": "Red oxygen",
+  "nucleoplasm.F2": "Fluorine",
+  "nucleoplasm.Ne": "Neon",
+  "nucleoplasm.Na": "Natrium",
+  "nucleoplasm.Mg": "Magnesium",
+  "nucleoplasm.Al": "Aluminum"
 }
