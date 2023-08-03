@@ -106,11 +106,11 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[17] + 2));
         output.add(elemental(item, ELEMENT_NAMES[17] + 3));
         output.add(elemental(item, ELEMENT_NAMES[17] + 4));
-        output.add(elemental(item, ELEMENT_NAMES[18]));
-        output.add(elemental(item, ELEMENT_NAMES[19]));
-        output.add(elemental(item, ELEMENT_NAMES[20]));
-        output.add(elemental(item, ELEMENT_NAMES[21]));
-        output.add(elemental(item, ELEMENT_NAMES[22]));
+        output.add(elemental(item, ELEMENT_NAMES[18]));//Ar
+        output.add(elemental(item, ELEMENT_NAMES[19]));//K
+        output.add(elemental(item, ELEMENT_NAMES[20]));//Ca
+        output.add(elemental(item, ELEMENT_NAMES[21]));//Sc
+        output.add(elemental(item, ELEMENT_NAMES[22]));//Ti
         output.add(elemental(item, ELEMENT_NAMES[23]));
         output.add(elemental(item, ELEMENT_NAMES[24]));
         output.add(elemental(item, ELEMENT_NAMES[25]));

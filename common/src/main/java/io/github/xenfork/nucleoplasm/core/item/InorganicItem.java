@@ -61,7 +61,6 @@ public class InorganicItem extends Item {
                         return Text.empty().append("[").append(String.valueOf(i)).append("]").append(Text.translatable("nucleoplasm.fullerene"));
                     }
                 } catch (NumberFormatException ignored) {}
-
             }
         }
         return Text.translatable("nucleoplasm." + string);
