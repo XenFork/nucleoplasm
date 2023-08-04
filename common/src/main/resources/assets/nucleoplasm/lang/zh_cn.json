@@ -60,5 +60,21 @@
   "nucleoplasm.V": "钒",
   "nucleoplasm.Cr": "铬",
   "nucleoplasm.Mn": "锰",
-  "nucleoplasm.Fe": "铁"
+  "nucleoplasm.Fe": "铁",
+  "nucleoplasm.Co": "钴",
+  "nucleoplasm.Ni": "镍",
+  "nucleoplasm.Cu": "铜",
+  "nucleoplasm.Zn": "锌",
+  "nucleoplasm.Ga": "镓",
+  "nucleoplasm.Ge": "锗",
+  "nucleoplasm.As": "砷",
+  "nucleoplasm.Se": "硒",
+  "nucleoplasm.Br": "溴",
+  "nucleoplasm.Kr": "氪",
+  "nucleoplasm.Rb": "铷",
+  "nucleoplasm.Sr": "锶",
+  "nucleoplasm.Y": "钇",
+  "nucleoplasm.Zr": "锆",
+  "nucleoplasm.Nb": "铌",
+  "nucleoplasm.Mo": "钼"
 }

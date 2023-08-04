@@ -87,12 +87,9 @@ public enum Groups {
 
         output.add(elemental(item, ELEMENT_NAMES[9] + 2));
 
-        output.add(elemental(item, ELEMENT_NAMES[10]));
-        output.add(elemental(item, ELEMENT_NAMES[11]));
-        output.add(elemental(item, ELEMENT_NAMES[12]));
-        output.add(elemental(item, ELEMENT_NAMES[13]));
-        output.add(elemental(item, ELEMENT_NAMES[14]));
-        output.add(elemental(item, ELEMENT_NAMES[15]));
+        for (int i = 10; i <= 15; i++) {
+            output.add(elemental(item, ELEMENT_NAMES[i]));
+        }
 
         output.add(elemental(item, ELEMENT_NAMES[16] + 2));
         output.add(elemental(item, ELEMENT_NAMES[16] + 3));//三聚硫
@@ -106,49 +103,19 @@ public enum Groups {
         output.add(elemental(item, ELEMENT_NAMES[17] + 2));
         output.add(elemental(item, ELEMENT_NAMES[17] + 3));
         output.add(elemental(item, ELEMENT_NAMES[17] + 4));
-        output.add(elemental(item, ELEMENT_NAMES[18]));//Ar
-        output.add(elemental(item, ELEMENT_NAMES[19]));//K
-        output.add(elemental(item, ELEMENT_NAMES[20]));//Ca
-        output.add(elemental(item, ELEMENT_NAMES[21]));//Sc
-        output.add(elemental(item, ELEMENT_NAMES[22]));//Ti
-        output.add(elemental(item, ELEMENT_NAMES[23]));
-        output.add(elemental(item, ELEMENT_NAMES[24]));
-        output.add(elemental(item, ELEMENT_NAMES[25]));
-        output.add(elemental(item, ELEMENT_NAMES[26]));
-        output.add(elemental(item, ELEMENT_NAMES[27]));
-        output.add(elemental(item, ELEMENT_NAMES[28]));
-        output.add(elemental(item, ELEMENT_NAMES[29]));
-        output.add(elemental(item, ELEMENT_NAMES[30]));
-        output.add(elemental(item, ELEMENT_NAMES[31]));
-        output.add(elemental(item, ELEMENT_NAMES[32]));
-
-        output.add(elemental(item, ELEMENT_NAMES[33]));
+        for (int i = 18; i <= 34; i++) {
+            output.add(elemental(item, ELEMENT_NAMES[i]));
+        }
         output.add(elemental(item, ELEMENT_NAMES[33] + 4));
 
-        output.add(elemental(item, ELEMENT_NAMES[34]));
         output.add(elemental(item, ELEMENT_NAMES[34] + 2));
         output.add(elemental(item, ELEMENT_NAMES[34] + 8));
         output.add(elemental(item, ELEMENT_NAMES[34] + 1000));
 
         output.add(elemental(item, ELEMENT_NAMES[35] + 2));
-
-        output.add(elemental(item, ELEMENT_NAMES[36]));
-        output.add(elemental(item, ELEMENT_NAMES[37]));
-        output.add(elemental(item, ELEMENT_NAMES[38]));
-        output.add(elemental(item, ELEMENT_NAMES[39]));
-        output.add(elemental(item, ELEMENT_NAMES[40]));
-        output.add(elemental(item, ELEMENT_NAMES[41]));
-        output.add(elemental(item, ELEMENT_NAMES[42]));
-        output.add(elemental(item, ELEMENT_NAMES[43]));
-        output.add(elemental(item, ELEMENT_NAMES[44]));
-        output.add(elemental(item, ELEMENT_NAMES[45]));
-        output.add(elemental(item, ELEMENT_NAMES[46]));
-        output.add(elemental(item, ELEMENT_NAMES[47]));
-        output.add(elemental(item, ELEMENT_NAMES[48]));
-        output.add(elemental(item, ELEMENT_NAMES[49]));
-        output.add(elemental(item, ELEMENT_NAMES[50]));
-        output.add(elemental(item, ELEMENT_NAMES[51]));
-        output.add(elemental(item, ELEMENT_NAMES[52]));
+        for (int i = 36;i<=52;i++) {
+            output.add(elemental(item, ELEMENT_NAMES[i]));
+        }
         output.add(elemental(item, ELEMENT_NAMES[53] + 2));
         output.add(elemental(item, ELEMENT_NAMES[54]));
         output.add(elemental(item, ELEMENT_NAMES[55]));
