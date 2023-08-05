@@ -117,24 +117,9 @@ public enum Groups {
             output.add(elemental(item, ELEMENT_NAMES[i]));
         }
         output.add(elemental(item, ELEMENT_NAMES[53] + 2));
-        output.add(elemental(item, ELEMENT_NAMES[54]));
-        output.add(elemental(item, ELEMENT_NAMES[55]));
-        output.add(elemental(item, ELEMENT_NAMES[56]));
-        output.add(elemental(item, ELEMENT_NAMES[57]));
-        output.add(elemental(item, ELEMENT_NAMES[58]));
-        output.add(elemental(item, ELEMENT_NAMES[59]));
-        output.add(elemental(item, "Nd"));
-        output.add(elemental(item, "Pm"));
-        output.add(elemental(item, "Sm"));
-        output.add(elemental(item, "Eu"));
-        output.add(elemental(item, "Gd"));
-        output.add(elemental(item, "Tb"));
-        output.add(elemental(item, "Dy"));
-        output.add(elemental(item, "Ho"));
-        output.add(elemental(item, "Er"));
-        output.add(elemental(item, "Tm"));
-        output.add(elemental(item, "Yb"));
-        output.add(elemental(item, "Lu"));
+        for (int i = 54; i < ELEMENT_NAMES.length; i++) {
+            output.add(elemental(item, ELEMENT_NAMES[i]));
+        }
     }
 
     public static ItemStack elemental(Item item, String... cfs) {

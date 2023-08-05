@@ -15,7 +15,10 @@ public class Utils {
             "Hf","Ta","W","Re","Os","Ir","Pt","Au","Hg","Tl","Pb","Bi","Po","At","Rn",
             "Fr","Ra",
                 "Ac","Th","Pa","U","Np","Pu","Am","Cm","Bk","Cf","Es","Fm","Md","No","Lr",
-            "Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og"
+            "Rf","Db","Sg","Bh","Hs","Mt","Ds","Rg","Cn","Nh","Fl","Mc","Lv","Ts","Og",
+            "Uue","Ubn",
+                "Ubu", "Ubb","Ubt","Ubq","Ubp","Ubh","Ubs","Ubo","Ube","Utn","Utu","Utb","Utt","Utq","Utp","Uth","Uts","Uto",
+                "Ute","Uqn","Uqu"
     };
     public static final ArrayList<String> others = new ArrayList<>();
     static {
