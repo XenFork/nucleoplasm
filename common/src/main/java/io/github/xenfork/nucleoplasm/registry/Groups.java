@@ -12,7 +12,6 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.collection.DefaultedList;
 
 import java.util.Locale;
 import java.util.Objects;
@@ -29,8 +28,6 @@ public enum Groups {
     private final CreativeTabRegistry.ModifyTabCallback cb;
 
     RegistrySupplier<ItemGroup> value;
-
-    final DefaultedList<ItemStack> stacks = DefaultedList.of();
 
     Groups(Supplier<ItemStack> stack, CreativeTabRegistry.ModifyTabCallback cb) {
         id = new Identifier(MOD_ID, name().replace("$", "_").toLowerCase(Locale.ROOT));
@@ -134,10 +131,6 @@ public enum Groups {
         return itemStack;
     }
 
-    public void add(ItemStack stack) {
-        stacks.add(stack);
-    }
-
     public RegistrySupplier<ItemGroup> get() {
         return value;
     }
@@ -155,9 +148,5 @@ public enum Groups {
             CreativeTabRegistry.modify(CreativeTabRegistry.defer(key), group.cb);
         }
         groups.register();
-    }
-
-    public ItemGroup getBuilder() {
-        return builder;
     }
 }
