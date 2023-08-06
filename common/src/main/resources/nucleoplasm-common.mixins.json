@@ -4,6 +4,7 @@
   "package": "io.github.xenfork.nucleoplasm.mixin.forge",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "MinecraftItemsMixin"
   ],
   "client": [
   ],
