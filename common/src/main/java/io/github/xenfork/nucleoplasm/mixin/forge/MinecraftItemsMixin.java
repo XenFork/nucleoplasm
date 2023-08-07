@@ -68,12 +68,16 @@ public class MinecraftItemsMixin {
     // 黄铁矿 FeS2
     @Inject(method = "<clinit>", at = @At("RETURN"))
     private static void clinit(CallbackInfo ci) {
+        // 煤炭的分类
         COAL_ORE = register(COAL_ORE, new CoalOreBlockItem(((BlockItem)COAL_ORE).getBlock(), new Item.Settings()));
         DEEPSLATE_COAL_ORE = register(DEEPSLATE_COAL_ORE, new CoalOreBlockItem(((BlockItem)DEEPSLATE_COAL_ORE).getBlock(), new Item.Settings()));
+        //铁的分类
         IRON_ORE = register(IRON_ORE, new IronOreBlockItem(((BlockItem)IRON_ORE).getBlock(), new Item.Settings()));
         DEEPSLATE_IRON_ORE = register(DEEPSLATE_IRON_ORE, new IronOreBlockItem(((BlockItem)DEEPSLATE_IRON_ORE).getBlock(), new Item.Settings()));
+        //铜矿分类
         COPPER_ORE = register(COPPER_ORE, new CopperOreBlockItem(((BlockItem)COPPER_ORE).getBlock(), new Item.Settings()));
         DEEPSLATE_COPPER_ORE = register(DEEPSLATE_COPPER_ORE, new CopperOreBlockItem(((BlockItem)DEEPSLATE_COPPER_ORE).getBlock(), new Item.Settings()));
+        //金矿分类
         GOLD_ORE = register(GOLD_ORE, new GoldOreBlockItem(((BlockItem)GOLD_ORE).getBlock(), new Item.Settings()));
         DEEPSLATE_GOLD_ORE = register(DEEPSLATE_GOLD_ORE, new GoldOreBlockItem(((BlockItem)DEEPSLATE_GOLD_ORE).getBlock(), new Item.Settings()));
         NETHER_GOLD_ORE = register(NETHER_GOLD_ORE, new GoldOreBlockItem(((BlockItem)NETHER_GOLD_ORE).getBlock(), new Item.Settings()));
