@@ -1,9 +1,6 @@
 package io.github.xenfork.nucleoplasm;
 
-import io.github.xenfork.nucleoplasm.registry.Blocks;
-import io.github.xenfork.nucleoplasm.registry.Fluids;
-import io.github.xenfork.nucleoplasm.registry.Groups;
-import io.github.xenfork.nucleoplasm.registry.Items;
+import io.github.xenfork.nucleoplasm.registry.*;
 
 public class Nucleoplasm
 {
@@ -14,5 +11,6 @@ public class Nucleoplasm
 		Blocks.init();//注册方块
 		Items.init();//注册物品
 		Groups.init();//注册组
+		Recipes.init();//注册配方
 	}
 }
