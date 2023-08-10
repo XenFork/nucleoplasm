@@ -2,6 +2,10 @@ plugins {
     id "com.github.johnrengelman.shadow" version "7.1.2"
 }
 
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+}
+
 architectury {
     platformSetupLoomIde()
     fabric()
@@ -34,6 +38,7 @@ processResources {
 }
 
 shadowJar {
+    exclude "architectury-common.accessWidener"
     configurations = [project.configurations.shadowCommon]
     archiveClassifier.set("dev-shadow")
 }
