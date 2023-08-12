@@ -4,9 +4,8 @@ import io.github.xenfork.nucleoplasm.core.item.block.CoalOreBlockItem;
 import io.github.xenfork.nucleoplasm.core.item.block.CopperOreBlockItem;
 import io.github.xenfork.nucleoplasm.core.item.block.GoldOreBlockItem;
 import io.github.xenfork.nucleoplasm.core.item.block.IronOreBlockItem;
-import io.github.xenfork.nucleoplasm.core.item.vanilla.OakLeave;
+import io.github.xenfork.nucleoplasm.core.item.vanilla.Leave;
 import io.github.xenfork.nucleoplasm.core.item.vanilla.Log;
-import net.minecraft.block.Blocks;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
@@ -321,14 +320,14 @@ public class MinecraftItemsMixin {
 
         {
             //橡木树叶和暗黑的橡木树叶
-            OAK_LEAVES = register(OAK_LEAVES, new OakLeave(((BlockItem) OAK_LEAVES).getBlock() ,new Item.Settings()));
-            DARK_OAK_LEAVES = register(DARK_OAK_LEAVES, new OakLeave(((BlockItem) DARK_OAK_LEAVES).getBlock() ,new Item.Settings()));
-            SPRUCE_LEAVES = register(SPRUCE_LEAVES, new OakLeave(((BlockItem) SPRUCE_LEAVES).getBlock() ,new Item.Settings()));
-            BIRCH_LEAVES = register(BIRCH_LEAVES, new OakLeave(((BlockItem) BIRCH_LEAVES).getBlock() ,new Item.Settings()));
-            JUNGLE_LEAVES = register(JUNGLE_LEAVES, new OakLeave(((BlockItem) JUNGLE_LEAVES).getBlock() ,new Item.Settings()));
-            ACACIA_LEAVES = register(ACACIA_LEAVES, new OakLeave(((BlockItem) ACACIA_LEAVES).getBlock() ,new Item.Settings()));
-            CHERRY_LEAVES = register(CHERRY_LEAVES, new OakLeave(((BlockItem) CHERRY_LEAVES).getBlock() ,new Item.Settings()));
-            MANGROVE_LEAVES = register(MANGROVE_LEAVES, new OakLeave(((BlockItem) MANGROVE_LEAVES).getBlock() ,new Item.Settings()));
+            OAK_LEAVES = register(OAK_LEAVES, new Leave(((BlockItem) OAK_LEAVES).getBlock() ,new Item.Settings()));
+            DARK_OAK_LEAVES = register(DARK_OAK_LEAVES, new Leave(((BlockItem) DARK_OAK_LEAVES).getBlock() ,new Item.Settings()));
+            SPRUCE_LEAVES = register(SPRUCE_LEAVES, new Leave(((BlockItem) SPRUCE_LEAVES).getBlock() ,new Item.Settings()));
+            BIRCH_LEAVES = register(BIRCH_LEAVES, new Leave(((BlockItem) BIRCH_LEAVES).getBlock() ,new Item.Settings()));
+            JUNGLE_LEAVES = register(JUNGLE_LEAVES, new Leave(((BlockItem) JUNGLE_LEAVES).getBlock() ,new Item.Settings()));
+            ACACIA_LEAVES = register(ACACIA_LEAVES, new Leave(((BlockItem) ACACIA_LEAVES).getBlock() ,new Item.Settings()));
+            CHERRY_LEAVES = register(CHERRY_LEAVES, new Leave(((BlockItem) CHERRY_LEAVES).getBlock() ,new Item.Settings()));
+            MANGROVE_LEAVES = register(MANGROVE_LEAVES, new Leave(((BlockItem) MANGROVE_LEAVES).getBlock() ,new Item.Settings()));
 
         }
     }

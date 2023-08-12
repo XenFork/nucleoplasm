@@ -4,7 +4,6 @@ import net.minecraft.block.Block;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.text.Text;
@@ -13,8 +12,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class OakLeave extends BlockItem {
-    public OakLeave(Block block, Settings settings) {
+public class Leave extends BlockItem {
+    public Leave(Block block, Settings settings) {
         super(block, settings);
     }
     // C55H72MgN4O5 叶绿素a C55H70MgN4O6 叶绿素b
