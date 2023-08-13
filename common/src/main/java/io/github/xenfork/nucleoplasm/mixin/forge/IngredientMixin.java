@@ -2,6 +2,7 @@ package io.github.xenfork.nucleoplasm.mixin.forge;
 
 import com.google.gson.JsonObject;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -23,8 +24,9 @@ public class IngredientMixin {
         entryJsonIn = json;
     }
 
-    @Redirect(method = "entryFromJson", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;<init>(Lnet/minecraft/item/ItemConvertible;)V"))
-    private static void setEntryJsonInItem(ItemStack instance, ItemConvertible item) {
+    @Inject(method = "entryFromJson", at = @At(value = "INVOKE", target = "Lnet/minecraft/item/ItemStack;<init>(Lnet/minecraft/item/ItemConvertible;)V", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILEXCEPTION, cancellable = true)
+    private static void entryFromJson(JsonObject json, CallbackInfoReturnable<Ingredient.Entry> cir, Item item) {
+        ItemStack stack = new ItemStack(item);
         if (entryJsonIn.has("nbt")) {
             JsonObject nbt = entryJsonIn.getAsJsonObject("nbt");
             NbtCompound compound;
@@ -34,8 +36,11 @@ public class IngredientMixin {
                 compound = null;
             }
             if (compound != null) {
-                instance.setNbt(compound);
+                stack.setNbt(compound);
             }
+            cir.setReturnValue(new Ingredient.StackEntry(stack));
+            cir.cancel();
         }
+
     }
 }

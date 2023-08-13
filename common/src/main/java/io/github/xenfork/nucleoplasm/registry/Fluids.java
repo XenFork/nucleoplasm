@@ -9,7 +9,6 @@ import net.minecraft.item.ItemConvertible;
 import net.minecraft.registry.RegistryKeys;
 
 import java.util.Locale;
-import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
@@ -35,7 +34,7 @@ public enum Fluids implements Supplier<Fluid>, ItemConvertible {
         }
         fluids.register();
         for (Fluids value : values()) {
-            value.bucketItem = Items.items.register(value.name + "_bucket", () -> new BucketItem(value.get(), value.settings));
+            value.bucketItem = ModItems.items.register(value.name + "_bucket", () -> new BucketItem(value.get(), value.settings));
         }
 
     }

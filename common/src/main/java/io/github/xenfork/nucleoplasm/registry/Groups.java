@@ -21,7 +21,7 @@ import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
 import static io.github.xenfork.nucleoplasm.core.Utils.ELEMENT_NAMES;
 
 public enum Groups {
-    elements(() -> new ItemStack(Items.Inorganic.get()), Groups::addElements);
+    elements(() -> new ItemStack(ModItems.Inorganic.get()), Groups::addElements);
 
     final ItemGroup builder;
     final Identifier id;
@@ -37,7 +37,7 @@ public enum Groups {
     }
 
     private static void addElements(FeatureSet flags, ItemGroup.Entries output, boolean canUseGameMasterBlocks) {
-        Item item = Items.Inorganic.get();
+        Item item = ModItems.Inorganic.get();
         output.add(elemental(item, ELEMENT_NAMES[1]));//金属氢
         output.add(elemental(item, ELEMENT_NAMES[1] + 2));
         output.add(elemental(item, ELEMENT_NAMES[1] + 3));

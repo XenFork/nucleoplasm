@@ -9,7 +9,7 @@ public class Nucleoplasm
 	public static void init() {
 		Fluids.init();//注册流体在注册桶之前注册
 		Blocks.init();//注册方块
-		Items.init();//注册物品
+		ModItems.init();//注册物品
 		Groups.init();//注册组
 		Recipes.init();//注册配方
 	}

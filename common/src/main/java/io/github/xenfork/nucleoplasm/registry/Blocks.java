@@ -54,7 +54,7 @@ public enum Blocks implements Supplier<Block>, ItemConvertible {
         blocks.register();
         for (Blocks value : values()) {
             if (value.isBlockItem)
-                value.blockItem = Items.items.register(value.name + "_block", () -> new BlockItem(value.get(), value.settings));
+                value.blockItem = ModItems.items.register(value.name + "_block", () -> new BlockItem(value.get(), value.settings));
         }
     }
 
