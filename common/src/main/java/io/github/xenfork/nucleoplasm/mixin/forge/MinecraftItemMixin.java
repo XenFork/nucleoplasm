@@ -6,8 +6,10 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.registry.Registries;
+import net.minecraft.text.MutableText;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Language;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,6 +18,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
+import java.util.Random;
 
 @Mixin(Item.class)
 public class MinecraftItemMixin {
@@ -83,7 +86,64 @@ public class MinecraftItemMixin {
                 // 云南波罗栎 Quercus yunnanensis Franch。
                 /*ore*/case "gold_ore", "deepslate_gold_ore", "iron_ore", "deepslate_iron_ore", "coal_ore", "deepslate_coal_ore", "nether_gold_ore", "lapis_ore", "deepslate_lapis_ore" , "diamond_ore", "deepslate_diamond_ore" -> /*真正写到的时候再分层*/
                         nucleoplasm$resetNucleoplasmName(stack, "ores");
-                /*log*/case "oak_log", "spruce_log","birch_log", "jungle_log", "acacia_log", "cherry_log", "dark_oak_log", "mangrove_log" -> nucleoplasm$resetNucleoplasmName(stack, "logs");
+                /*oak log*/case "oak_log" -> {
+                    int i = new Random().nextInt(0, 51);
+                    switch (i) {
+                        case 0: nucleoplasm$resetNucleoplasmName(stack, "Quercus × fangshanensis Liou");
+                        case 1: nucleoplasm$resetNucleoplasmName(stack, "Quercus × fenchengensis H. W. Jen et L. M. Wang");
+                        case 2: nucleoplasm$resetNucleoplasmName(stack, "Quercus × hopeiensis Liou");
+                        case 3: nucleoplasm$resetNucleoplasmName(stack, "Quercus × mongolico-dentata Nakai");
+                        case 4: nucleoplasm$resetNucleoplasmName(stack, "Quercus acrodonta Seemen");
+                        case 5: nucleoplasm$resetNucleoplasmName(stack, "Quercus acutissima Carruth.");
+                        case 6: nucleoplasm$resetNucleoplasmName(stack, "Quercus aliena Bl.");
+                        case 7: nucleoplasm$resetNucleoplasmName(stack, "Quercus aquifolioides Rehd. et Wils.");
+                        case 8: nucleoplasm$resetNucleoplasmName(stack, "Quercus baronii Skan");
+                        case 9: nucleoplasm$resetNucleoplasmName(stack, "Quercus bawanglingensis Huang, Li et Xing");
+                        case 10: nucleoplasm$resetNucleoplasmName(stack, "Quercus chenii Nakai");
+                        case 11: nucleoplasm$resetNucleoplasmName(stack, "Quercus cocciferoides Hand.-Mazz.");
+                        case 12: nucleoplasm$resetNucleoplasmName(stack, "Quercus dentata Thunb.");
+                        case 13: nucleoplasm$resetNucleoplasmName(stack, "Quercus dolicholepis A. Camus");
+                        case 14: nucleoplasm$resetNucleoplasmName(stack, "Quercus engleriana Seem.");
+                        case 15: nucleoplasm$resetNucleoplasmName(stack, "Quercus fabri Hance");
+                        case 16: nucleoplasm$resetNucleoplasmName(stack, "Quercus fimbriata Chun et Huang");
+                        case 17: nucleoplasm$resetNucleoplasmName(stack, "Quercus franchetii Skan");
+                        case 18: nucleoplasm$resetNucleoplasmName(stack, "Quercus gilliana Rehd. et Wils.");
+                        case 19: nucleoplasm$resetNucleoplasmName(stack, "Quercus griffithii Hook. f. et Thoms ex Miq.");
+                        case 20: nucleoplasm$resetNucleoplasmName(stack, "Quercus guyavaefolia H. Leveille");
+                        case 21: nucleoplasm$resetNucleoplasmName(stack, "Quercus kingiana Craib");
+                        case 22: nucleoplasm$resetNucleoplasmName(stack, "Quercus kongshanensis Y. C. Hsu et H. W. Jen");
+                        case 23: nucleoplasm$resetNucleoplasmName(stack, "Quercus lanceolata S. Z. Qu et W. H. Zhang");
+                        case 24: nucleoplasm$resetNucleoplasmName(stack, "Quercus lodicosa E. F. Warb.");
+                        case 25: nucleoplasm$resetNucleoplasmName(stack, "Quercus longispica (Hand.-Mazz.) A. Camus");
+                        case 26: nucleoplasm$resetNucleoplasmName(stack, "Quercus malacotricha A. Camus");
+                        case 27: nucleoplasm$resetNucleoplasmName(stack, "Quercus marlipoensis Hu et Cheng");
+                        case 28: nucleoplasm$resetNucleoplasmName(stack, "Quercus mongolica Fisch. ex Ledeb.");
+                        case 29: nucleoplasm$resetNucleoplasmName(stack, "Quercus monimotricha Hand.-Mazz.");
+                        case 30: nucleoplasm$resetNucleoplasmName(stack, "Quercus monnula Y. C. Hsu et H. W. Jen");
+                        case 31: nucleoplasm$resetNucleoplasmName(stack, "Quercus oxyphylla (Wils.) Hand.-Mazz.");
+                        case 32: nucleoplasm$resetNucleoplasmName(stack, "Quercus palustris Muench.");
+                        case 33: nucleoplasm$resetNucleoplasmName(stack, "Quercus pannosa Hand.-Mazz.");
+                        case 34: nucleoplasm$resetNucleoplasmName(stack, "Quercus phillyraeoides A. Gray");
+                        case 35: nucleoplasm$resetNucleoplasmName(stack, "Quercus pseudosemecarpifolia A. Camus");
+                        case 36: nucleoplasm$resetNucleoplasmName(stack, "Quercus rehderiana Hand.-Mazz.");
+                        case 37: nucleoplasm$resetNucleoplasmName(stack, "Quercus robur L.");
+                        case 38: nucleoplasm$resetNucleoplasmName(stack, "Quercus semicarpifolia Smith");
+                        case 39: nucleoplasm$resetNucleoplasmName(stack, "Quercus senescens Hand.-Mazz.");
+                        case 40: nucleoplasm$resetNucleoplasmName(stack, "Quercus serrata Thunb.");
+                        case 41: nucleoplasm$resetNucleoplasmName(stack, "Quercus setulosa Hick. et A. Camus");
+                        case 42: nucleoplasm$resetNucleoplasmName(stack, "Quercus spinosa David ex Franch.");
+                        case 43: nucleoplasm$resetNucleoplasmName(stack, "Quercus stewardii Rehd.");
+                        case 44: nucleoplasm$resetNucleoplasmName(stack, "Quercus tarokoensis Hayata");
+                        case 45: nucleoplasm$resetNucleoplasmName(stack, "Quercus tungmaiensis Y. T. Chang");
+                        case 46: nucleoplasm$resetNucleoplasmName(stack, "Quercus utilis Hu et Cheng");
+                        case 47: nucleoplasm$resetNucleoplasmName(stack, "Quercus variabilis Bl.");
+                        case 48: nucleoplasm$resetNucleoplasmName(stack, "Quercus wutaishanica Mayr");
+                        case 49: nucleoplasm$resetNucleoplasmName(stack, "Quercus yiwuensis Huagn");
+                        default: nucleoplasm$resetNucleoplasmName(stack, "Quercus yunnanensis Franch。");
+                    }
+
+                }
+                /*log*/case "spruce_log","birch_log", "jungle_log", "acacia_log", "cherry_log", "dark_oak_log", "mangrove_log" -> nucleoplasm$resetNucleoplasmName(stack, "logs");
                 /*Stripped log*/case "stripped_spruce_log", "stripped_birch_log", "stripped_jungle_log", "stripped_acacia_log", "stripped_cherry_log", "stripped_dark_oak_log", "stripped_oak_log", "stripped_mangrove_log" -> nucleoplasm$resetNucleoplasmName(stack, "stripped logs");
                 /*wood*/case "oak_wood", "spruce_wood", "birch_wood", "jungle_wood", "acacia_wood", "cherry_wood", "dark_oak_wood", "mangrove_wood" -> nucleoplasm$resetNucleoplasmName(stack, "wood");
                 /*stripped wood*/case "stripped_oak_wood", "stripped_spruce_wood", "stripped_birch_wood", "stripped_jungle_wood", "stripped_acacia_wood","stripped_cherry_wood", "stripped_dark_oak_wood", "stripped_mangrove_wood" -> nucleoplasm$resetNucleoplasmName(stack, "stripped wood");
@@ -97,7 +157,11 @@ public class MinecraftItemMixin {
         if (stack.getNbt() != null) {
             NbtCompound nbt = stack.getNbt();
             if (nbt.contains(nucleoplasm$nucleoplasmName)) {
-                tooltip.add(Text.translatable("nucleoplasm.designation").append(Text.translatable("nucleoplasm." + nbt.getString(nucleoplasm$nucleoplasmName))));
+                String key = "nucleoplasm." + nbt.getString(nucleoplasm$nucleoplasmName);
+                String varietyKey = "nucleoplasm.variety";
+                MutableText variety = Language.getInstance().hasTranslation(varietyKey) ? Text.translatable(varietyKey) : Text.literal("variety");
+                MutableText text = Language.getInstance().hasTranslation(key) ? Text.translatable(key) : Text.literal(key.replace("nucleoplasm.", ""));
+                tooltip.add(variety.append(text));
             }
         }
     }
