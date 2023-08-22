@@ -12,5 +12,6 @@ public class Nucleoplasm
 		ModItems.init();//注册物品
 		Groups.init();//注册组
 		Recipes.init();//注册配方
+
 	}
 }
