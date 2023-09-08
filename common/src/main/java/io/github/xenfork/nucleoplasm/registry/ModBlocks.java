@@ -7,7 +7,6 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 
 import java.util.Locale;
@@ -15,7 +14,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
 import static io.github.xenfork.nucleoplasm.registry.ModItems.items;
 
 public enum ModBlocks implements Supplier<Block>, ItemConvertible {
@@ -25,12 +24,12 @@ public enum ModBlocks implements Supplier<Block>, ItemConvertible {
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
 
     private final Block block;
-    private final String name;
+    final String name;
 
     private RegistrySupplier<Block> register;
-    private Consumer<Item.Settings> settings;
-    private final boolean isBlockItem;
-    private RegistrySupplier<BlockItem> blockItem;
+    Consumer<Item.Settings> settings;
+    final boolean isBlockItem;
+    RegistrySupplier<BlockItem> blockItem;
     ModBlocks(Function<AbstractBlock.Settings, Block> block, Consumer<Item.Settings> settings) {
         this.isBlockItem = true;
         this.block = block.apply(AbstractBlock.Settings.create());
@@ -56,14 +55,6 @@ public enum ModBlocks implements Supplier<Block>, ItemConvertible {
             value.register = blocks.register(value.name, () -> value.block);
         }
         blocks.register();
-        for (ModBlocks value : values()) {
-            if (value.isBlockItem) {
-                Item.Settings t = new Item.Settings();
-                value.settings.accept(t);
-                value.blockItem = items.register(value.name + "_block", () -> new BlockItem(value.get(), t));
-            }
-
-        }
     }
 
     @Override

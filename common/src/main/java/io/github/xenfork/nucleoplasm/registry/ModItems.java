@@ -4,6 +4,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.xenfork.nucleoplasm.core.item.InorganicItem;
 import io.github.xenfork.nucleoplasm.core.item.OrganicMatterItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.registry.RegistryKeys;
 
@@ -33,6 +34,13 @@ public enum ModItems implements Supplier<Item> {
     public static void init() {
         for (ModItems value : values()) {
             value.registry = items.register(value.name, value.item);
+        }
+        for (ModBlocks value : ModBlocks.values()) {
+            if (value.isBlockItem) {
+                Item.Settings t = new Item.Settings();
+                value.settings.accept(t);
+                value.blockItem = items.register(value.name + "_block", () -> new BlockItem(value.get(), t));
+            }
         }
         items.register();
     }
