@@ -16,6 +16,7 @@ import java.util.function.Supplier;
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
 
 public enum Blocks implements Supplier<Block>, ItemConvertible {
+    Broken$Stone(Block::new, new Item.Settings()),//破碎的石子
     ;
 
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
