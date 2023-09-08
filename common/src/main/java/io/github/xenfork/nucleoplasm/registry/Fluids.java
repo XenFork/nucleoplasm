@@ -11,7 +11,7 @@ import net.minecraft.registry.RegistryKeys;
 import java.util.Locale;
 import java.util.function.Supplier;
 
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
 public enum Fluids implements Supplier<Fluid>, ItemConvertible {
     ;
@@ -26,7 +26,7 @@ public enum Fluids implements Supplier<Fluid>, ItemConvertible {
         this.settings = settings;
     }
 
-    public static final DeferredRegister<Fluid> fluids = DeferredRegister.create(MOD_ID, RegistryKeys.FLUID);
+
 
     public static void init() {
         for (Fluids value : values()) {
@@ -34,7 +34,7 @@ public enum Fluids implements Supplier<Fluid>, ItemConvertible {
         }
         fluids.register();
         for (Fluids value : values()) {
-            value.bucketItem = ModItems.items.register(value.name + "_bucket", () -> new BucketItem(value.get(), value.settings));
+            value.bucketItem = items.register(value.name + "_bucket", () -> new BucketItem(value.get(), value.settings));
         }
 
     }

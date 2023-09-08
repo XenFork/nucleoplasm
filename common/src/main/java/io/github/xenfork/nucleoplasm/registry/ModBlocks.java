@@ -7,19 +7,20 @@ import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 
 import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
-public enum Blocks implements Supplier<Block>, ItemConvertible {
+public enum ModBlocks implements Supplier<Block>, ItemConvertible {
     Broken$Stone(Block::new, new Item.Settings()),//破碎的石子
     ;
 
-    public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
+
 
     private final Block block;
     private final String name;
@@ -28,34 +29,34 @@ public enum Blocks implements Supplier<Block>, ItemConvertible {
     private Item.Settings settings;
     private final boolean isBlockItem;
     private RegistrySupplier<BlockItem> blockItem;
-    Blocks(Function<AbstractBlock.Settings, Block> block, Item.Settings settings) {
+    ModBlocks(Function<AbstractBlock.Settings, Block> block, Item.Settings settings) {
         this.isBlockItem = true;
         this.block = block.apply(AbstractBlock.Settings.create());
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
         this.settings = settings;
     }
 
-    Blocks(Function<AbstractBlock.Settings, Block> block, boolean isBlockItem) {
+    ModBlocks(Function<AbstractBlock.Settings, Block> block, boolean isBlockItem) {
         this.isBlockItem = isBlockItem;
         this.block = block.apply(AbstractBlock.Settings.create());
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
         this.settings = new Item.Settings();
     }
 
-    Blocks(Function<AbstractBlock.Settings, Block> block) {
+    ModBlocks(Function<AbstractBlock.Settings, Block> block) {
         this.isBlockItem = false;
         this.block = block.apply(AbstractBlock.Settings.create());
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
     }
 
     public static void init() {
-        for (Blocks value : values()) {
+        for (ModBlocks value : values()) {
             value.register = blocks.register(value.name, () -> value.block);
         }
         blocks.register();
-        for (Blocks value : values()) {
+        for (ModBlocks value : values()) {
             if (value.isBlockItem)
-                value.blockItem = ModItems.items.register(value.name + "_block", () -> new BlockItem(value.get(), value.settings));
+                value.blockItem = items.register(value.name + "_block", () -> new BlockItem(Registries.BLOCK.get(Registries.BLOCK.getId(value.block)), value.settings));
         }
     }
 
