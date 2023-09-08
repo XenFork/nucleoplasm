@@ -15,12 +15,13 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
+import static io.github.xenfork.nucleoplasm.registry.ModItems.items;
 
 public enum ModBlocks implements Supplier<Block>, ItemConvertible {
-    Broken$Stone(Block::new, new Item.Settings()),//破碎的石子
+//    Broken$Stone(Block::new, new Item.Settings()),//破碎的石子
     ;
 
-
+    public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
 
     private final Block block;
     private final String name;

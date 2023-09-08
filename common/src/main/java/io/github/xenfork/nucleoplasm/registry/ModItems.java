@@ -12,13 +12,14 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.items;
 
 public enum ModItems implements Supplier<Item> {
     Inorganic(InorganicItem::new),
     Organic$Matter(OrganicMatterItem::new),
     ;
 
+
+    public static final DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM);
 
     private final String name;
     private final Supplier<Item> item;
@@ -33,6 +34,7 @@ public enum ModItems implements Supplier<Item> {
         for (ModItems value : values()) {
             value.registry = items.register(value.name, value.item);
         }
+        items.register();
     }
 
     @Override

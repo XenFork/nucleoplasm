@@ -12,9 +12,13 @@ import java.util.Locale;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
+import static io.github.xenfork.nucleoplasm.registry.ModItems.items;
 
 public enum Fluids implements Supplier<Fluid>, ItemConvertible {
+
     ;
+
+    public static final DeferredRegister<Fluid> fluids = DeferredRegister.create(MOD_ID, RegistryKeys.FLUID);
     private final String name;
     private Fluid fluid;
     private Item.Settings settings;
