@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryKeys;
 
 import java.util.Locale;
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -18,7 +19,7 @@ import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 import static io.github.xenfork.nucleoplasm.registry.ModItems.items;
 
 public enum ModBlocks implements Supplier<Block>, ItemConvertible {
-//    Broken$Stone(Block::new, new Item.Settings()),//破碎的石子
+    Broken$Stone(Block::new, true),//破碎的石子
     ;
 
     public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
@@ -27,10 +28,10 @@ public enum ModBlocks implements Supplier<Block>, ItemConvertible {
     private final String name;
 
     private RegistrySupplier<Block> register;
-    private Item.Settings settings;
+    private Consumer<Item.Settings> settings;
     private final boolean isBlockItem;
     private RegistrySupplier<BlockItem> blockItem;
-    ModBlocks(Function<AbstractBlock.Settings, Block> block, Item.Settings settings) {
+    ModBlocks(Function<AbstractBlock.Settings, Block> block, Consumer<Item.Settings> settings) {
         this.isBlockItem = true;
         this.block = block.apply(AbstractBlock.Settings.create());
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
@@ -41,7 +42,7 @@ public enum ModBlocks implements Supplier<Block>, ItemConvertible {
         this.isBlockItem = isBlockItem;
         this.block = block.apply(AbstractBlock.Settings.create());
         name = name().replace("$", "_").toLowerCase(Locale.ROOT);
-        this.settings = new Item.Settings();
+        this.settings = settings1 -> {};
     }
 
     ModBlocks(Function<AbstractBlock.Settings, Block> block) {
@@ -56,8 +57,12 @@ public enum ModBlocks implements Supplier<Block>, ItemConvertible {
         }
         blocks.register();
         for (ModBlocks value : values()) {
-            if (value.isBlockItem)
-                value.blockItem = items.register(value.name + "_block", () -> new BlockItem(Registries.BLOCK.get(Registries.BLOCK.getId(value.block)), value.settings));
+            if (value.isBlockItem) {
+                Item.Settings t = new Item.Settings();
+                value.settings.accept(t);
+                value.blockItem = items.register(value.name + "_block", () -> new BlockItem(value.get(), t));
+            }
+
         }
     }
 
