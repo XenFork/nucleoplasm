@@ -57,3 +57,5 @@ nucleoplasm/normandy-login
 nucleoplasm/nuclide
 
 logs/
+
+~*.SLDPRT
