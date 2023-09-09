@@ -24,16 +24,26 @@ dependencies {
     modApi "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
     // Remove the next line if you don't want to depend on the API
     modApi "dev.architectury:architectury-fabric:${architectury_version}"
-
+    modApi "dev.felnull:special-model-loader:1.2.0"
+    include "dev.felnull:special-model-loader:1.2.0"
+    modRuntimeOnly("com.terraformersmc:modmenu:7.2.2") {
+        exclude group: "net.fabricmc",module: "fabric-api"
+    }
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionFabric")) { transitive false }
 }
 
 processResources {
     inputs.property "version", project.version
-
+    def split = authors.split(",")
+    StringBuilder sb = new StringBuilder(split[0].trim())
+    for (i in 1..< split.length) {
+        sb.append("\"").append(",").append("\n    \"").append(split[i].trim())
+    }
+    inputs.property "authors", sb.toString()
     filesMatching("fabric.mod.json") {
-        expand "version": project.version
+        expand "version": project.version,
+                "authors": sb.toString()
     }
 }
 
