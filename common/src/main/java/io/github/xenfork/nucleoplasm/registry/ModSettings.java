@@ -50,11 +50,9 @@ public enum ModSettings implements Supplier<Object>, ItemConvertible {
     }
 
     ModSettings(Function<AbstractBlock.Settings, Block> func, Item.Settings... settings) {
-        var ref = new Object() {
-            RegistrySupplier<Block> register;
-        };
+
         value2 = blocks.register(id(), () -> func.apply(AbstractBlock.Settings.create()));
-        value = items.register(id(), () -> new BlockItem(ref.register.get(), (settings.length == 0 ? new Item.Settings() : settings[0])));
+        value = items.register(id(), () -> new BlockItem((Block) value2.get(), (settings.length == 0 ? new Item.Settings() : settings[0])));
     }
 
     @NotNull
