@@ -6,6 +6,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -15,13 +17,12 @@ import java.util.Objects;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.groups;
 import static io.github.xenfork.nucleoplasm.core.Utils.ELEMENT_NAMES;
 
 public enum ModGroups {
-    elements(() -> new ItemStack(ModItems.Inorganic.get()), ModGroups::addElements),
+    elements(() -> new ItemStack(ModRegistry.Inorganic.asItem()), ModGroups::addElements),
     ;
-
-
 
     public final ItemGroup builder;
     final Identifier id;
@@ -37,7 +38,7 @@ public enum ModGroups {
     }
 
     private static void addElements(FeatureSet flags, ItemGroup.Entries output, boolean canUseGameMasterBlocks) {
-        Item item = ModItems.Inorganic.get();
+        Item item = ModRegistry.Inorganic.asItem();
         output.add(elemental(item, ELEMENT_NAMES[1]));//金属氢
         output.add(elemental(item, ELEMENT_NAMES[1] + 2));
         output.add(elemental(item, ELEMENT_NAMES[1] + 3));
@@ -137,6 +138,15 @@ public enum ModGroups {
 
     public Identifier getId() {
         return id;
+    }
+
+    public static void init() {
+        for (ModGroups group : ModGroups.values()) {
+			group.value = groups.register(group.getId(), () -> group.builder);
+			RegistryKey<ItemGroup> key = RegistryKey.of(RegistryKeys.ITEM_GROUP, group.getId());
+			CreativeTabRegistry.modify(CreativeTabRegistry.defer(key), group.cb);
+		}
+        groups.register();
     }
 
 }

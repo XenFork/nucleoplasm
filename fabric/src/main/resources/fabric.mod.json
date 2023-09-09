@@ -10,10 +10,10 @@
   ],
   "contact": {
     "homepage": "https://github.com/XenFork/nucleoplasm",
-    "issues": "https://github.com/XenFork/nucleoplasm/issues"
+    "issues": "${issues_url}"
   },
 
-  "license": "MIT",
+  "license": "${license_type}",
   "icon": "icon.png",
 
   "environment": "*",
