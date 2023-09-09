@@ -1,14 +1,11 @@
 package io.github.xenfork.nucleoplasm.registry;
 
 import dev.architectury.registry.CreativeTabRegistry;
-import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
 import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
@@ -20,16 +17,19 @@ import java.util.function.Supplier;
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
 import static io.github.xenfork.nucleoplasm.core.Utils.ELEMENT_NAMES;
 
-public enum Groups {
-    elements(() -> new ItemStack(ModItems.Inorganic.get()), Groups::addElements);
+public enum ModGroups {
+    elements(() -> new ItemStack(ModItems.Inorganic.get()), ModGroups::addElements),
+    ;
 
-    final ItemGroup builder;
+
+
+    public final ItemGroup builder;
     final Identifier id;
-    private final CreativeTabRegistry.ModifyTabCallback cb;
+    public final CreativeTabRegistry.ModifyTabCallback cb;
 
-    RegistrySupplier<ItemGroup> value;
+    public RegistrySupplier<ItemGroup> value;
 
-    Groups(Supplier<ItemStack> stack, CreativeTabRegistry.ModifyTabCallback cb) {
+    ModGroups(Supplier<ItemStack> stack, CreativeTabRegistry.ModifyTabCallback cb) {
         id = new Identifier(MOD_ID, name().replace("$", "_").toLowerCase(Locale.ROOT));
         builder = CreativeTabRegistry.create(Text.translatable("nucleoplasm.group." + id.getPath()), stack);
         Objects.requireNonNull(cb);
@@ -139,14 +139,4 @@ public enum Groups {
         return id;
     }
 
-    public static final DeferredRegister<ItemGroup> groups = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM_GROUP);
-
-    public static void init() {
-        for (Groups group : values()) {
-            group.value = groups.register(group.id.getPath(), () -> group.builder);
-            RegistryKey<ItemGroup> key = RegistryKey.of(RegistryKeys.ITEM_GROUP, group.getId());
-            CreativeTabRegistry.modify(CreativeTabRegistry.defer(key), group.cb);
-        }
-        groups.register();
-    }
 }

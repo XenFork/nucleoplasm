@@ -51,6 +51,4 @@ public class Utils {
         return ingredient;
     }
 
-
-
 }
