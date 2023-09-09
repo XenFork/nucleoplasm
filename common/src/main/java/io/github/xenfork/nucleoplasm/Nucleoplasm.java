@@ -21,7 +21,6 @@ import java.util.function.Supplier;
 public class Nucleoplasm
 {
 	public static final String MOD_ID = "nucleoplasm";
-	public static final Supplier<RegistrarManager> manager = Suppliers.memoize(() -> RegistrarManager.get(MOD_ID));
 
 	public static final DeferredRegister<Item> items = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM);
 	public static final DeferredRegister<Block> blocks = DeferredRegister.create(MOD_ID, RegistryKeys.BLOCK);
@@ -30,11 +29,9 @@ public class Nucleoplasm
 	public static final DeferredRegister<RecipeSerializer<?>> recipes = DeferredRegister.create(MOD_ID, RegistryKeys.RECIPE_SERIALIZER);
 
 	public static void init() {
-		try {
-			Class.forName(ModSettings.class.getName());
-		} catch (ClassNotFoundException ignored) {
-
-		}
+		ModSettings.init();
+		blocks.register();
+		items.register();
 //		//注册流体在注册桶之前注册
 //		for (ModFluids value : ModFluids.values()) {
 //			value.register = fluids.register(value.id, () -> value.fluid);

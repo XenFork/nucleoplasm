@@ -11,7 +11,8 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.items;
+
+
 
 public enum ModItems implements Supplier<Item> {
     Inorganic(InorganicItem::new),
@@ -33,7 +34,7 @@ public enum ModItems implements Supplier<Item> {
 
     public static void init() {
         for (ModItems value : values()) {
-            value.registry = items.register(value.id, value.item);
+//            value.registry = items.register(value.id, value.item);
         }
     }
 

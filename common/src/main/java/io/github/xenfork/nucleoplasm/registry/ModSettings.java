@@ -1,6 +1,7 @@
 package io.github.xenfork.nucleoplasm.registry;
 
 import com.google.common.base.Suppliers;
+import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.DeferredSupplier;
 import dev.architectury.registry.registries.RegistrarManager;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -11,9 +12,12 @@ import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.MapColor;
 import net.minecraft.block.enums.Instrument;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemConvertible;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +26,7 @@ import java.util.Locale;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.manager;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
 public enum ModSettings implements Supplier<Object>, ItemConvertible {
     Broken$Stone(BrokenStoneBlock::new, new Item.Settings()),//破碎的石子
@@ -32,14 +35,14 @@ public enum ModSettings implements Supplier<Object>, ItemConvertible {
     ;
 
 
-    public RegistrySupplier<?> value;//item or more
+    public final RegistrySupplier<?> value;//item or more
     public RegistrySupplier<?> value2;//block or fuild or more
 
     ModSettings(Function<Item.Settings, Item> func) {
-        manager.get().forRegistry(RegistryKeys.ITEM, items -> {
-            value = items.register(id(), () -> func.apply(new Item.Settings()));
-        });
+        value = items.register(id(), () -> func.apply(new Item.Settings()));
     }
+
+    public static void init() {}
 
     @NotNull
     private String rename() {
@@ -50,13 +53,8 @@ public enum ModSettings implements Supplier<Object>, ItemConvertible {
         var ref = new Object() {
             RegistrySupplier<Block> register;
         };
-        manager.get().forRegistry(RegistryKeys.BLOCK, blocks -> {
-            ref.register = blocks.register(id(), () -> func.apply(AbstractBlock.Settings.create()));
-        });
-        manager.get().forRegistry(RegistryKeys.ITEM, items -> {
-            value2 = ref.register;
-            value = items.register(id(), () -> new BlockItem(ref.register.get(), (settings.length == 0 ? new Item.Settings() : settings[0])));
-        });
+        value2 = blocks.register(id(), () -> func.apply(AbstractBlock.Settings.create()));
+        value = items.register(id(), () -> new BlockItem(ref.register.get(), (settings.length == 0 ? new Item.Settings() : settings[0])));
     }
 
     @NotNull
