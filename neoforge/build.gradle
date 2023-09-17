@@ -33,7 +33,9 @@ repositories {
 dependencies {
     forge "net.neoforged:forge:${minecraft_version}-${neo_forge_version}"
     // Remove the next line if you don't want to depend on the API
-    modApi "dev.architectury:architectury-forge:${architectury_version}"
+    modApi("dev.architectury:architectury-forge:${architectury_version}") {
+        exclude group: "net.minecraftforge"
+    }
 
     common(project(path: ":common", configuration: "namedElements")) { transitive false }
     shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }

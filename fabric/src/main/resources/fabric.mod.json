@@ -2,7 +2,6 @@
   "schemaVersion": 1,
   "id": "nucleoplasm",
   "version": "${version}",
-
   "name": "nucleoplasm",
   "description": "",
   "authors": [
@@ -17,7 +16,11 @@
   "icon": "icon.png",
 
   "environment": "*",
-  "entrypoints": {},
+  "entrypoints": {
+    "main": [
+      "io.github.xenfork.nucleoplasm.fabric.NucleoplasmFabric"
+    ]
+  },
   "mixins": [
     "nucleoplasm.mixins.json",
     "nucleoplasm-common.mixins.json"
@@ -29,7 +32,6 @@
   "custom": {
     "modmenu": {
       "link": {
-
       }
     }
   }

@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "mixin": [
+    "nucleoplasm.mixins.json",
+    "nucleoplasm-common.mixins.json"
+  ],
+  "quilt_loader": {
+    "group": "${group}",
+    "id": "nucleoplasm",
+    "version": "${version}",
+    "name": "Nucleoplasm Mod",
+    "description": "This is an example description! Tell everyone what your mod is about!",
+    "authors": ["Me!"],
+    "contact": {
+      "sources": "https://github.com/architectury/architectury-templates"
+    },
+    "license": "MIT License",
+    "icon": "icon.png",
+    "intermediate_mappings": "net.fabricmc:intermediary",
+    "environment": "*",
+    "entrypoints": {
+      "init": [
+        "io.github.xenfork.nucleoplasm.quilt.NucleoplasmQuilt"
+      ]
+    },
+    "depends": [
+      {
+        "id": "quilt_loader",
+        "version": "*"
+      },
+      {
+        "id": "quilt_base",
+        "version": "*"
+      },
+      {
+        "id": "minecraft",
+        "version": ">=1.20.1"
+      },
+      {
+        "id": "architectury",
+        "version": ">=9.1.12"
+      }
+    ]
+  }
+}
