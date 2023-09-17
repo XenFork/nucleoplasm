@@ -1,0 +1,112 @@
+plugins {
+    id "com.github.johnrengelman.shadow" version "7.1.2"
+}
+
+loom {
+    accessWidenerPath = project(":common").loom.accessWidenerPath
+    forge {
+        mixinConfig "nucleoplasm-common.mixins.json"
+        mixinConfig "nucleoplasm.mixins.json"
+
+        convertAccessWideners = true
+        extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
+    }
+}
+
+architectury {
+    platformSetupLoomIde()
+    forge()
+}
+
+configurations {
+    common
+    shadowCommon // Don't use shadow from the shadow plugin because we don't want IDEA to index this.
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentForge.extendsFrom common
+}
+
+repositories {
+    maven { url "https://maven.neoforged.net/releases/" }
+}
+
+dependencies {
+    forge "net.neoforged:forge:${minecraft_version}-${neo_forge_version}"
+    // Remove the next line if you don't want to depend on the API
+    modApi "dev.architectury:architectury-forge:${architectury_version}"
+
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowCommon(project(path: ":common", configuration: "transformProductionForge")) { transitive = false }
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "authors", authors
+    inputs.property "loaderInterval", forge_version.split("\\.")[0]
+    inputs.property "minecraft_version", minecraft_version
+    def split = minecraft_version.toString().split("\\.")
+    StringBuilder sb = new StringBuilder()
+    sb.append(split[0]).append(".")
+    for (i in 1..<split.length - 1) {
+        if (i == 1) {
+            sb.append((split[i].toInteger().intValue() + 1).toString())
+        }
+    }
+    inputs.property "alpha_minecraft_version", sb.toString()
+    inputs.property "license_type", license_type
+    inputs.property "issues_url", issues_url
+    filesMatching("META-INF/mods.toml") {
+        expand "version": project.version,
+                "authors": authors,
+                "loaderInterval": forge_version.split("\\.")[0],
+                "minecraft_version": minecraft_version,
+                "alpha_minecraft_version": sb.toString(),
+                "license_type": license_type,
+                "issues_url": issues_url
+    }
+}
+
+shadowJar {
+    exclude "fabric.mod.json"
+    exclude "nucleoplasm-common.accessWidener"
+
+    configurations = [project.configurations.shadowCommon]
+    archiveClassifier.set("dev-shadow")
+}
+
+remapJar {
+    inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveClassifier.set(null)
+}
+
+jar {
+    archiveClassifier.set("dev")
+}
+
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from(commonSources.archiveFile.map { zipTree(it) }) {
+    }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
+}
+
+publishing {
+    publications {
+        mavenForge(MavenPublication) {
+            artifactId = archives_base_name + "-" + project.name
+            from components.java
+        }
+    }
+
+    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
+    repositories {
+        // Add repositories to publish to here.
+    }
+}
