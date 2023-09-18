@@ -1,20 +1,21 @@
 {
   "schema_version": 1,
   "mixin": [
-    "nucleoplasm.mixins.json",
-    "nucleoplasm-common.mixins.json"
+    "${common_mixins}"
   ],
   "quilt_loader": {
     "group": "${group}",
     "id": "nucleoplasm",
     "version": "${version}",
     "name": "Nucleoplasm Mod",
-    "description": "This is an example description! Tell everyone what your mod is about!",
-    "authors": ["Me!"],
+    "description": "",
+    "authors": [
+      "${authors}"
+    ],
     "contact": {
-      "sources": "https://github.com/architectury/architectury-templates"
+      "issues": "${issues_url}"
     },
-    "license": "MIT License",
+    "license": "${license_type}",
     "icon": "icon.png",
     "intermediate_mappings": "net.fabricmc:intermediary",
     "environment": "*",

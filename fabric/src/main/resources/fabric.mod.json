@@ -22,8 +22,7 @@
     ]
   },
   "mixins": [
-    "nucleoplasm.mixins.json",
-    "nucleoplasm-common.mixins.json"
+    "${common_mixins}"
   ],
   "depends": {
     "fabricloader": ">=0.14.21",

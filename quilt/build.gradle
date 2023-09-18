@@ -40,10 +40,27 @@ dependencies {
 processResources {
     inputs.property "group", rootProject.maven_group
     inputs.property "version", project.version
-
+    def split = authors.split(",")
+    StringBuilder sb = new StringBuilder(split[0].trim())
+    for (i in 1..< split.length) {
+        sb.append("\"").append(",").append("\n        \"").append(split[i].trim())
+    }
+    def split1 = common_mixins.split(",")
+    StringBuilder sb1 = new StringBuilder(split1[0].trim())
+    for (i in 1..<split1.length) {
+        sb1.append("\"").append(",").append("\n    \"").append(split1[i].trim())
+    }
+    inputs.property "authors", sb.toString()
+    inputs.property "common_mixins", sb1.toString()
+    inputs.property "license_type", license_type
+    inputs.property "issues_url", issues_url
     filesMatching("quilt.mod.json") {
         expand "group": rootProject.maven_group,
-                "version": project.version
+                "version": project.version,
+                "authors": sb.toString(),
+                "license_type": license_type,
+                "issues_url": issues_url,
+                "common_mixins": sb1.toString()
     }
 }
 

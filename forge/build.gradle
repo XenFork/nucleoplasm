@@ -5,8 +5,11 @@ plugins {
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
     forge {
-        mixinConfig "nucleoplasm-common.mixins.json"
-        mixinConfig "nucleoplasm.mixins.json"
+
+        def split = common_mixins.split(",")
+        mixinConfigs split
+//        mixinConfig "nucleoplasm-common.mixins.json"
+//        mixinConfig "nucleoplasm.mixins.json"
 
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name

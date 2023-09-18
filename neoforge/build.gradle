@@ -5,8 +5,11 @@ plugins {
 loom {
     accessWidenerPath = project(":common").loom.accessWidenerPath
     forge {
-        mixinConfig "nucleoplasm-common.mixins.json"
-        mixinConfig "nucleoplasm.mixins.json"
+
+        def split = common_mixins.split(",")
+        mixinConfigs split
+//        mixinConfig "nucleoplasm-common.mixins.json"
+//        mixinConfig "nucleoplasm.mixins.json"
 
         convertAccessWideners = true
         extraAccessWideners.add loom.accessWidenerPath.get().asFile.name
@@ -16,6 +19,7 @@ loom {
 architectury {
     platformSetupLoomIde()
     forge()
+
 }
 
 configurations {
@@ -44,7 +48,7 @@ dependencies {
 processResources {
     inputs.property "version", project.version
     inputs.property "authors", authors
-    inputs.property "loaderInterval", forge_version.split("\\.")[0]
+    inputs.property "loaderInterval", neo_forge_version.split("\\.")[0]
     inputs.property "minecraft_version", minecraft_version
     def split = minecraft_version.toString().split("\\.")
     StringBuilder sb = new StringBuilder()
@@ -60,7 +64,7 @@ processResources {
     filesMatching("META-INF/mods.toml") {
         expand "version": project.version,
                 "authors": authors,
-                "loaderInterval": forge_version.split("\\.")[0],
+                "loaderInterval": neo_forge_version.split("\\.")[0],
                 "minecraft_version": minecraft_version,
                 "alpha_minecraft_version": sb.toString(),
                 "license_type": license_type,
