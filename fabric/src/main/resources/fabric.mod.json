@@ -19,6 +19,9 @@
   "entrypoints": {
     "main": [
       "io.github.xenfork.nucleoplasm.fabric.NucleoplasmFabric"
+    ],
+    "client": [
+      "io.github.xenfork.nucleoplasm.fabric.NucleoplasmClientFabric"
     ]
   },
   "mixins": [

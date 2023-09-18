@@ -1,4 +1,8 @@
 {
-  "parent": "forge:obj",
-  "model": "nucleoplasm:models/block/rock.obj"
+  "loader": "forge:obj",
+  "model": "nucleoplasm:models/block/rock.obj",
+  "textures": {
+    "texture0": "minecraft:block/dirt",
+    "particle": "minecraft:block/dirt"
+  }
 }
