@@ -1,0 +1,4 @@
+{
+  "parent": "forge:obj",
+  "model": "nucleoplasm:models/block/rock.obj"
+}
