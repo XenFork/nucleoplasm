@@ -1,4 +1,4 @@
 # Made in Blockbench 4.6.5
-newmtl m_fe7d9410-82fc-4d0d-2149-793b564449aa
-map_Kd texture0 
+newmtl m_75fad5c8-bc09-d648-c599-905da06a544a
+map_Kd minecraft:block/stone 
 newmtl none
