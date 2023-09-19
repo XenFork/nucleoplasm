@@ -20,7 +20,7 @@ public class BrokenStoneFeature extends Feature<BrokenStoneFeatureConfig> {
         BlockPos pos = context.getOrigin();
         BrokenStoneFeatureConfig config = context.getConfig();
         Direction offset = Direction.NORTH;
-        int height = config.height().get(context.getRandom());
+        int height = config.height();
         for (int y = 0; y < height; y++) {
             offset = offset.rotateYClockwise();
             BlockPos blockPos = pos.up(y).offset(offset);
