@@ -1,8 +1,9 @@
 {
   "loader": "forge:obj",
-  "model": "nucleoplasm:models/block/rock.obj",
+  "flip-v": true,
+  "model": "nucleoplasm:models/block/broken_stone.obj",
   "textures": {
-    "texture0": "minecraft:block/dirt",
-    "particle": "minecraft:block/dirt"
+    "texture0": "minecraft:block/stone",
+    "particle": "minecraft:block/stone"
   }
 }
