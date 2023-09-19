@@ -24,6 +24,7 @@ public class BrokenStoneFeature extends Feature<BrokenStoneFeatureConfig> {
         for (int y = 0; y < height; y++) {
             offset = offset.rotateYClockwise();
             BlockPos blockPos = pos.up(y).offset(offset);
+
             context.getWorld().setBlockState(blockPos, config.block().get(context.getRandom(), blockPos), 3);
         }
         return true;
