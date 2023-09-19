@@ -1,5 +1,6 @@
 {
   "loader": "forge:obj",
+  "parent": "special-model-loader:builtin/obj",
   "flip-v": true,
   "model": "nucleoplasm:models/block/broken_stone.obj",
   "textures": {
