@@ -7,13 +7,20 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import io.github.xenfork.nucleoplasm.core.block.BrokenStoneBlock;
 import io.github.xenfork.nucleoplasm.core.item.InorganicItem;
 import io.github.xenfork.nucleoplasm.core.item.OrganicMatterItem;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.FluidBlock;
+import net.minecraft.block.*;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FlowableFluid;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.item.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.hit.BlockHitResult;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
@@ -23,7 +30,18 @@ import java.util.function.Supplier;
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
 public enum ModRegistry implements Supplier<Object>, ItemConvertible {
-    Broken$Stone(settings -> new BrokenStoneBlock(settings.nonOpaque()), new Item.Settings()),//破碎的石子
+    Broken$Stone(settings -> new BrokenStoneBlock(settings.nonOpaque()) {
+        @SuppressWarnings("deprecation")
+        @Override
+        public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+            return VoxelShapes.cuboid(0.1f,0f,0.3f,0.9f, 0.2f, 0.7f);
+        }
+
+        @Override
+        public ActionResult onUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit) {
+            return super.onUse(state, world, pos, player, hand, hit);
+        }
+    }, new Item.Settings()),//破碎的石子
     Inorganic(InorganicItem::new),
     Organic$Matter(OrganicMatterItem::new),
     ;
