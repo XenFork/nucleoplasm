@@ -23,7 +23,7 @@ import java.util.function.Supplier;
 import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
 public enum ModRegistry implements Supplier<Object>, ItemConvertible {
-    Broken$Stone(BrokenStoneBlock::new, new Item.Settings()),//破碎的石子
+    Broken$Stone(settings -> new BrokenStoneBlock(settings.nonOpaque()), new Item.Settings()),//破碎的石子
     Inorganic(InorganicItem::new),
     Organic$Matter(OrganicMatterItem::new),
     ;
