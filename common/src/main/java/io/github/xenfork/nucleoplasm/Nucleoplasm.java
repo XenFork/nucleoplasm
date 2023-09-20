@@ -34,5 +34,8 @@ public class Nucleoplasm
 		ModGroups.init();
 		ModRecipes.init();
 		OtherRegister.init();
+		ModFeatures.init();
+		ModWorldGenerations.init();
+
 	}
 }
