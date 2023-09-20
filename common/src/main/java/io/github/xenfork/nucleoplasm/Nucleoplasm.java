@@ -26,6 +26,9 @@ public class Nucleoplasm
 	public static final DeferredRegister<ItemGroup> groups = DeferredRegister.create(MOD_ID, RegistryKeys.ITEM_GROUP);
 	public static final DeferredRegister<RecipeSerializer<?>> recipes = DeferredRegister.create(MOD_ID, RegistryKeys.RECIPE_SERIALIZER);
 
+	public static final DeferredRegister<Feature<?>> features = DeferredRegister.create(MOD_ID, RegistryKeys.FEATURE);
+
+	public static DeferredRegister<ConfiguredFeature<?, ?>> configuredFeatures;
 	public static void init() {
 		ModRegistry.init();
 		ModGroups.init();
