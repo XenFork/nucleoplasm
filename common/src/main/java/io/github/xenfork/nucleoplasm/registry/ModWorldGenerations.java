@@ -22,42 +22,20 @@ import javax.imageio.spi.RegisterableService;
 
 import java.util.Locale;
 
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.MOD_ID;
-import static io.github.xenfork.nucleoplasm.Nucleoplasm.configuredFeatures;
+import static io.github.xenfork.nucleoplasm.Nucleoplasm.*;
 
-public enum ModWorldGenerations {
-    Broken$Stone(ModFeatures.Broken$Stone.get(), new BrokenStoneFeatureConfig(1, SimpleBlockStateProvider.of((Block) ModRegistry.Broken$Stone.value2.get())));
-
-    private final Feature<FeatureConfig> feature;
-    private final FeatureConfig config;
-    private RegistrySupplier<ConfiguredFeature<FeatureConfig, Feature<FeatureConfig>>> register;
-    ModWorldGenerations(Feature<FeatureConfig> feature, FeatureConfig config) {
-        this.feature = feature;
-        this.config = config;
-    }
+public class ModWorldGenerations {
+    public static RegistrySupplier<BrokenStoneFeature> brokenStoneFeatureRegistrySupplier;
 
     public static void init() {
+        Identifier brokenStone = new Identifier(MOD_ID, "broken_stone");
+        brokenStoneFeatureRegistrySupplier = features.register(brokenStone, () -> new BrokenStoneFeature(BrokenStoneFeatureConfig.CODEC));
+        features.register();
         LifecycleEvent.SETUP.register(() -> {
+            ConfiguredFeatures.register();
             configuredFeatures = DeferredRegister.create(MOD_ID, RegistryKeys.CONFIGURED_FEATURE);
-            for (ModWorldGenerations value : values()) {
-                value.register = configuredFeatures.register(value.id(), () -> new ConfiguredFeature<>(value.feature, value.config));
-            }
+            configuredFeatures.register(brokenStone, () -> new ConfiguredFeature<>(brokenStoneFeatureRegistrySupplier.get(), new BrokenStoneFeatureConfig(1, SimpleBlockStateProvider.of((Block) ModRegistry.Broken$Stone.value2.get()))));
             configuredFeatures.register();
         });
-    }
-
-    @NotNull
-    private String rename() {
-        return name().replace("$", "_").toLowerCase(Locale.ROOT);
-    }
-
-
-    @NotNull
-    private Identifier id() {
-        return new Identifier(MOD_ID, rename());
-    }
-
-    private Identifier id(String sub) {
-        return new Identifier(MOD_ID, rename() + "_" + sub);
     }
 }

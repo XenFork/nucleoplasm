@@ -33,8 +33,6 @@ public class Nucleoplasm
 		ModRegistry.init();
 		ModGroups.init();
 		ModRecipes.init();
-		OtherRegister.init();
-		ModFeatures.init();
 		ModWorldGenerations.init();
 
 	}
